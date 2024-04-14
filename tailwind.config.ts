@@ -5,8 +5,11 @@ export default {
   content: ["./src/**/*.tsx"],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+      colors: {
+        primary: "hsl(var(--primary))",
+        "primary-dark": "hsl(var(--primary-dark))",
+        "primary-foreground": "hsl(var(--primary-foreground))",
+        secondary: "hsl(var(--secondary))",
       },
     },
   },
