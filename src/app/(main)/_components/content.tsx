@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Content() {
   return (
@@ -18,7 +19,9 @@ export function Content() {
           The free, fun, and effective, way to <br /> learn a language!
         </h1>
         <div className="ml-24 flex w-[350px] flex-col gap-2">
-          <Button className="text-md h-12 w-full">get started</Button>
+          <Button className="text-md h-12 w-full" asChild>
+            <Link href="/register">get started</Link>
+          </Button>
           <Button variant="outline" className="text-md h-12 w-full">
             I already have an account
           </Button>
