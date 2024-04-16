@@ -20,7 +20,7 @@ export default function Register() {
         <Input placeholder="Email" />
         <Input placeholder="Password" />
         <Button className="w-full">create account</Button>
-        <div className="relative my-2 h-[0.050rem] w-full bg-[#cecdcd] before:absolute before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:bg-white before:px-2 before:text-[#cecdcd] before:content-['or']" />
+        <div className="relative my-2 h-[0.050rem] w-full before:absolute before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:bg-white before:px-2 before:text-[#cecdcd] before:content-['or']" />
         <Button variant="outline" className="w-full">
           <Image
             src="/images/brands/facebook.png"
