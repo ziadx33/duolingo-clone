@@ -10,6 +10,7 @@ export function GoogleOAuth() {
       onClick={() => signIn("google")}
       variant="outline"
       className="w-full"
+      type="button"
     >
       <Image
         src="/images/brands/google.png"

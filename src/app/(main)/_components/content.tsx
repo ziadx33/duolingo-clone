@@ -22,8 +22,8 @@ export function Content() {
           <Button className="text-md h-12 w-full" asChild>
             <Link href="/register">get started</Link>
           </Button>
-          <Button variant="outline" className="text-md h-12 w-full">
-            I already have an account
+          <Button variant="outline" asChild className="text-md h-12 w-full">
+            <Link href="/login">I already have an account</Link>
           </Button>
         </div>
       </div>

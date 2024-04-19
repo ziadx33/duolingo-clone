@@ -3,8 +3,8 @@ import { mainFont } from "@/fonts";
 import "@/styles/globals.css";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import { SessionProvider } from "next-auth/react";
 import NextAuthProvider from "./next-auth-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = {
   title: "Duolingo clone",
@@ -25,9 +25,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TRPCReactProvider>
-            <NextAuthProvider>{children}</NextAuthProvider>
-          </TRPCReactProvider>
+          <NextAuthProvider>
+            <TRPCReactProvider>
+              <main>{children}</main>
+              <Toaster richColors />
+            </TRPCReactProvider>
+          </NextAuthProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { RegisterForm } from "./_components/register-form";
 
-export default function Register() {
+export default async function Register() {
   return (
     <main className="flex flex-col">
       <RegisterForm />

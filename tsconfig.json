@@ -38,5 +38,11 @@
     "**/*.js",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    ".next",
+    ".eslintrc.cjs",
+    "next-env.d.ts",
+    "prisma/zod/*.ts"
+  ]
 }

@@ -6,7 +6,7 @@ const mainFont = localFont({
   variable: "--font-main",
   src: [
     {
-      path: "../fonts/main.ttf",
+      path: "./main.ttf",
       weight: "400",
       style: "normal",
     },
