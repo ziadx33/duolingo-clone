@@ -36,7 +36,12 @@ const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    jwt: ({ token }) => {
+    jwt: ({ token, trigger, session }) => {
+      if (trigger === "update") {
+        for (const key in session.user) {
+          token[key] = session.user[key];
+        }
+      }
       return token;
     },
   },

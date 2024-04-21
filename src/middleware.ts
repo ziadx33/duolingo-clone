@@ -3,7 +3,6 @@ import {
   PROTECTED_ROUTES,
   PUBLIC_ROUTES,
 } from "@/constants";
-import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
