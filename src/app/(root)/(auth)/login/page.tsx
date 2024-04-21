@@ -1,12 +1,8 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { LoginForm } from "./_components/login-form";
-import { useSession } from "next-auth/react";
 
 export default function Register() {
-  const { data } = useSession();
   return (
     <main className="flex flex-col">
       <LoginForm />
