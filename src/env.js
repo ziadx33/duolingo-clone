@@ -26,6 +26,7 @@ export const env = createEnv({
     EMAIL_SERVER_PASSWORD: z.string(),
     EMAIL_FROM: z.string(),
     SEND_GRID_API_KEY: z.string(),
+    NEXTAUTH_SECRET: z.string(),
   },
 
   /**
@@ -53,6 +54,7 @@ export const env = createEnv({
     EMAIL_SERVER_PASSWORD: process.env.EMAIL_SERVER_PASSWORD,
     EMAIL_FROM: process.env.EMAIL_FROM,
     SEND_GRID_API_KEY: process.env.SEND_GRID_API_KEY,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

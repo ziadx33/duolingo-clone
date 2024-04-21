@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react";
 
 export default function Register() {
   const { data } = useSession();
-  console.log(data);
   return (
     <main className="flex flex-col">
       <LoginForm />
