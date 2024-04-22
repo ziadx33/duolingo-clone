@@ -19,6 +19,8 @@ const arFont = IBM_Plex_Sans_Arabic({
   weight: "700",
 });
 
-const fonts: Record<string, NextFontWithVariable> = { ar: arFont };
+type CountryCode = "ar";
+
+const fonts: Record<CountryCode, NextFontWithVariable> = { ar: arFont };
 
 export { mainFont, arFont, fonts };

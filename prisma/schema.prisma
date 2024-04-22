@@ -37,12 +37,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Subject {
-    id   String @id @default(uuid())
-    name String
-    code String
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -77,8 +71,15 @@ model User {
     emailVerified DateTime?
     image         String?
     password      String
-    accounts      Account[]
-    sessions      Session[]
+    created_at    DateTime  @default(now())
+
+    streak  Int
+    totalXp Int
+    hearts  Int
+
+    accounts Account[]
+    sessions Session[]
+    subjects Subject[]
 }
 
 model VerificationToken {
@@ -88,4 +89,36 @@ model VerificationToken {
     expires DateTime
 
     @@unique([email, token])
+}
+
+model Subject {
+    id       String    @id @default(uuid())
+    name     String
+    code     String
+    userId   String?
+    Section  Section[]
+    learners User[]
+}
+
+model Section {
+    id          String  @id @default(uuid())
+    description String
+    subject     Subject @relation(fields: [subjectId], references: [id])
+    subjectId   String
+}
+
+model Unit {
+    id          String @id @default(uuid())
+    description String
+}
+
+model Practice {
+    id          String @id @default(uuid())
+    title       String
+    description String
+}
+
+model Lesson {
+    id String @id @default(uuid())
+    xp Int
 }
