@@ -73,9 +73,9 @@ model User {
     password      String
     created_at    DateTime  @default(now())
 
-    streak  Int
-    totalXp Int
-    hearts  Int
+    streak  Int @default(0)
+    totalXp Int @default(9)
+    hearts  Int @default(5)
 
     accounts Account[]
     sessions Session[]
