@@ -79,7 +79,7 @@ model User {
 
     accounts   Account[]
     sessions   Session[]
-    subjectIds String[]
+    subjectIds String[]  @default([])
 }
 
 model VerificationToken {
