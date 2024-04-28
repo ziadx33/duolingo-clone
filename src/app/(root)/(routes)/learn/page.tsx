@@ -1,9 +1,10 @@
 "use client";
 
+import { type User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 
 export default function Page() {
-  const { data } = useSession();
+  const { data } = useSession() as unknown as { data: { user: User } };
   return (
     <div>
       <h1>Hello! {data?.user?.name}.</h1>

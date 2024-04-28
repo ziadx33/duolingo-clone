@@ -5,4 +5,5 @@ export const PracticeModel = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
+  isCompleted: z.boolean(),
 })

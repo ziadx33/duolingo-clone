@@ -77,9 +77,9 @@ model User {
     totalXp Int @default(9)
     hearts  Int @default(5)
 
-    accounts Account[]
-    sessions Session[]
-    subjects Subject[]
+    accounts   Account[]
+    sessions   Session[]
+    subjectIds String[]
 }
 
 model VerificationToken {
@@ -92,12 +92,10 @@ model VerificationToken {
 }
 
 model Subject {
-    id       String    @id @default(uuid())
-    name     String
-    code     String
-    userId   String?
-    Section  Section[]
-    learners User[]
+    id      String    @id @default(uuid())
+    name    String
+    code    String
+    Section Section[]
 }
 
 model Section {
@@ -105,20 +103,24 @@ model Section {
     description String
     subject     Subject @relation(fields: [subjectId], references: [id])
     subjectId   String
+    isCompleted Boolean
 }
 
 model Unit {
-    id          String @id @default(uuid())
+    id          String  @id @default(uuid())
     description String
+    isCompleted Boolean
 }
 
 model Practice {
-    id          String @id @default(uuid())
+    id          String  @id @default(uuid())
     title       String
     description String
+    isCompleted Boolean
 }
 
 model Lesson {
-    id String @id @default(uuid())
-    xp Int
+    id          String  @id @default(uuid())
+    xp          Int
+    isCompleted Boolean
 }

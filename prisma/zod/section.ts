@@ -6,6 +6,7 @@ export const SectionModel = z.object({
   id: z.string(),
   description: z.string(),
   subjectId: z.string(),
+  isCompleted: z.boolean(),
 })
 
 export interface CompleteSection extends z.infer<typeof SectionModel> {

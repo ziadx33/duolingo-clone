@@ -10,6 +10,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { env } from "@/env";
 import { db } from "@/server/db";
 import { getUserByEmail, getUserById } from "./db/user";
+import { type User } from "@prisma/client";
 
 /**
  * Module augmentation for `next-auth` types to add custom properties to the `session` object.
@@ -82,4 +83,5 @@ export const authHandler = nextAuth(authOptions);
 /**
  * Wrapper for `getServerSession` to avoid importing `authOptions` in every file.
  */
-export const getServerAuthSession = () => getServerSession(authOptions);
+export const getServerAuthSession = () =>
+  getServerSession(authOptions) as Promise<User>;

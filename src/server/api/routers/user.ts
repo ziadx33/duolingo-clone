@@ -7,6 +7,7 @@ import { z } from "zod";
 import { hash } from "bcrypt";
 import { BCRYPT_SALT } from "@/lib/bcrypt";
 import { getUserByEmail, getUserById, updateUserById } from "@/server/db/user";
+import { getServerAuthSession } from "@/server/auth";
 
 export const user = createTRPCRouter({
   create: publicProcedure
@@ -62,4 +63,15 @@ export const user = createTRPCRouter({
       const updated = updateUserById(id, data);
       return updated;
     }),
+  subjects: publicProcedure.query(async () => {
+    const user = await getServerAuthSession();
+    const subjects = await prisma.subject.findMany({
+      where: {
+        id: {
+          in: user.subjectIds,
+        },
+      },
+    });
+    return subjects;
+  }),
 });
