@@ -1,6 +1,6 @@
 import * as z from "zod"
 import * as imports from "../null"
-import { CompleteSection, RelatedSectionModel } from "./index"
+import { CompleteUnit, RelatedUnitModel, CompleteUser, RelatedUserModel } from "./index"
 
 export const SubjectModel = z.object({
   id: z.string(),
@@ -9,7 +9,8 @@ export const SubjectModel = z.object({
 })
 
 export interface CompleteSubject extends z.infer<typeof SubjectModel> {
-  Section: CompleteSection[]
+  units: CompleteUnit[]
+  User: CompleteUser[]
 }
 
 /**
@@ -18,5 +19,6 @@ export interface CompleteSubject extends z.infer<typeof SubjectModel> {
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const RelatedSubjectModel: z.ZodSchema<CompleteSubject> = z.lazy(() => SubjectModel.extend({
-  Section: RelatedSectionModel.array(),
+  units: RelatedUnitModel.array(),
+  User: RelatedUserModel.array(),
 }))

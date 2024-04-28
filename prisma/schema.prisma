@@ -65,13 +65,15 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?   @default("https://utfs.io/f/6213c0cc-9851-460a-a19d-7870de89bbee-pjqibl.jpg")
-    password      String
-    created_at    DateTime  @default(now())
+    id               String    @id @default(cuid())
+    name             String?
+    email            String?   @unique
+    emailVerified    DateTime?
+    image            String?   @default("https://utfs.io/f/6213c0cc-9851-460a-a19d-7870de89bbee-pjqibl.jpg")
+    password         String
+    created_at       DateTime  @default(now())
+    currentSubject   Subject   @relation(fields: [currentSubjectId], references: [id])
+    currentSubjectId String    @default("")
 
     streak  Int @default(0)
     totalXp Int @default(9)
@@ -92,35 +94,36 @@ model VerificationToken {
 }
 
 model Subject {
-    id      String    @id @default(uuid())
-    name    String
-    code    String
-    Section Section[]
-}
-
-model Section {
-    id          String  @id @default(uuid())
-    description String
-    subject     Subject @relation(fields: [subjectId], references: [id])
-    subjectId   String
-    isCompleted Boolean
+    id    String @id @default(uuid())
+    name  String
+    code  String
+    units Unit[]
+    User  User[]
 }
 
 model Unit {
-    id          String  @id @default(uuid())
+    id          String     @id @default(uuid())
     description String
     isCompleted Boolean
+    Subject     Subject?   @relation(fields: [subjectId], references: [id])
+    subjectId   String?
+    practices   Practice[]
 }
 
 model Practice {
-    id          String  @id @default(uuid())
+    id          String   @id @default(uuid())
     title       String
     description String
     isCompleted Boolean
+    Unit        Unit?    @relation(fields: [unitId], references: [id])
+    unitId      String?
+    lessons     Lesson[]
 }
 
 model Lesson {
-    id          String  @id @default(uuid())
+    id          String    @id @default(uuid())
     xp          Int
     isCompleted Boolean
+    Practice    Practice? @relation(fields: [practiceId], references: [id])
+    practiceId  String?
 }
