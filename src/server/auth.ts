@@ -40,10 +40,11 @@ const authOptions: NextAuthOptions = {
     },
     jwt: ({ token, trigger, session, user }) => {
       if (trigger === "update") {
-        for (const key in session.user) {
-          token[key] = session.user[key];
+        for (const key in session) {
+          token[key] = session[key as keyof typeof session];
         }
       }
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return { ...token, ...user };
     },
   },
@@ -85,4 +86,4 @@ export const authHandler = nextAuth(authOptions);
  * Wrapper for `getServerSession` to avoid importing `authOptions` in every file.
  */
 export const getServerAuthSession = () =>
-  getServerSession(authOptions) as Promise<User>;
+  getServerSession(authOptions) as Promise<{ user?: User }>;

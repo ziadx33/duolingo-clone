@@ -21,7 +21,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (isIncludingProtectedRoutes && user_data?.user?.subjectIds.length === 0) {
+  if (
+    request.nextUrl.pathname !== "/choose-subjects" &&
+    isIncludingProtectedRoutes &&
+    user_data?.user?.subjectIds.length === 0
+  ) {
     return NextResponse.redirect(new URL("/choose-subjects", request.url));
   }
 }

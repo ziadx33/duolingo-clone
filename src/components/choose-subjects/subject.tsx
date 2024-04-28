@@ -1,9 +1,24 @@
-import { type Subject } from "@prisma/client";
-import Image from "next/image";
+"use client";
 
-export function Subject({ code, name }: Subject) {
+import { type User, type Subject } from "@prisma/client";
+import Image from "next/image";
+import { SubjectButton } from "./subject-button";
+import { useSession } from "next-auth/react";
+import { Checkbox } from "../ui/checkbox";
+
+export function Subject({ code, name, id }: Subject) {
+  const { data: userData } = useSession() as unknown as {
+    data?: { user: User };
+  };
+  const isAlreadyChosen = userData?.user?.subjectIds.includes(id);
   return (
-    <button className="flex h-[175px] w-[172px] flex-col items-center justify-center gap-4 rounded-lg border px-[12px] pb-[24px] pt-[12px] transition duration-200 hover:bg-secondary">
+    <SubjectButton isAlreadyChosen={!!isAlreadyChosen} subjectId={id}>
+      {isAlreadyChosen && (
+        <Checkbox
+          checked={isAlreadyChosen}
+          className="absolute right-2 top-2 h-6 w-6"
+        />
+      )}
       <Image
         src={`/images/flags/${code}.svg`}
         alt={code}
@@ -12,6 +27,6 @@ export function Subject({ code, name }: Subject) {
         draggable="false"
       />
       <h3 className="text-center">{name}</h3>
-    </button>
+    </SubjectButton>
   );
 }
