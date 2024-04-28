@@ -69,7 +69,7 @@ model User {
     name          String?
     email         String?   @unique
     emailVerified DateTime?
-    image         String?
+    image         String?   @default("https://utfs.io/f/6213c0cc-9851-460a-a19d-7870de89bbee-pjqibl.jpg")
     password      String
     created_at    DateTime  @default(now())
 

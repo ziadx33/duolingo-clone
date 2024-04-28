@@ -4,7 +4,6 @@ import { Subject } from "@/components/choose-subjects/subject";
 
 export default async function ChooseSubjects() {
   const subjects = await api.subjects.getAll();
-  console.log(subjects);
   return (
     <main>
       <Header />
