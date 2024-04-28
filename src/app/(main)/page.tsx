@@ -1,6 +1,6 @@
-import { Content } from "./_components/content";
-import { Header } from "../../components/header";
-import { LanguagesBar } from "./_components/languages-bar/languages-bar";
+import { Header } from "@/components/header";
+import { Content } from "@/components/main/content";
+import { LanguagesBar } from "@/components/main/languages-bar/languages-bar";
 
 export default function Home() {
   return (

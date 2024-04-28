@@ -1,11 +1,10 @@
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import { getSubjects } from "@/server/db/subjects";
-import { type Subject } from "@prisma/client";
+import prisma from "@/server/db/prisma";
 
 export const subjects = createTRPCRouter({
   getAll: publicProcedure.query(async () => {
     try {
-      const subjects: Subject[] = await getSubjects();
+      const subjects = await prisma.subject.findMany();
       return subjects;
     } catch (error) {
       throw error;

@@ -32,18 +32,19 @@ const authOptions: NextAuthOptions = {
       return true;
     },
     session: async ({ token, session }) => {
+      session.user = token as User;
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
       return session;
     },
-    jwt: ({ token, trigger, session }) => {
+    jwt: ({ token, trigger, session, user }) => {
       if (trigger === "update") {
         for (const key in session.user) {
           token[key] = session.user[key];
         }
       }
-      return token;
+      return { ...token, ...user };
     },
   },
   session: { strategy: "jwt" },
