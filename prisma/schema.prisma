@@ -114,12 +114,11 @@ model Unit {
 }
 
 model Practice {
-    id          String   @id @default(uuid())
-    title       String
-    description String
-    Unit        Unit?    @relation(fields: [unitId], references: [id])
-    unitId      String?
-    lessons     Lesson[]
+    id      String   @id @default(uuid())
+    title   String
+    Unit    Unit?    @relation(fields: [unitId], references: [id])
+    unitId  String?
+    lessons Lesson[]
 }
 
 model Lesson {
