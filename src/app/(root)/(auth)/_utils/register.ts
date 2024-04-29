@@ -19,6 +19,7 @@ export const register = async (
     email,
     name,
     password,
+    currentSubjectId: "1",
   });
   const verificationCode = await generateVerificationToken(email);
   const confirmLink = `${origin}/verification-token?token=${verificationCode.token}`;

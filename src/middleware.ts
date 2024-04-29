@@ -24,7 +24,7 @@ export async function middleware(request: NextRequest) {
   if (
     request.nextUrl.pathname !== "/choose-subjects" &&
     isIncludingProtectedRoutes &&
-    user_data?.user?.subjectIds.length === 0
+    user_data?.user?.currentSubjectId === ""
   ) {
     return NextResponse.redirect(new URL("/choose-subjects", request.url));
   }

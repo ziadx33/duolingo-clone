@@ -11,16 +11,17 @@ import { getServerAuthSession } from "@/server/auth";
 
 export const user = createTRPCRouter({
   create: publicProcedure
-    .input(RegisterSchema)
+    .input(RegisterSchema.and(z.object({ currentSubjectId: z.string() })))
     .output(UserModel)
     .mutation(async (opts) => {
-      const { email, password, name } = opts.input;
+      const { email, password, name, currentSubjectId } = opts.input;
       try {
         const createdUser: User = await prisma.user.create({
           data: {
             email,
             name,
             password: await hash(password, BCRYPT_SALT),
+            currentSubjectId,
           },
         });
         return createdUser;

@@ -6,7 +6,7 @@ import Image from "next/image";
 export async function Sidebar() {
   const { user } = await getServerAuthSession();
   return (
-    <aside className="h-full w-64 border-r-2 px-6 py-6">
+    <aside className="h-full w-[13%] border-r-2 px-6 py-6">
       <Image
         draggable="false"
         alt="logo"
@@ -18,7 +18,7 @@ export async function Sidebar() {
       <nav className="flex flex-col gap-4">
         {SIDEBAR_LINKS.map((link) => (
           <ActiveLink
-            className="flex h-12 items-center gap-2 rounded-lg pl-2 hover:bg-secondary"
+            className="flex h-12 items-center justify-center gap-2 rounded-lg p-0 hover:bg-secondary 2xl:justify-start 2xl:pl-2"
             activeClasses="bg-secondary"
             href={link.href}
             key={link.name}
@@ -34,7 +34,7 @@ export async function Sidebar() {
               height={40}
               className={link.name === "profile" ? "rounded-full" : ""}
             />
-            {link.name}
+            <span className="hidden 2xl:block">{link.name}</span>
           </ActiveLink>
         ))}
       </nav>
