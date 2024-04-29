@@ -7,7 +7,6 @@ import { z } from "zod";
 import { hash } from "bcrypt";
 import { BCRYPT_SALT } from "@/lib/bcrypt";
 import { getUserByEmail, getUserById, updateUserById } from "@/server/db/user";
-import { getServerAuthSession } from "@/server/auth";
 
 export const user = createTRPCRouter({
   create: publicProcedure

@@ -1,16 +1,15 @@
-import { getSubject } from "@/server/actions/subjects";
+import {
+  getSubject,
+  getSubjects,
+  getSubjectsIn,
+} from "@/server/actions/subjects";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import prisma from "@/server/db/prisma";
 import { z } from "zod";
 
 export const subjects = createTRPCRouter({
   getAll: publicProcedure.query(async () => {
-    try {
-      const subjects = await prisma.subject.findMany();
-      return subjects;
-    } catch (error) {
-      throw error;
-    }
+    const subjects = await getSubjects();
+    return subjects;
   }),
   get: publicProcedure
     .input(z.object({ id: z.string() }))
@@ -23,17 +22,7 @@ export const subjects = createTRPCRouter({
     .input(z.object({ ids: z.string().array() }))
     .query(async ({ input }) => {
       const { ids } = input;
-      try {
-        const subjects = await prisma.subject.findMany({
-          where: {
-            id: {
-              in: ids,
-            },
-          },
-        });
-        return subjects;
-      } catch (err) {
-        throw err;
-      }
+      const subjects = await getSubjectsIn(ids);
+      return subjects;
     }),
 });
