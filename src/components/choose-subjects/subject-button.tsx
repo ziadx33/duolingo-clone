@@ -3,7 +3,6 @@
 import { api } from "@/trpc/react";
 import { type Subject } from "@prisma/client";
 import { useSession } from "@/hooks/use-session";
-import { useRouter } from "next/navigation";
 import { type ReactNode } from "react";
 
 type SubjectButtonProps = {
@@ -19,7 +18,6 @@ export function SubjectButton({
 }: SubjectButtonProps) {
   const { mutateAsync: addCurrentSubject } = api.auth.user.update.useMutation();
   const { update: updateUser, data: userData } = useSession();
-  const router = useRouter();
   const addSubjectHandler = async () => {
     await updateUser({
       currentSubjectId: subjectId,
@@ -30,7 +28,7 @@ export function SubjectButton({
         currentSubjectId: subjectId,
       },
     });
-    router.push("/learn");
+    location.pathname = "/learn";
   };
   return (
     <button

@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { type Unit } from "@prisma/client";
 import { Practice } from "../practices/practice";
@@ -19,9 +18,6 @@ export async function Unit({ unitIndex, description, id }: UnitProps) {
           </h3>
           <h2 className="text-xl font-bold">{description}</h2>
         </div>
-        <Button variant="outline" className="h-12">
-          Guidebook
-        </Button>
       </Card>
       <div className="flex flex-col items-center justify-center gap-6">
         {practices?.map((practice, practiceIndex) => (

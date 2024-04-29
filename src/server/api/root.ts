@@ -1,9 +1,15 @@
 import { subjects } from "@/server/api/routers/subjects";
-import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
+import {
+  createCallerFactory,
+  createTRPCRouter,
+  publicProcedure,
+} from "@/server/api/trpc";
 import { user } from "./routers/users";
 import { verificationTokens } from "./routers/verification-tokens";
 import { units } from "./routers/units";
 import { practices } from "./routers/practices";
+import { z } from "zod";
+import { revalidateTag } from "next/cache";
 
 /**
  * This is the primary router for your server.
@@ -18,6 +24,9 @@ export const appRouter = createTRPCRouter({
   },
   units,
   practices,
+  revalidate: publicProcedure.input(z.string()).mutation(async ({ input }) => {
+    revalidateTag(input);
+  }),
 });
 
 // export type definition of API
