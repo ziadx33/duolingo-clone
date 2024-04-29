@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "@/server/db/prisma";
 import { type User } from "@prisma/client";
 

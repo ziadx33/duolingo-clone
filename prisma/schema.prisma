@@ -78,7 +78,7 @@ model User {
     streak  Int @default(0)
     totalXp Int @default(9)
     hearts  Int @default(5)
-    gem     Int @default(0)
+    gem     Int @default(500)
 
     accounts Account[]
     sessions Session[]

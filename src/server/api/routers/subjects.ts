@@ -1,3 +1,4 @@
+import { getSubject } from "@/server/actions/subjects";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import prisma from "@/server/db/prisma";
 import { z } from "zod";
@@ -15,16 +16,8 @@ export const subjects = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       const { id } = input;
-      try {
-        const subject = await prisma.subject.findUnique({
-          where: {
-            id,
-          },
-        });
-        return subject;
-      } catch (error) {
-        throw error;
-      }
+      const subject = await getSubject(id);
+      return subject;
     }),
   getIn: publicProcedure
     .input(z.object({ ids: z.string().array() }))

@@ -1,16 +1,19 @@
 "use client";
 
 import { useSession } from "@/hooks/use-session";
-import ChooseSubjectSelect from "./choose-subject-select";
-import { redirect } from "next/navigation";
+import ChooseSubjectSelect from "./header-buttons/choose-subject-select";
+import { StreakButton } from "./header-buttons/streak-button";
+import { GemButton } from "./header-buttons/gem-button";
+import { HeartsButton } from "./header-buttons/hearts-button";
 
 export function Header() {
   const { data: userData } = useSession();
-  if (!userData?.user) redirect("/login");
-  const { user } = userData;
   return (
-    <header className="flex h-24 w-full px-4 py-3">
-      <ChooseSubjectSelect {...user} />
+    <header className="flex h-24 w-full items-center justify-center gap-8 py-3">
+      <ChooseSubjectSelect {...userData?.user} />
+      <StreakButton streak={userData?.user?.streak} />
+      <GemButton gem={userData?.user?.gem} />
+      <HeartsButton hearts={userData?.user?.hearts} />
     </header>
   );
 }
