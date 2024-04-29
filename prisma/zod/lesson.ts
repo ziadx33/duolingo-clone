@@ -5,7 +5,6 @@ import { CompletePractice, RelatedPracticeModel } from "./index"
 export const LessonModel = z.object({
   id: z.string(),
   xp: z.number().int(),
-  isCompleted: z.boolean(),
   practiceId: z.string().nullish(),
 })
 

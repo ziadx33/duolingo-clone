@@ -15,6 +15,9 @@ export const UserModel = z.object({
   totalXp: z.number().int(),
   hearts: z.number().int(),
   gem: z.number().int(),
+  completedUnitsIds: z.string().array(),
+  completedPracticeIds: z.string().array(),
+  completedLessonIds: z.string().array(),
 })
 
 export interface CompleteUser extends z.infer<typeof UserModel> {

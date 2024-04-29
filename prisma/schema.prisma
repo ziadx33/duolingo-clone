@@ -82,6 +82,10 @@ model User {
 
     accounts Account[]
     sessions Session[]
+
+    completedUnitsIds    String[]
+    completedPracticeIds String[]
+    completedLessonIds   String[]
 }
 
 model VerificationToken {
@@ -104,7 +108,6 @@ model Subject {
 model Unit {
     id          String     @id @default(uuid())
     description String
-    isCompleted Boolean
     Subject     Subject?   @relation(fields: [subjectId], references: [id])
     subjectId   String?
     practices   Practice[]
@@ -114,16 +117,14 @@ model Practice {
     id          String   @id @default(uuid())
     title       String
     description String
-    isCompleted Boolean
     Unit        Unit?    @relation(fields: [unitId], references: [id])
     unitId      String?
     lessons     Lesson[]
 }
 
 model Lesson {
-    id          String    @id @default(uuid())
-    xp          Int
-    isCompleted Boolean
-    Practice    Practice? @relation(fields: [practiceId], references: [id])
-    practiceId  String?
+    id         String    @id @default(uuid())
+    xp         Int
+    Practice   Practice? @relation(fields: [practiceId], references: [id])
+    practiceId String?
 }

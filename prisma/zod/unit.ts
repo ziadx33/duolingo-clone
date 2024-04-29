@@ -5,7 +5,6 @@ import { CompleteSubject, RelatedSubjectModel, CompletePractice, RelatedPractice
 export const UnitModel = z.object({
   id: z.string(),
   description: z.string(),
-  isCompleted: z.boolean(),
   subjectId: z.string().nullish(),
 })
 

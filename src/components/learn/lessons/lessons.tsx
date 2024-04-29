@@ -1,3 +1,3 @@
 export function Lessons() {
-  return <h1 className="h-full w-[67%] bg-red-600">Hi</h1>;
+  return <div className="flex h-full w-[67%] justify-center pt-12">hi</div>;
 }
