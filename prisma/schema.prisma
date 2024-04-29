@@ -83,9 +83,9 @@ model User {
     accounts Account[]
     sessions Session[]
 
-    completedUnitsIds    String[]
-    completedPracticeIds String[]
-    completedLessonIds   String[]
+    completedUnitsIds    String[] @default([])
+    completedPracticeIds String[] @default([])
+    completedLessonIds   String[] @default([])
 }
 
 model VerificationToken {
