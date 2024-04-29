@@ -9,7 +9,7 @@ export function StreakButton({
   return (
     <div className="flex h-fit items-center gap-1.5 text-orange-500">
       <Image
-        src={`/images/icons/${streak ? "streak-strong" : "streak-weak"}.svg`}
+        src={`/images/icons/streak.svg`}
         width={25}
         height={30}
         alt="streak"

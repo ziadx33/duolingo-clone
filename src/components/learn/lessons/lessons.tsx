@@ -9,7 +9,7 @@ export async function Lessons() {
     subjectId: user.currentSubjectId,
   });
   return (
-    <div className="flex h-full w-[67%] justify-center pt-12">
+    <div className="flex min-h-full w-[67%] justify-center pt-12">
       <div className="w-[40rem]">
         {units?.map((unit, unitIndex) => (
           <Unit key={unit.id} unitIndex={unitIndex + 1} {...unit} />

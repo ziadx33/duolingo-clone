@@ -5,7 +5,6 @@ import { CompleteUnit, RelatedUnitModel, CompleteLesson, RelatedLessonModel } fr
 export const PracticeModel = z.object({
   id: z.string(),
   title: z.string(),
-  description: z.string(),
   unitId: z.string().nullish(),
 })
 
