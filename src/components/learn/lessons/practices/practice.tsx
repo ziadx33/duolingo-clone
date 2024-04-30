@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { type Practice } from "@prisma/client";
+import { type User, type Lesson, type Practice } from "@prisma/client";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import { FaTrophy, FaCheck } from "react-icons/fa";
 import { useState } from "react";
@@ -13,6 +13,8 @@ type PracticeProps = {
   lastPractice: boolean;
   isNext: boolean;
   isCompleted: boolean;
+  lessons: Lesson[];
+  userData: User;
 } & Practice;
 
 export function Practice({
@@ -21,8 +23,20 @@ export function Practice({
   isNext,
   isCompleted,
   title,
+  lessons,
+  userData,
 }: PracticeProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const nextLesson = lessons.find((lesson, lessonIndex) => {
+    console.log("lesson", lesson);
+    return (
+      userData.completedLessonIds.includes(lesson.id) ||
+      (!!lessons[lessonIndex + 1] &&
+        !userData.completedLessonIds.includes(lessons[lessonIndex + 1]!.id))
+    );
+  });
+  console.log("next lesson", nextLesson);
+  console.log(lessons);
   return (
     <Card className="relative grid h-24 w-24 place-items-center rounded-[50%] border-[0.5rem]">
       <Button
@@ -65,9 +79,11 @@ export function Practice({
         >
           <div>
             <h4>{title}</h4>
-            <p className="text-muted-foreground">Lesson 1 of 3</p>
+            <p className="text-muted-foreground">
+              Lesson {lessons.indexOf(nextLesson!) + 1} of {lessons.length}
+            </p>
           </div>
-          <Button>Start +10XP</Button>
+          <Button>Start +{nextLesson?.xp}XP</Button>
         </Card>
       )}
     </Card>

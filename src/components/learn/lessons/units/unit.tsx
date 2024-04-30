@@ -8,6 +8,9 @@ type UnitProps = { unitIndex: number } & Unit;
 
 export async function Unit({ unitIndex, description, id }: UnitProps) {
   const practices = await api.practices.getPracticesByUnitId({ unitId: id });
+  const lessons = await api.lessons.getLessonsByPracticeIds({
+    practiceIds: practices?.map((practice) => practice.id) ?? [],
+  });
   const { user } = await getServerAuthSession();
   return (
     <div className="flex flex-col gap-10">
@@ -24,13 +27,17 @@ export async function Unit({ unitIndex, description, id }: UnitProps) {
           <Practice
             isNext={
               !(
-                !user?.completedLessonIds.includes(practice.id) &&
+                !user?.completedPracticeIds.includes(practice.id) &&
                 practiceIndex > 0 &&
                 !user?.completedPracticeIds.includes(
                   practices[practiceIndex - 1]!.id,
                 )
               )
             }
+            lessons={lessons.filter(
+              (lesson) => lesson.practiceId === practice.id,
+            )}
+            userData={user!}
             isCompleted={!!user?.completedPracticeIds.includes(practice.id)}
             lastPractice={practices.length === practiceIndex + 1}
             practiceIndex={practiceIndex}
