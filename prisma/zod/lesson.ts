@@ -10,7 +10,7 @@ export const LessonModel = z.object({
 
 export interface CompleteLesson extends z.infer<typeof LessonModel> {
   Practice?: CompletePractice | null
-  questionIds: CompleteQuestionType[]
+  questions: CompleteQuestionType[]
 }
 
 /**
@@ -20,5 +20,5 @@ export interface CompleteLesson extends z.infer<typeof LessonModel> {
  */
 export const RelatedLessonModel: z.ZodSchema<CompleteLesson> = z.lazy(() => LessonModel.extend({
   Practice: RelatedPracticeModel.nullish(),
-  questionIds: RelatedQuestionTypeModel.array(),
+  questions: RelatedQuestionTypeModel.array(),
 }))

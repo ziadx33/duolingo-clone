@@ -127,7 +127,7 @@ model Lesson {
     Practice   Practice? @relation(fields: [practiceId], references: [id])
     practiceId String?
 
-    questionIds QuestionType[]
+    questions QuestionType[]
 }
 
 enum QUESTIONTYPE {

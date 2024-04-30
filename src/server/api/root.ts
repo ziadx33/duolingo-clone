@@ -11,6 +11,7 @@ import { practices } from "./routers/practices";
 import { z } from "zod";
 import { revalidateTag } from "next/cache";
 import { lessons } from "./routers/lessons";
+import { questionTypes } from "./routers/question-types";
 
 /**
  * This is the primary router for your server.
@@ -26,6 +27,7 @@ export const appRouter = createTRPCRouter({
   units,
   practices,
   lessons,
+  questionTypes,
   revalidate: publicProcedure.input(z.string()).mutation(async ({ input }) => {
     revalidateTag(input);
   }),

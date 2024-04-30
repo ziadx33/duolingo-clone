@@ -1,11 +1,14 @@
-import { getLessonById } from "@/server/actions/lessons";
+import { Questions } from "@/components/[lessonId]/questions";
+import { api } from "@/trpc/server";
 
 export default async function Page({
   params: { lessonId },
 }: {
   params: { lessonId: string };
 }) {
-  const lesson = await getLessonById(lessonId);
-  console.log(lesson);
-  return <h1>Hi</h1>;
+  const questionTypes =
+    (await api.questionTypes.getQuestionTypesByLessonId({
+      lessonId,
+    })) ?? [];
+  return <Questions questionTypes={questionTypes} />;
 }
