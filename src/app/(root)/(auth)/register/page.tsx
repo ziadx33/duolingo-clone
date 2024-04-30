@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { RegisterForm } from "./_components/register-form";
+import { RegisterForm } from "../../../../components/register/register-form";
 import { redirect } from "next/navigation";
 
 export default async function Register({
