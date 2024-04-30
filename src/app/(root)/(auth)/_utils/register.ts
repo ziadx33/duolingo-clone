@@ -7,10 +7,12 @@ import { getUserByEmail } from "@/server/db/user";
 import { api } from "@/trpc/server";
 import { type z } from "zod";
 
-type RegisterParamsType = z.infer<typeof RegisterSchema>;
+type RegisterParamsType = z.infer<typeof RegisterSchema> & {
+  subjectId: string;
+};
 
 export const register = async (
-  { email, name, password }: RegisterParamsType,
+  { email, name, password, subjectId }: RegisterParamsType,
   origin: string,
 ) => {
   const exists = await getUserByEmail(email);
@@ -19,7 +21,7 @@ export const register = async (
     email,
     name,
     password,
-    currentSubjectId: "1",
+    currentSubjectId: subjectId,
   });
   const verificationCode = await generateVerificationToken(email);
   const confirmLink = `${origin}/verification-token?token=${verificationCode.token}`;

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { LoginForm } from "./_components/login-form";
 
-export default function Register() {
+export default function Login() {
   return (
     <main className="flex flex-col">
       <LoginForm />

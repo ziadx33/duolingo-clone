@@ -2,7 +2,7 @@ import { MIDDLEWARE_ROUTES, PROTECTED_ROUTES } from "@/constants";
 import { type User } from "@prisma/client";
 import { getSession } from "next-auth/react";
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const requestForNextAuth = {
@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (
-    request.nextUrl.pathname !== "/choose-subjects" &&
+    pathname !== "/choose-subjects" &&
     isIncludingProtectedRoutes &&
     user_data?.user?.currentSubjectId === ""
   ) {

@@ -4,6 +4,7 @@ import { api } from "@/trpc/react";
 import { type Subject } from "@prisma/client";
 import { useSession } from "@/hooks/use-session";
 import { type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 
 type SubjectButtonProps = {
   children: ReactNode;
@@ -18,17 +19,20 @@ export function SubjectButton({
 }: SubjectButtonProps) {
   const { mutateAsync: addCurrentSubject } = api.auth.user.update.useMutation();
   const { update: updateUser, data: userData } = useSession();
+  const router = useRouter();
   const addSubjectHandler = async () => {
-    await updateUser({
-      currentSubjectId: subjectId,
-    });
-    await addCurrentSubject({
-      id: userData?.user?.id ?? "",
-      data: {
+    if (userData) {
+      await updateUser({
         currentSubjectId: subjectId,
-      },
-    });
-    location.pathname = "/learn";
+      });
+      await addCurrentSubject({
+        id: userData?.user?.id ?? "",
+        data: {
+          currentSubjectId: subjectId,
+        },
+      });
+      location.pathname = "/learn";
+    } else router.push(`/register?subjectId=${subjectId}`);
   };
   return (
     <button

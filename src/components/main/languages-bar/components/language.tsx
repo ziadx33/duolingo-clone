@@ -1,15 +1,16 @@
-import { fonts } from "@/fonts";
+import { type Subject } from "@prisma/client";
 import Image from "next/image";
 import Link, { type LinkProps } from "next/link";
 
-type LanguageProps = {
-  name: string;
-  code: string;
-} & Omit<LinkProps, "href">;
+type LanguageProps = Subject & Omit<LinkProps, "href">;
 
-export function Language({ code, name, ...restProps }: LanguageProps) {
+export function Language({ id, code, name, ...restProps }: LanguageProps) {
   return (
-    <Link {...restProps} className="flex h-12 items-center gap-1" href="/">
+    <Link
+      {...restProps}
+      className="flex h-12 items-center"
+      href={`/register?subjectId=${id}`}
+    >
       <Image
         src={`/images/flags/${code}.svg`}
         alt={name}
@@ -17,11 +18,6 @@ export function Language({ code, name, ...restProps }: LanguageProps) {
         height={40}
         className="rounded-md object-cover"
       />
-      <h3
-        className={`font-bold text-gray-600 dark:text-white ${fonts[code]?.className}`}
-      >
-        {name}
-      </h3>
     </Link>
   );
 }

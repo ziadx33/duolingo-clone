@@ -17,7 +17,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { register } from "../../_utils/register";
 import { toast } from "sonner";
 
-export function RegisterForm() {
+type RegisterFormProps = {
+  subjectId: string;
+};
+
+export function RegisterForm({ subjectId }: RegisterFormProps) {
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -30,12 +34,15 @@ export function RegisterForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (values) => {
-          toast.promise(register(values, window.location.origin), {
-            loading: "Registering...",
-            success:
-              "Registered successfully, we have sent a verification link to your email.",
-            error: "Failed to register",
-          });
+          toast.promise(
+            register({ ...values, subjectId }, window.location.origin),
+            {
+              loading: "Registering...",
+              success:
+                "Registered successfully, we have sent a verification link to your email.",
+              error: "Failed to register",
+            },
+          );
         })}
         className="mx-auto flex h-screen w-96 flex-col items-center gap-4 py-32"
       >
