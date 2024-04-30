@@ -40,7 +40,6 @@ export async function Unit({ unitIndex, description, id }: UnitProps) {
             userData={user!}
             isCompleted={!!user?.completedPracticeIds.includes(practice.id)}
             lastPractice={practices.length === practiceIndex + 1}
-            practiceIndex={practiceIndex}
             key={practice.id}
             {...practice}
           />

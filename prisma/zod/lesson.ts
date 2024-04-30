@@ -1,6 +1,6 @@
 import * as z from "zod"
 import * as imports from "../null"
-import { CompletePractice, RelatedPracticeModel } from "./index"
+import { CompletePractice, RelatedPracticeModel, CompleteQuestionType, RelatedQuestionTypeModel } from "./index"
 
 export const LessonModel = z.object({
   id: z.string(),
@@ -10,6 +10,7 @@ export const LessonModel = z.object({
 
 export interface CompleteLesson extends z.infer<typeof LessonModel> {
   Practice?: CompletePractice | null
+  questionIds: CompleteQuestionType[]
 }
 
 /**
@@ -19,4 +20,5 @@ export interface CompleteLesson extends z.infer<typeof LessonModel> {
  */
 export const RelatedLessonModel: z.ZodSchema<CompleteLesson> = z.lazy(() => LessonModel.extend({
   Practice: RelatedPracticeModel.nullish(),
+  questionIds: RelatedQuestionTypeModel.array(),
 }))

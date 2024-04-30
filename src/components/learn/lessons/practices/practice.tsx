@@ -9,7 +9,6 @@ import { FaTrophy, FaCheck } from "react-icons/fa";
 import { useState } from "react";
 
 type PracticeProps = {
-  practiceIndex: number;
   lastPractice: boolean;
   isNext: boolean;
   isCompleted: boolean;
@@ -19,7 +18,6 @@ type PracticeProps = {
 
 export function Practice({
   lastPractice,
-  practiceIndex,
   isNext,
   isCompleted,
   title,
@@ -70,7 +68,7 @@ export function Practice({
           />
         )}
       </Button>
-      {practiceIndex === 0 && (
+      {
         <Card
           className={cn(
             "start-dialog absolute left-1/2 top-[4.2rem] z-10 flex  h-fit w-72 -translate-x-1/2 flex-col justify-between gap-4 rounded-3xl p-4 transition-opacity",
@@ -85,7 +83,7 @@ export function Practice({
           </div>
           <Button>Start +{nextLesson?.xp}XP</Button>
         </Card>
-      )}
+      }
     </Card>
   );
 }

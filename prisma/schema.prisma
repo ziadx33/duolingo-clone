@@ -126,4 +126,56 @@ model Lesson {
     xp         Int
     Practice   Practice? @relation(fields: [practiceId], references: [id])
     practiceId String?
+
+    questionIds QuestionType[]
+}
+
+enum QUESTIONTYPE {
+    LISTENING
+    SELECT_CORRECT_VOICE
+    WRITE
+}
+
+model QuestionType {
+    id       String  @id @default(uuid())
+    Lesson   Lesson? @relation(fields: [lessonId], references: [id])
+    lessonId String?
+
+    type QUESTIONTYPE
+
+    listeningQuestion ListeningQuestion? @relation(fields: [listeningId], references: [id])
+    listeningId       String?
+
+    SelectCorrectVoiceQuestion SelectCorrectVoiceQuestion? @relation(fields: [selectCorrectVoiceId], references: [id])
+    selectCorrectVoiceId       String?
+
+    WriteQuestion WriteQuestion? @relation(fields: [writeId], references: [id])
+    writeId       String?
+}
+
+model ListeningQuestion {
+    id        String         @id @default(uuid())
+    questions QuestionType[]
+}
+
+model SelectCorrectVoiceQuestion {
+    id        String         @id @default(uuid())
+    questions QuestionType[]
+}
+
+model WriteQuestion {
+    id        String         @id @default(uuid())
+    questions QuestionType[]
+
+    suggestedSentences String[]
+    correctSentence    WriteQuestionAnswer @relation(fields: [writeQuestionAnswerId], references: [id])
+
+    writeQuestionAnswerId String
+}
+
+model WriteQuestionAnswer {
+    id              String          @id @default(uuid())
+    WriteQuestion   WriteQuestion[]
+    correctSentence String[]
+    helpers         String[]
 }

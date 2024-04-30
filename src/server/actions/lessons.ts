@@ -38,3 +38,19 @@ export const getLessonsByPracticeIds = unstable_cache(
     }
   }),
 );
+
+export const getLessonById = unstable_cache(
+  cache(async (id: string) => {
+    try {
+      const lesson = await prisma.lesson.findUnique({
+        where: {
+          id,
+        },
+      });
+      return lesson;
+    } catch (err) {
+      throw err;
+    }
+  }),
+  ["lesson", "id"],
+);
