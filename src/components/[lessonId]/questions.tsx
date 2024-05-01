@@ -6,9 +6,10 @@ import { useRef, useState } from "react";
 
 type QuestionsProps = {
   questionTypes: QuestionType[];
+  lessonId: string;
 };
 
-export function Questions({ questionTypes }: QuestionsProps) {
+export function Questions({ questionTypes, lessonId }: QuestionsProps) {
   const playedQuestionsIds = useRef<QuestionType["id"][]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<QuestionType>(
     questionTypes[
@@ -24,6 +25,7 @@ export function Questions({ questionTypes }: QuestionsProps) {
   return (
     <main className="h-screen w-full pt-14">
       <CurrentQuestion
+        lessonId={lessonId}
         setCurrentQuestion={setCurrentQuestion}
         playedQuestionsIds={playedQuestionsIds}
         questionTypes={questionTypes}

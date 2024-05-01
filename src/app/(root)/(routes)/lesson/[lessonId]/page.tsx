@@ -10,5 +10,5 @@ export default async function Page({
     (await api.questionTypes.getQuestionTypesByLessonId({
       lessonId,
     })) ?? [];
-  return <Questions questionTypes={questionTypes} />;
+  return <Questions lessonId={lessonId} questionTypes={questionTypes} />;
 }

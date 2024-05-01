@@ -8,11 +8,13 @@ import Image from "next/image";
 type ProgressBarProps = {
   currentQuestion: QuestionType;
   questionTypes: QuestionType[];
+  isDone: boolean;
 };
 
 export function ProgressBar({
   questionTypes,
   currentQuestion,
+  isDone,
 }: ProgressBarProps) {
   const { data: userData } = useSession();
   const progress = useCallback(() => {
@@ -25,7 +27,7 @@ export function ProgressBar({
       <button>
         <IoMdClose size={25} />
       </button>
-      <Progress value={progress()} className="mb-0.5" />
+      <Progress value={!isDone ? progress() : 100} className="mb-0.5" />
       <div className="flex items-center gap-1 text-red-500">
         <Image
           src="/images/icons/heart.svg"

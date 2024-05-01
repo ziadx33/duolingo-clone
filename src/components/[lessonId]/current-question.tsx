@@ -18,12 +18,14 @@ import {
 import { FaCheck, FaFlag } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { IoMdClose } from "react-icons/io";
+import { Congrats } from "./congrats";
 
 type CurrentQuestionProps = {
   currentQuestion: QuestionType;
   questionTypes: QuestionType[];
   playedQuestionsIds: MutableRefObject<QuestionType["id"][]>;
   setCurrentQuestion?: Dispatch<SetStateAction<QuestionType>>;
+  lessonId: string;
 };
 
 export function CurrentQuestion({
@@ -31,6 +33,7 @@ export function CurrentQuestion({
   questionTypes,
   playedQuestionsIds,
   setCurrentQuestion,
+  lessonId,
 }: CurrentQuestionProps) {
   const { data, isLoading: isQuestionLoading } =
     api.questionTypes.getQuestionByQuestionType.useQuery({
@@ -39,6 +42,7 @@ export function CurrentQuestion({
   const [isCorrect, setIsCorrect] = useState(false);
   const [isButtonShow, setIsButtonShow] = useState(true);
   const [goNext, setGoNext] = useState(false);
+  const [done, setDone] = useState(true);
   const [correctSolution, setCorrectSolution] = useState<null | string>(null);
   const resetFn = useRef<(() => void) | null>(null);
   const correctSound = new Audio(
@@ -61,43 +65,54 @@ export function CurrentQuestion({
     const filteredQuestionTypes = questionTypes.filter(
       (questionType) => !newPlayedQuestions.includes(questionType.id),
     );
-    setCurrentQuestion?.(
+    const nextQuestion =
       filteredQuestionTypes[
         Math.floor(Math.random() * filteredQuestionTypes.length)
-      ]!,
-    );
+      ];
+    if (!nextQuestion) return setDone(true);
+    setCurrentQuestion?.(nextQuestion);
   };
   return (
     <>
       <div className="relative h-[85%] w-full">
-        <div className="container flex h-full flex-col items-center gap-20">
+        <div
+          className={cn(
+            "container flex h-full flex-col items-center",
+            done ? "gap-0" : "gap-20",
+          )}
+        >
           <ProgressBar
+            isDone={done}
             currentQuestion={currentQuestion}
             questionTypes={questionTypes}
           />
-          {!isQuestionLoading ? (
-            currentQuestion.type === "WRITE" && (
-              <WriteQuestion
-                getInfo={(correct, buttonShow, correctSolution, reset) => {
-                  console.log(correct);
-                  setIsCorrect(correct);
-                  setIsButtonShow(buttonShow);
-                  setCorrectSolution(correctSolution);
-                  resetFn.current = reset;
-                }}
-                {...(data as WriteQuestionType)}
-              />
+          {!done ? (
+            !isQuestionLoading ? (
+              currentQuestion.type === "WRITE" && (
+                <WriteQuestion
+                  getInfo={(correct, buttonShow, correctSolution, reset) => {
+                    console.log(correct);
+                    setIsCorrect(correct);
+                    setIsButtonShow(buttonShow);
+                    setCorrectSolution(correctSolution);
+                    resetFn.current = reset;
+                  }}
+                  {...(data as WriteQuestionType)}
+                />
+              )
+            ) : (
+              <div className="mb-56 grid h-full w-[50rem] place-items-center">
+                <RotatingLines
+                  strokeColor="grey"
+                  strokeWidth="5"
+                  animationDuration="0.75"
+                  width="70"
+                  visible={true}
+                />
+              </div>
             )
           ) : (
-            <div className="mb-56 grid h-full w-[50rem] place-items-center">
-              <RotatingLines
-                strokeColor="grey"
-                strokeWidth="5"
-                animationDuration="0.75"
-                width="70"
-                visible={true}
-              />
-            </div>
+            <Congrats lessonId={lessonId} />
           )}
         </div>
       </div>
