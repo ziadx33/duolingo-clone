@@ -6,10 +6,20 @@ import {
 } from "@prisma/client";
 import { useMemo, useState } from "react";
 
+type WriteQuestionProps = {
+  getInfo(
+    correct: boolean,
+    buttonShow: boolean,
+    correctSolution: string | null,
+    reset: (() => void) | null,
+  ): void;
+} & WriteQuestionType;
+
 export function WriteQuestion({
   writeQuestionAnswerId,
   suggestedSentences,
-}: WriteQuestion) {
+  getInfo,
+}: WriteQuestionProps) {
   const { data: correctSentenceData } =
     api.writeQuestions.getWriteQuestionAnswer.useQuery({
       writeQuestionAnswerId: writeQuestionAnswerId,
@@ -21,6 +31,12 @@ export function WriteQuestion({
   const [selectedWords, setSelectedWords] = useState<
     WriteQuestionType["suggestedSentences"]
   >([]);
+
+  const reset = () => {
+    setSelectedWords([]);
+    getInfo(false, true, null, null);
+  };
+
   return (
     <div className="flex h-full w-[35rem] flex-col pt-24">
       <h1 className="text-3xl font-bold">Write this in english</h1>
@@ -48,9 +64,20 @@ export function WriteQuestion({
       <div className="mb-12 flex h-16 w-full items-center justify-center gap-1 border-y-2">
         {selectedWords.map((word) => (
           <span
-            onClick={() =>
-              setSelectedWords(selectedWords.filter((w) => w !== word))
-            }
+            onClick={() => {
+              const isCorrect =
+                selectedWords.join(" ") ===
+                correctSentenceData?.helpers.join(" ");
+              setSelectedWords(selectedWords.filter((w) => w !== word));
+              getInfo(
+                isCorrect,
+                selectedWords.length > 0,
+                !isCorrect
+                  ? correctSentenceData?.helpers.join(" ") ?? null
+                  : null,
+                reset,
+              );
+            }}
             className="cursor-pointer rounded-lg border-2 px-6 py-1 text-base transition hover:bg-secondary"
             key={JSON.stringify({ id: crypto.randomUUID() })}
           >
@@ -65,7 +92,20 @@ export function WriteQuestion({
           )
           .map((sentence) => (
             <span
-              onClick={() => setSelectedWords([...selectedWords, sentence])}
+              onClick={() => {
+                const isCorrect =
+                  [...selectedWords, sentence].join(" ") ===
+                  correctSentenceData?.helpers.join(" ");
+                setSelectedWords([...selectedWords, sentence]);
+                getInfo(
+                  isCorrect,
+                  selectedWords.length > 0,
+                  !isCorrect
+                    ? correctSentenceData?.helpers.join(" ") ?? null
+                    : null,
+                  reset,
+                );
+              }}
               className="cursor-pointer rounded-lg border-2 px-6 py-1 text-base transition hover:bg-secondary"
               key={JSON.stringify({ id: crypto.randomUUID() })}
             >
