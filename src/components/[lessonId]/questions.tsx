@@ -2,20 +2,21 @@
 
 import { type QuestionType } from "@prisma/client";
 import { CurrentQuestion } from "./current-question";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type QuestionsProps = {
   questionTypes: QuestionType[];
 };
 
 export function Questions({ questionTypes }: QuestionsProps) {
-  const playedQuestionsIds: QuestionType["id"][] = [];
+  const playedQuestionsIds = useRef<QuestionType["id"][]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<QuestionType>(
     questionTypes[
       Math.floor(
         Math.random() *
           questionTypes.filter(
-            (questionType) => !playedQuestionsIds.includes(questionType.id),
+            (questionType) =>
+              !playedQuestionsIds.current.includes(questionType.id),
           ).length,
       )
     ]!,
@@ -23,6 +24,8 @@ export function Questions({ questionTypes }: QuestionsProps) {
   return (
     <main className="h-screen w-full pt-14">
       <CurrentQuestion
+        setCurrentQuestion={setCurrentQuestion}
+        playedQuestionsIds={playedQuestionsIds}
         questionTypes={questionTypes}
         currentQuestion={currentQuestion}
       />

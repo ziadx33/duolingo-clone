@@ -7,7 +7,14 @@ import { Button } from "../ui/button";
 import { api } from "@/trpc/react";
 import { WriteQuestion } from "./question-types/write-question";
 import { RotatingLines } from "react-loader-spinner";
-import { useEffect, useRef, useState } from "react";
+import {
+  type Dispatch,
+  type MutableRefObject,
+  type SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FaCheck, FaFlag } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { IoMdClose } from "react-icons/io";
@@ -15,11 +22,15 @@ import { IoMdClose } from "react-icons/io";
 type CurrentQuestionProps = {
   currentQuestion: QuestionType;
   questionTypes: QuestionType[];
+  playedQuestionsIds: MutableRefObject<QuestionType["id"][]>;
+  setCurrentQuestion?: Dispatch<SetStateAction<QuestionType>>;
 };
 
 export function CurrentQuestion({
   currentQuestion,
   questionTypes,
+  playedQuestionsIds,
+  setCurrentQuestion,
 }: CurrentQuestionProps) {
   const { data, isLoading: isQuestionLoading } =
     api.questionTypes.getQuestionByQuestionType.useQuery({
@@ -40,6 +51,22 @@ export function CurrentQuestion({
   useEffect(() => {
     document.body.style.overflow = "hidden";
   }, []);
+
+  const goNextQuestion = () => {
+    const newPlayedQuestions = [
+      ...playedQuestionsIds.current,
+      currentQuestion.id,
+    ];
+    playedQuestionsIds.current = newPlayedQuestions;
+    const filteredQuestionTypes = questionTypes.filter(
+      (questionType) => !newPlayedQuestions.includes(questionType.id),
+    );
+    setCurrentQuestion?.(
+      filteredQuestionTypes[
+        Math.floor(Math.random() * filteredQuestionTypes.length)
+      ]!,
+    );
+  };
   return (
     <>
       <div className="relative h-[85%] w-full">
@@ -76,7 +103,9 @@ export function CurrentQuestion({
       </div>
       <div className="h-[15%] w-full border-t-2  pb-2">
         <div className="container flex h-full items-center justify-between px-96">
-          <Button variant="outline">Skip</Button>
+          <Button variant="outline" onClick={goNextQuestion}>
+            Skip
+          </Button>
           <Button
             onClick={async () => {
               setGoNext(true);
@@ -126,7 +155,9 @@ export function CurrentQuestion({
                 if (!isCorrect) {
                   resetFn.current?.();
                   setGoNext(false);
+                  return;
                 }
+                goNextQuestion();
               }}
               className="mt-6"
             >
