@@ -7,6 +7,7 @@ import { type User, type Lesson, type Practice } from "@prisma/client";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import { FaTrophy, FaCheck } from "react-icons/fa";
 import { useState } from "react";
+import Link from "next/link";
 
 type PracticeProps = {
   lastPractice: boolean;
@@ -81,7 +82,11 @@ export function Practice({
               Lesson {lessons.indexOf(nextLesson!) + 1} of {lessons.length}
             </p>
           </div>
-          <Button>Start +{nextLesson?.xp}XP</Button>
+          <Button asChild>
+            <Link href={`/lesson/${nextLesson?.id}`}>
+              Start +{nextLesson?.xp}XP
+            </Link>
+          </Button>
         </Card>
       }
     </Card>

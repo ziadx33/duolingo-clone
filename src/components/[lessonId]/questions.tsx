@@ -9,8 +9,16 @@ type QuestionsProps = {
 };
 
 export function Questions({ questionTypes }: QuestionsProps) {
+  const playedQuestionsIds: QuestionType["id"][] = [];
   const [currentQuestion, setCurrentQuestion] = useState<QuestionType>(
-    questionTypes[0] as QuestionType,
+    questionTypes[
+      Math.floor(
+        Math.random() *
+          questionTypes.filter(
+            (questionType) => !playedQuestionsIds.includes(questionType.id),
+          ).length,
+      )
+    ]!,
   );
   return (
     <main className="h-screen w-full pt-14">

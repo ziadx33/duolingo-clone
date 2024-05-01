@@ -108,7 +108,7 @@ model Subject {
 model Unit {
     id          String     @id @default(uuid())
     description String
-    Subject     Subject?   @relation(fields: [subjectId], references: [id])
+    Subject     Subject?   @relation(fields: [subjectId], references: [id], onDelete: Cascade)
     subjectId   String?
     practices   Practice[]
 }
@@ -116,7 +116,7 @@ model Unit {
 model Practice {
     id      String   @id @default(uuid())
     title   String
-    Unit    Unit?    @relation(fields: [unitId], references: [id])
+    Unit    Unit?    @relation(fields: [unitId], references: [id], onDelete: Cascade)
     unitId  String?
     lessons Lesson[]
 }
@@ -124,7 +124,7 @@ model Practice {
 model Lesson {
     id         String    @id @default(uuid())
     xp         Int
-    Practice   Practice? @relation(fields: [practiceId], references: [id])
+    Practice   Practice? @relation(fields: [practiceId], references: [id], onDelete: Cascade)
     practiceId String?
 
     questions QuestionType[]
@@ -138,18 +138,18 @@ enum QUESTIONTYPE {
 
 model QuestionType {
     id       String  @id @default(uuid())
-    Lesson   Lesson? @relation(fields: [lessonId], references: [id])
+    Lesson   Lesson? @relation(fields: [lessonId], references: [id], onDelete: Cascade)
     lessonId String?
 
     type QUESTIONTYPE
 
-    listeningQuestion ListeningQuestion? @relation(fields: [listeningId], references: [id])
+    listeningQuestion ListeningQuestion? @relation(fields: [listeningId], references: [id], onDelete: Cascade)
     listeningId       String?
 
-    SelectCorrectVoiceQuestion SelectCorrectVoiceQuestion? @relation(fields: [selectCorrectVoiceId], references: [id])
+    SelectCorrectVoiceQuestion SelectCorrectVoiceQuestion? @relation(fields: [selectCorrectVoiceId], references: [id], onDelete: Cascade)
     selectCorrectVoiceId       String?
 
-    WriteQuestion WriteQuestion? @relation(fields: [writeId], references: [id])
+    WriteQuestion WriteQuestion? @relation(fields: [writeId], references: [id], onDelete: Cascade)
     writeId       String?
 }
 
@@ -168,7 +168,7 @@ model WriteQuestion {
     questions QuestionType[]
 
     suggestedSentences String[]
-    correctSentence    WriteQuestionAnswer @relation(fields: [writeQuestionAnswerId], references: [id])
+    correctSentence    WriteQuestionAnswer @relation(fields: [writeQuestionAnswerId], references: [id], onDelete: Cascade)
 
     writeQuestionAnswerId String
 }
