@@ -21,7 +21,7 @@ export function Congrats({ lessonId }: { lessonId: string }) {
     );
   }
   return (
-    <div className="-mt-24 flex h-full w-full flex-col items-center gap-2">
+    <div className="-mt-24 flex h-full w-full flex-col items-center gap-4">
       <Image
         src="/images/questions/congrats.svg"
         width={500}
@@ -30,8 +30,8 @@ export function Congrats({ lessonId }: { lessonId: string }) {
         draggable={false}
       />
       <Card className="pt-2 text-center text-xl">
-        <h3 className="border-b-2 pb-2">Total xp</h3>
-        <div className="flex h-16 w-fit items-center gap-1 px-12 text-lg">
+        <h3 className="border-b pb-2">Total xp</h3>
+        <div className="flex h-16 w-fit items-center gap-2 px-12 text-lg">
           <Image
             src="https://d35aaqx5ub95lt.cloudfront.net/images/icons/f5358b2d4087a109790fc809eedc08c5.svg"
             width={20}
