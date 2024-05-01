@@ -108,24 +108,24 @@ model Subject {
 model Unit {
     id          String     @id @default(uuid())
     description String
-    Subject     Subject?   @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-    subjectId   String?
+    Subject     Subject    @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+    subjectId   String
     practices   Practice[]
 }
 
 model Practice {
     id      String   @id @default(uuid())
     title   String
-    Unit    Unit?    @relation(fields: [unitId], references: [id], onDelete: Cascade)
-    unitId  String?
+    Unit    Unit     @relation(fields: [unitId], references: [id], onDelete: Cascade)
+    unitId  String
     lessons Lesson[]
 }
 
 model Lesson {
-    id         String    @id @default(uuid())
+    id         String   @id @default(uuid())
     xp         Int
-    Practice   Practice? @relation(fields: [practiceId], references: [id], onDelete: Cascade)
-    practiceId String?
+    Practice   Practice @relation(fields: [practiceId], references: [id], onDelete: Cascade)
+    practiceId String
 
     questions QuestionType[]
 }
