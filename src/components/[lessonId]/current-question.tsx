@@ -6,6 +6,7 @@ import { ProgressBar } from "./progress-bar";
 import { Button } from "../ui/button";
 import { api } from "@/trpc/react";
 import { WriteQuestion } from "./question-types/write-question";
+import { RotatingLines } from "react-loader-spinner";
 
 type CurrentQuestionProps = {
   currentQuestion: QuestionType;
@@ -16,11 +17,11 @@ export function CurrentQuestion({
   currentQuestion,
   questionTypes,
 }: CurrentQuestionProps) {
-  const { data, isLoading } =
+  const { data, isLoading: isQuestionLoading } =
     api.questionTypes.getQuestionByQuestionType.useQuery({
       questionType: currentQuestion,
     });
-  if (isLoading) return <div>Loading</div>;
+
   console.log(data);
   return (
     <>
@@ -30,8 +31,20 @@ export function CurrentQuestion({
             currentQuestion={currentQuestion}
             questionTypes={questionTypes}
           />
-          {currentQuestion.type === "WRITE" && (
-            <WriteQuestion {...(data as WriteQuestionType)} />
+          {!isQuestionLoading ? (
+            currentQuestion.type === "WRITE" && (
+              <WriteQuestion {...(data as WriteQuestionType)} />
+            )
+          ) : (
+            <div className="mb-56 grid h-full w-[50rem] place-items-center">
+              <RotatingLines
+                strokeColor="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="70"
+                visible={true}
+              />
+            </div>
           )}
         </div>
       </div>
