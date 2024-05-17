@@ -28,19 +28,19 @@ export function Practice({
   const [dialogOpen, setDialogOpen] = useState(false);
   const nextLesson = lessons.find((lesson, lessonIndex) => {
     console.log("lesson", lesson);
-    return (
-      userData.completedLessonIds.includes(lesson.id) ||
-      (!!lessons[lessonIndex + 1] &&
-        !userData.completedLessonIds.includes(lessons[lessonIndex + 1]!.id))
-    );
+    console.log(!!lessons[lessonIndex + 1]);
+    return !!lessons[lessonIndex + 1]
+      ? !userData.completedLessonIds.includes(lessons[lessonIndex]!.id)
+      : true;
   });
   console.log("next lesson", nextLesson);
-  console.log(lessons);
+  console.log(userData.completedLessonIds);
+  console.log("lessons", lessons);
   return (
     <Card className="relative grid h-24 w-24 place-items-center rounded-[50%] border-[0.5rem]">
       <Button
         onClick={() => setDialogOpen((v) => !v)}
-        disabled={!isCompleted && !isNext}
+        disabled={!!isCompleted}
         variant="ghost"
         className="h-[85%] w-[85%] rounded-[50%] disabled:opacity-100"
       >
@@ -61,12 +61,7 @@ export function Practice({
             />
           )
         ) : (
-          <FaCheck
-            className={cn(
-              "scale-[2]",
-              isNext ? "fill-foreground" : "fill-muted",
-            )}
-          />
+          <FaCheck className="scale-[2] fill-muted" />
         )}
       </Button>
       {
