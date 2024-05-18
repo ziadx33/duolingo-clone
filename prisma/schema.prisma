@@ -131,8 +131,8 @@ model Lesson {
 }
 
 enum QUESTIONTYPE {
-    LISTENING
-    SELECT_CORRECT_VOICE
+    HEARING
+    CHOOSE
     WRITE
 }
 
@@ -143,22 +143,26 @@ model QuestionType {
 
     type QUESTIONTYPE
 
-    listeningQuestion ListeningQuestion? @relation(fields: [listeningId], references: [id], onDelete: Cascade)
-    listeningId       String?
+    hearingQuestion HearingQuestion? @relation(fields: [hearingId], references: [id], onDelete: Cascade)
+    hearingId       String?
 
-    SelectCorrectVoiceQuestion SelectCorrectVoiceQuestion? @relation(fields: [selectCorrectVoiceId], references: [id], onDelete: Cascade)
-    selectCorrectVoiceId       String?
+    choosingQuestion ChoosingQuestion? @relation(fields: [choosingId], references: [id], onDelete: Cascade)
+    choosingId       String?
 
     WriteQuestion WriteQuestion? @relation(fields: [writeId], references: [id], onDelete: Cascade)
     writeId       String?
 }
 
-model ListeningQuestion {
+model HearingQuestion {
     id        String         @id @default(uuid())
     questions QuestionType[]
+
+    sentenceSrc        String
+    suggestedSentences String[]
+    correctSentence    String
 }
 
-model SelectCorrectVoiceQuestion {
+model ChoosingQuestion {
     id        String         @id @default(uuid())
     questions QuestionType[]
 }
