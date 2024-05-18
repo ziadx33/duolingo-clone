@@ -32,6 +32,7 @@ export function CurrentQuestion({
     api.questionTypes.getQuestionByQuestionType.useQuery({
       questionType: currentQuestion,
     });
+  console.log("question data rn or hating", data);
   const [isCorrect, setIsCorrect] = useState(false);
   const [isButtonShow, setIsButtonShow] = useState(true);
 
@@ -53,6 +54,7 @@ export function CurrentQuestion({
           )}
         >
           <ProgressBar
+            completedQuestions={playedQuestionsIds.current.length}
             isDone={done}
             currentQuestion={currentQuestion}
             questionTypes={questionTypes}

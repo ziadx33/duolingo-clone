@@ -1,19 +1,12 @@
 import { Card } from "@/components/ui/card";
 import { api } from "@/trpc/react";
-import {
-  type WriteQuestion,
-  type WriteQuestion as WriteQuestionType,
-} from "@prisma/client";
+import { type WriteQuestion as WriteQuestionType } from "@prisma/client";
 import { useEffect, useMemo, useState } from "react";
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
+import { type getInfoFnType } from "../question-section";
 
 type WriteQuestionProps = {
-  getInfo(
-    correct: boolean,
-    buttonShow: boolean,
-    correctSolution: string | null,
-    reset: (() => void) | null,
-  ): void;
+  getInfo: getInfoFnType;
 } & WriteQuestionType;
 
 export function WriteQuestion({

@@ -9,19 +9,18 @@ type ProgressBarProps = {
   currentQuestion: QuestionType;
   questionTypes: QuestionType[];
   isDone: boolean;
+  completedQuestions: number;
 };
 
 export function ProgressBar({
   questionTypes,
-  currentQuestion,
   isDone,
+  completedQuestions,
 }: ProgressBarProps) {
   const { data: userData } = useSession();
   const progress = useCallback(() => {
-    return (
-      (questionTypes.indexOf(currentQuestion) / questionTypes.length) * 100
-    );
-  }, [currentQuestion, questionTypes]);
+    return (completedQuestions / questionTypes.length) * 100;
+  }, [completedQuestions, questionTypes.length]);
   return (
     <div className="flex h-1 w-full items-center gap-2">
       <button>

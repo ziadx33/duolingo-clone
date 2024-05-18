@@ -67,6 +67,7 @@ export function NextQuestionCard({
               return;
             }
             if (isDone) return router.push("/learn");
+            setGoNext(false);
             goNextQuestion();
           }}
           className="mt-6"

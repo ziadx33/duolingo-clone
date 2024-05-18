@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 import { RotatingLines } from "react-loader-spinner";
 import { Congrats } from "./congrats";
 import {
-  type ListeningQuestion,
-  type SelectCorrectVoiceQuestion,
+  type HearingQuestion,
+  type ChoosingQuestion,
   type QuestionType,
   type WriteQuestion as WriteQuestionType,
 } from "@prisma/client";
@@ -12,11 +13,12 @@ import {
   type MutableRefObject,
   type SetStateAction,
 } from "react";
+import { HearQuestion } from "./question-types/hear-question";
 
 type QuestionDataType =
   | WriteQuestionType
-  | ListeningQuestion
-  | SelectCorrectVoiceQuestion
+  | HearingQuestion
+  | ChoosingQuestion
   | null
   | undefined;
 
@@ -32,6 +34,13 @@ type QuestionSectionProps = {
   resetFn: MutableRefObject<(() => void) | null>;
 };
 
+export type getInfoFnType = (
+  correct: boolean,
+  buttonShow: boolean,
+  correctSolution: string | null,
+  reset: (() => void) | null,
+) => void;
+
 export function QuestionSection({
   done,
   isQuestionLoading,
@@ -43,18 +52,30 @@ export function QuestionSection({
   setCorrectSolution,
   resetFn,
 }: QuestionSectionProps) {
+  const getInfoFn: getInfoFnType = (
+    correct,
+    buttonShow,
+    correctSolution,
+    reset,
+  ) => {
+    console.log(correct);
+    setIsCorrect(correct);
+    setIsButtonShow(buttonShow);
+    setCorrectSolution(correctSolution);
+    resetFn.current = reset;
+  };
+  console.log("question data", questionData);
   return !done ? (
     !isQuestionLoading ? (
-      currentQuestion.type === "WRITE" && (
+      currentQuestion.type === "WRITE" ? (
         <WriteQuestion
-          getInfo={(correct, buttonShow, correctSolution, reset) => {
-            console.log(correct);
-            setIsCorrect(correct);
-            setIsButtonShow(buttonShow);
-            setCorrectSolution(correctSolution);
-            resetFn.current = reset;
-          }}
+          getInfo={getInfoFn}
           {...(questionData as WriteQuestionType)}
+        />
+      ) : (
+        <HearQuestion
+          getInfo={getInfoFn}
+          {...(questionData as HearingQuestion)}
         />
       )
     ) : (
