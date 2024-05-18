@@ -5,11 +5,11 @@ import { CompletePractice, RelatedPracticeModel, CompleteQuestionType, RelatedQu
 export const LessonModel = z.object({
   id: z.string(),
   xp: z.number().int(),
-  practiceId: z.string().nullish(),
+  practiceId: z.string(),
 })
 
 export interface CompleteLesson extends z.infer<typeof LessonModel> {
-  Practice?: CompletePractice | null
+  Practice: CompletePractice
   questions: CompleteQuestionType[]
 }
 
@@ -19,6 +19,6 @@ export interface CompleteLesson extends z.infer<typeof LessonModel> {
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const RelatedLessonModel: z.ZodSchema<CompleteLesson> = z.lazy(() => LessonModel.extend({
-  Practice: RelatedPracticeModel.nullish(),
+  Practice: RelatedPracticeModel,
   questions: RelatedQuestionTypeModel.array(),
 }))

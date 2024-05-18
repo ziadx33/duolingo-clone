@@ -167,8 +167,9 @@ model WriteQuestion {
     id        String         @id @default(uuid())
     questions QuestionType[]
 
-    suggestedSentences String[]
-    correctSentence    WriteQuestionAnswer @relation(fields: [writeQuestionAnswerId], references: [id], onDelete: Cascade)
+    suggestedSentences   String[]
+    correctSentence      WriteQuestionAnswer @relation(fields: [writeQuestionAnswerId], references: [id], onDelete: Cascade)
+    correctSentenceVoice String?
 
     writeQuestionAnswerId String
 }

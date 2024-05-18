@@ -5,6 +5,7 @@ import { CompleteQuestionType, RelatedQuestionTypeModel, CompleteWriteQuestionAn
 export const WriteQuestionModel = z.object({
   id: z.string(),
   suggestedSentences: z.string().array(),
+  correctSentenceVoice: z.string().nullish(),
   writeQuestionAnswerId: z.string(),
 })
 
