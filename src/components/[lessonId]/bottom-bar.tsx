@@ -17,6 +17,7 @@ export function BottomBar({
   isCorrect,
   isButtonShow,
 }: BottomBar) {
+  console.log("show", isButtonShow);
   const correctSound = new Audio(
     "https://d35aaqx5ub95lt.cloudfront.net/sounds/37d8f0b39dcfe63872192c89653a93f6.mp3",
   );
@@ -40,7 +41,7 @@ export function BottomBar({
           correctSound.volume = 0.5;
           await correctSound.play();
         }}
-        disabled={isButtonShow && !done}
+        disabled={!isButtonShow}
         className={cn(done && "w-full")}
       >
         {!done ? "check" : "continue"}
