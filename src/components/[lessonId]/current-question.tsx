@@ -35,7 +35,7 @@ export function CurrentQuestion({
   const [isCorrect, setIsCorrect] = useState(false);
   const [isButtonShow, setIsButtonShow] = useState(true);
 
-  const [done, setDone] = useState(true);
+  const [done, setDone] = useState(false);
   const [correctSolution, setCorrectSolution] = useState<null | string>(null);
   const resetFn = useRef<(() => void) | null>(null);
 

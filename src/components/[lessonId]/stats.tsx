@@ -62,6 +62,7 @@ export function Stats({
         isButtonShow={isButtonShow}
       />
       <NextQuestionCard
+        isDone={done}
         goNext={goNext}
         isCorrect={isCorrect}
         correctSolution={correctSolution}

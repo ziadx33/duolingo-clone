@@ -2,11 +2,42 @@ import Image from "next/image";
 import { Card } from "../ui/card";
 import { api } from "@/trpc/react";
 import { RotatingLines } from "react-loader-spinner";
+import { useSession } from "@/hooks/use-session";
+import { useEffect } from "react";
 
 export function Congrats({ lessonId }: { lessonId: string }) {
-  const { data, isLoading } = api.lessons.getLessonById.useQuery({
+  const { data: lessonData, isLoading } = api.lessons.getLessonById.useQuery({
     id: lessonId,
   });
+  const { update, data: userData } = useSession();
+  const { mutateAsync: editUserFn } = api.auth.user.update.useMutation();
+  useEffect(() => {
+    void (async () => {
+      if (!userData?.user || !lessonData) return;
+      const newTotalXp = userData?.user?.totalXp + lessonData?.xp ?? 0;
+      const newCompletedLessonIds = [
+        ...userData?.user.completedLessonIds,
+        lessonId,
+      ];
+      const newCompletedPracticeIds = [...userData?.user.completedPracticeIds];
+      if (newCompletedLessonIds.length === 3)
+        newCompletedLessonIds.push(lessonData.practiceId);
+
+      const updatedData = {
+        totalXp: newTotalXp,
+        completedLessonIds: newCompletedLessonIds,
+        completedPracticeIds: newCompletedPracticeIds,
+      };
+      await update(updatedData);
+      await editUserFn({
+        data: updatedData,
+        id: userData?.user.id,
+      });
+      console.log("done");
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lessonData]);
+
   if (isLoading) {
     return (
       <div className="mb-56 grid h-full w-[50rem] place-items-center">
@@ -38,7 +69,7 @@ export function Congrats({ lessonId }: { lessonId: string }) {
             height={20}
             alt="xp"
           />
-          {data?.xp}
+          {lessonData?.xp}
         </div>
       </Card>
     </div>
