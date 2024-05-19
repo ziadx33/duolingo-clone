@@ -27,15 +27,10 @@ export function Practice({
 }: PracticeProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const nextLesson = lessons.find((lesson, lessonIndex) => {
-    console.log("lesson", lesson);
-    console.log(!!lessons[lessonIndex + 1]);
     return !!lessons[lessonIndex + 1]
       ? !userData.completedLessonIds.includes(lessons[lessonIndex]!.id)
       : true;
   });
-  console.log("next lesson", nextLesson);
-  console.log(userData.completedLessonIds);
-  console.log("lessons", lessons);
   return (
     <Card className="relative grid h-24 w-24 place-items-center rounded-[50%] border-[0.5rem]">
       <Button

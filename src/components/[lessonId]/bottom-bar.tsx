@@ -1,6 +1,7 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 type BottomBar = {
   done: boolean;
@@ -18,6 +19,7 @@ export function BottomBar({
   isButtonShow,
 }: BottomBar) {
   console.log("show", isButtonShow);
+  const router = useRouter();
   const correctSound = new Audio(
     "https://d35aaqx5ub95lt.cloudfront.net/sounds/37d8f0b39dcfe63872192c89653a93f6.mp3",
   );
@@ -33,6 +35,7 @@ export function BottomBar({
       )}
       <Button
         onClick={async () => {
+          if (done) return router.push("/learn");
           setGoNext(true);
           if (!isCorrect) {
             incorrectSound.volume = 0.5;
