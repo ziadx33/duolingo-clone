@@ -33,7 +33,6 @@ export function Congrats({ lessonId }: { lessonId: string }) {
         data: updatedData,
         id: userData?.user.id,
       });
-      console.log("done");
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonData]);

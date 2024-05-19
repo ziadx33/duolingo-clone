@@ -83,7 +83,6 @@ export function WriteQuestion({
                 (w) => w !== word,
               );
               setSelectedWords(deletedSentenceSelectedWords);
-              console.log("from selected", deletedSentenceSelectedWords);
               getInfo(
                 isCorrect,
                 deletedSentenceSelectedWords.length > 0,

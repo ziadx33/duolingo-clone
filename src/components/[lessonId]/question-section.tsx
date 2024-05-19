@@ -59,13 +59,11 @@ export function QuestionSection({
     correctSolution,
     reset,
   ) => {
-    console.log(correct);
     setIsCorrect(correct);
     setIsButtonShow(buttonShow);
     setCorrectSolution(correctSolution);
     resetFn.current = reset;
   };
-  console.log("question data", questionData);
   return !done ? (
     !isQuestionLoading ? (
       currentQuestion.type === "WRITE" ? (

@@ -13,7 +13,11 @@ export function Header() {
       <ChooseSubjectSelect {...userData?.user} />
       <StreakButton streak={userData?.user?.streak} />
       <GemButton gem={userData?.user?.gem} />
-      <HeartsButton hearts={userData?.user?.hearts} />
+      <HeartsButton
+        userId={userData?.user?.id}
+        lastHeartIncrement={userData?.user?.lastHeartIncrement}
+        hearts={userData?.user?.hearts}
+      />
     </header>
   );
 }
