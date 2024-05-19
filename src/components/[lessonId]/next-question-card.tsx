@@ -7,7 +7,6 @@ import {
 import { FaCheck, FaFlag } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
 
 type NextQuestionCardProps = {
   goNext: boolean;
@@ -16,7 +15,6 @@ type NextQuestionCardProps = {
   resetFn?: MutableRefObject<(() => void) | null>;
   setGoNext: Dispatch<SetStateAction<boolean>>;
   goNextQuestion: () => void;
-  isDone: boolean;
 };
 
 export function NextQuestionCard({
@@ -26,9 +24,7 @@ export function NextQuestionCard({
   resetFn,
   setGoNext,
   goNextQuestion,
-  isDone,
 }: NextQuestionCardProps) {
-  const router = useRouter();
   return (
     <div>
       <div
@@ -66,7 +62,6 @@ export function NextQuestionCard({
               setGoNext(false);
               return;
             }
-            if (isDone) return router.push("/learn");
             setGoNext(false);
             goNextQuestion();
           }}

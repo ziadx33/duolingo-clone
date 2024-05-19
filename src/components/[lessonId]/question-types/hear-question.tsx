@@ -48,7 +48,6 @@ export function HearQuestion({
                 (w) => w !== word,
               );
               setSelectedWords(deletedSentenceSelectedWords);
-              console.log("from selected", deletedSentenceSelectedWords);
               getInfo(
                 isCorrect,
                 deletedSentenceSelectedWords.length > 0,

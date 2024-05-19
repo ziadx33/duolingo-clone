@@ -28,7 +28,7 @@ export function Practice({
   const [dialogOpen, setDialogOpen] = useState(false);
   const nextLesson = lessons.find((lesson, lessonIndex) => {
     return !!lessons[lessonIndex + 1]
-      ? !userData.completedLessonIds.includes(lessons[lessonIndex]!.id)
+      ? !userData.completedLessonIds.includes(lesson.id)
       : true;
   });
   return (
