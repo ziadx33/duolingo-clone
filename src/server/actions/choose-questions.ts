@@ -1,18 +1,18 @@
 import { unstable_cache } from "next/cache";
 import prisma from "../db/prisma";
 
-export const getHearingQuestionByQuestionTypeId = unstable_cache(
+export const getChoosingQuestionByQuestionTypeId = unstable_cache(
   async (questionTypeId: string) => {
     try {
-      const hearingQuestion = await prisma.questionType
+      const choosingQuestion = await prisma.questionType
         .findUnique({
           where: {
             id: questionTypeId,
           },
         })
-        .hearingQuestion();
+        .choosingQuestion();
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return hearingQuestion;
+      return choosingQuestion;
     } catch (err) {
       throw err;
     }

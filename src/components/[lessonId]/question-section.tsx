@@ -14,6 +14,7 @@ import {
   type SetStateAction,
 } from "react";
 import { HearQuestion } from "./question-types/hear-question";
+import { ChooseQuestion } from "./question-types/choose-question";
 
 type QuestionDataType =
   | WriteQuestionType
@@ -71,6 +72,11 @@ export function QuestionSection({
         <WriteQuestion
           getInfo={getInfoFn}
           {...(questionData as WriteQuestionType)}
+        />
+      ) : currentQuestion.type === "CHOOSE" ? (
+        <ChooseQuestion
+          getInfo={getInfoFn}
+          {...(questionData as ChoosingQuestion)}
         />
       ) : (
         <HearQuestion

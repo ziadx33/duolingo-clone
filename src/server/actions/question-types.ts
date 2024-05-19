@@ -12,7 +12,8 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import prisma from "../db/prisma";
 import { getWriteQuestionByQuestionTypeId } from "./write-questions";
-import { getHearingQuestionByQuestionId } from "./hear-questions";
+import { getHearingQuestionByQuestionTypeId } from "./hear-questions";
+import { getChoosingQuestionByQuestionTypeId } from "./choose-questions";
 
 export const getQuestionTypesByLessonId = unstable_cache(
   cache(async (lessonId: Lesson["id"]) => {
@@ -47,10 +48,16 @@ export const getQuestionByQuestionType = async (
       question = writeQuestion;
     }
     if (questionType.hearingId) {
-      const hearingQuestion = await getHearingQuestionByQuestionId(
+      const hearingQuestion = await getHearingQuestionByQuestionTypeId(
         questionType.id!,
       );
       question = hearingQuestion;
+    }
+    if (questionType.choosingId) {
+      const choosingQuestion = await getChoosingQuestionByQuestionTypeId(
+        questionType.id!,
+      );
+      question = choosingQuestion;
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return questionType.type === "HEARING"
