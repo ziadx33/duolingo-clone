@@ -4,6 +4,9 @@ import { CompleteQuestionType, RelatedQuestionTypeModel } from "./index"
 
 export const ChoosingQuestionModel = z.object({
   id: z.string(),
+  correctSentence: z.string(),
+  suggestedSentences: z.string().array(),
+  suggestedSentencesSrcs: z.string().array(),
 })
 
 export interface CompleteChoosingQuestion extends z.infer<typeof ChoosingQuestionModel> {
