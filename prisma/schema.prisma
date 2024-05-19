@@ -166,10 +166,11 @@ model ChoosingQuestion {
     id        String         @id @default(uuid())
     questions QuestionType[]
 
-    correctSentence        String
-    correctChoosen         String
-    suggestedSentences     String[]
-    suggestedSentencesSrcs String[]
+    correctSentence             String
+    correctChoosen              String
+    suggestedSentences          String[]
+    suggestedSentencesImgSrcs   String[]
+    suggestedSentencesSoundSrcs String[]
 }
 
 model WriteQuestion {
