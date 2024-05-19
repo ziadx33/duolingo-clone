@@ -31,6 +31,7 @@ export function Practice({
       ? !userData.completedLessonIds.includes(lesson.id)
       : true;
   });
+  console.log("user data", userData.hearts);
   return (
     <Card className="relative grid h-24 w-24 place-items-center rounded-[50%] border-[0.5rem]">
       <Button
@@ -72,9 +73,11 @@ export function Practice({
               Lesson {lessons.indexOf(nextLesson!) + 1} of {lessons.length}
             </p>
           </div>
-          <Button asChild>
+          <Button disabled={userData.hearts === 0}>
             <Link href={`/lesson/${nextLesson?.id}`}>
-              Start +{nextLesson?.xp}XP
+              {userData.hearts === 0
+                ? "you have no hearts"
+                : `Start +${nextLesson?.xp}XP`}
             </Link>
           </Button>
         </Card>

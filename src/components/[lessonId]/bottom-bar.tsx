@@ -2,6 +2,7 @@ import { type Dispatch, type SetStateAction } from "react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { useSession } from "@/hooks/use-session";
 
 type BottomBar = {
   done: boolean;
@@ -18,7 +19,7 @@ export function BottomBar({
   isCorrect,
   isButtonShow,
 }: BottomBar) {
-  console.log("show", isButtonShow);
+  const { update: updateUserData, data: userData } = useSession();
   const router = useRouter();
   const correctSound = new Audio(
     "https://d35aaqx5ub95lt.cloudfront.net/sounds/37d8f0b39dcfe63872192c89653a93f6.mp3",
@@ -39,7 +40,13 @@ export function BottomBar({
           setGoNext(true);
           if (!isCorrect) {
             incorrectSound.volume = 0.5;
-            return await incorrectSound.play();
+            void incorrectSound.play();
+            const currentHearts = (userData?.user?.hearts ?? 0) - 1;
+            await updateUserData({
+              hearts: currentHearts,
+            });
+            if (currentHearts === 0) router.push("/learn");
+            return;
           }
           correctSound.volume = 0.5;
           await correctSound.play();
