@@ -17,6 +17,10 @@ const config = {
         protocol: "https",
         hostname: "d2pur3iezf4d1j.cloudfront.net",
       },
+      {
+        protocol: "https",
+        hostname: "d35aaqx5ub95lt.cloudfront.net",
+      },
     ],
   },
 };
