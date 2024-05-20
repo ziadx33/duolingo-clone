@@ -31,7 +31,6 @@ export function Practice({
       ? !userData.completedLessonIds.includes(lesson.id)
       : true;
   });
-  console.log("user data", userData.hearts);
   return (
     <Card className="relative grid h-24 w-24 place-items-center rounded-[50%] border-[0.5rem]">
       <Button

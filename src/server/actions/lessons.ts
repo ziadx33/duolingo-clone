@@ -54,3 +54,19 @@ export const getLessonById = unstable_cache(
   }),
   ["lesson", "id"],
 );
+
+export const getLessonsByLessonId = unstable_cache(
+  cache(async (practiceId: string) => {
+    try {
+      const lessons = await prisma.lesson.findMany({
+        where: {
+          practiceId,
+        },
+      });
+      return lessons;
+    } catch (err) {
+      throw err;
+    }
+  }),
+  ["lessons", "id", "practice-id"],
+);

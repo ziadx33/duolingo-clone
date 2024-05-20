@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/hooks/use-session";
+import { revalidatePath } from "next/cache";
 
 type BottomBar = {
   done: boolean;
@@ -10,6 +11,7 @@ type BottomBar = {
   isCorrect: boolean;
   setGoNext: Dispatch<SetStateAction<boolean>>;
   isButtonShow: boolean;
+  completedDoneReqs: boolean;
 };
 
 export function BottomBar({
@@ -18,6 +20,7 @@ export function BottomBar({
   setGoNext,
   isCorrect,
   isButtonShow,
+  completedDoneReqs,
 }: BottomBar) {
   const { update: updateUserData, data: userData } = useSession();
   const router = useRouter();
@@ -36,7 +39,9 @@ export function BottomBar({
       )}
       <Button
         onClick={async () => {
-          if (done) return router.push("/learn");
+          if (done) {
+            return router.push("/learn");
+          }
           setGoNext(true);
           if (!isCorrect) {
             incorrectSound.volume = 0.5;
@@ -51,7 +56,7 @@ export function BottomBar({
           correctSound.volume = 0.5;
           await correctSound.play();
         }}
-        disabled={!isButtonShow}
+        disabled={!isButtonShow || !completedDoneReqs}
         className={cn(done && "w-full")}
       >
         {!done ? "check" : "continue"}

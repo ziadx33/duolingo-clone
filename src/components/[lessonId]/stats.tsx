@@ -19,6 +19,7 @@ type StatsProps = {
   questionTypes: QuestionType[];
   setCurrentQuestion?: Dispatch<SetStateAction<QuestionType>>;
   setDone?: Dispatch<SetStateAction<boolean>>;
+  completedDoneReqs: boolean;
 };
 
 export function Stats({
@@ -32,6 +33,7 @@ export function Stats({
   questionTypes,
   setCurrentQuestion,
   setDone,
+  completedDoneReqs,
 }: StatsProps) {
   const [goNext, setGoNext] = useState(false);
 
@@ -55,6 +57,7 @@ export function Stats({
   return (
     <>
       <BottomBar
+        completedDoneReqs={completedDoneReqs}
         setGoNext={setGoNext}
         done={done}
         goNextQuestion={goNextQuestion}

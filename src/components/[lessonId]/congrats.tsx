@@ -3,39 +3,56 @@ import { Card } from "../ui/card";
 import { api } from "@/trpc/react";
 import { RotatingLines } from "react-loader-spinner";
 import { useSession } from "@/hooks/use-session";
-import { useEffect } from "react";
+import { type Dispatch, type SetStateAction, useEffect } from "react";
 
-export function Congrats({ lessonId }: { lessonId: string }) {
+type CongratsProps = {
+  lessonId: string;
+  setCompletedDoneReqs: Dispatch<SetStateAction<boolean>>;
+};
+
+export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
   const { data: lessonData, isLoading } = api.lessons.getLessonById.useQuery({
     id: lessonId,
   });
   const { update, data: userData } = useSession();
   const { mutateAsync: editUserFn } = api.auth.user.update.useMutation();
+  const { data: lessons } = api.lessons.getLessonsByLessonId.useQuery({
+    id: lessonId,
+  });
   useEffect(() => {
     void (async () => {
-      if (!userData?.user || !lessonData) return;
+      if (!userData?.user || !lessonData || !lessons) return;
+      setCompletedDoneReqs(false);
       const newTotalXp = userData?.user?.totalXp + lessonData?.xp ?? 0;
       const newCompletedLessonIds = [
-        ...userData?.user.completedLessonIds,
+        ...userData.user?.completedLessonIds,
         lessonId,
       ];
       const newCompletedPracticeIds = [...userData?.user.completedPracticeIds];
-      if (newCompletedLessonIds.length === 3)
-        newCompletedLessonIds.push(lessonData.practiceId);
+      const completedPracticeLessonsLength = lessons
+        .filter((lesson) => newCompletedLessonIds.includes(lesson.id))
+        .map((lesson) => lesson.id).length;
+      console.log("completed:", completedPracticeLessonsLength);
+      console.log("lessons length", lessons.length);
+      if (completedPracticeLessonsLength === lessons.length) {
+        newCompletedPracticeIds.push(lessonData.practiceId);
+      }
 
       const updatedData = {
         totalXp: newTotalXp,
         completedLessonIds: newCompletedLessonIds,
         completedPracticeIds: newCompletedPracticeIds,
       };
+      console.log("uupdated", updatedData);
       await update(updatedData);
       await editUserFn({
         data: updatedData,
         id: userData?.user.id,
       });
+      setCompletedDoneReqs(true);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lessonData]);
+  }, [lessonData, lessons]);
 
   if (isLoading) {
     return (

@@ -33,6 +33,7 @@ type QuestionSectionProps = {
   setIsButtonShow: Dispatch<SetStateAction<boolean>>;
   setCorrectSolution: Dispatch<SetStateAction<string | null>>;
   resetFn: MutableRefObject<(() => void) | null>;
+  setCompletedDoneReqs: Dispatch<SetStateAction<boolean>>;
 };
 
 export type getInfoFnType = (
@@ -52,6 +53,7 @@ export function QuestionSection({
   setIsButtonShow,
   setCorrectSolution,
   resetFn,
+  setCompletedDoneReqs,
 }: QuestionSectionProps) {
   const getInfoFn: getInfoFnType = (
     correct,
@@ -94,6 +96,6 @@ export function QuestionSection({
       </div>
     )
   ) : (
-    <Congrats lessonId={lessonId} />
+    <Congrats setCompletedDoneReqs={setCompletedDoneReqs} lessonId={lessonId} />
   );
 }

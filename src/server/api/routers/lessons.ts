@@ -1,5 +1,6 @@
 import {
   getLessonById,
+  getLessonsByLessonId,
   getLessonsByPracticeIds,
 } from "@/server/actions/lessons";
 import { getPracticesByUnitId } from "@/server/actions/practices";
@@ -39,5 +40,12 @@ export const lessons = createTRPCRouter({
       const { id } = input;
       const lesson = await getLessonById(id);
       return lesson;
+    }),
+  getLessonsByLessonId: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      const { id } = input;
+      const lessons = await getLessonsByLessonId(id);
+      return lessons;
     }),
 });

@@ -38,6 +38,7 @@ export function CurrentQuestion({
   const [done, setDone] = useState(false);
   const [correctSolution, setCorrectSolution] = useState<null | string>(null);
   const resetFn = useRef<(() => void) | null>(null);
+  const [completedDoneReqs, setCompletedDoneReqs] = useState(true);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -59,6 +60,7 @@ export function CurrentQuestion({
             questionTypes={questionTypes}
           />
           <QuestionSection
+            setCompletedDoneReqs={setCompletedDoneReqs}
             done={done}
             currentQuestion={currentQuestion}
             isQuestionLoading={isQuestionLoading}
@@ -73,6 +75,7 @@ export function CurrentQuestion({
       </div>
       <div className="h-[15%] w-full border-t-2  pb-2">
         <Stats
+          completedDoneReqs={completedDoneReqs}
           correctSolution={correctSolution}
           isCorrect={isCorrect}
           isButtonShow={isButtonShow}

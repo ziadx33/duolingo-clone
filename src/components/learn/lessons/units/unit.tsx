@@ -1,8 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { type Unit } from "@prisma/client";
-import { Practice } from "../practices/practice";
 import { api } from "@/trpc/server";
-import { getServerAuthSession } from "@/server/auth";
+import { Practices } from "../practices/practices";
 
 type UnitProps = { unitIndex: number } & Unit;
 
@@ -11,7 +10,6 @@ export async function Unit({ unitIndex, description, id }: UnitProps) {
   const lessons = await api.lessons.getLessonsByPracticeIds({
     practiceIds: practices?.map((practice) => practice.id) ?? [],
   });
-  const { user } = await getServerAuthSession();
   return (
     <div className="flex flex-col gap-10">
       <Card className="flex h-24 w-full items-center justify-between p-4">
@@ -23,27 +21,7 @@ export async function Unit({ unitIndex, description, id }: UnitProps) {
         </div>
       </Card>
       <div className="flex flex-col items-center justify-center gap-6">
-        {practices?.map((practice, practiceIndex) => (
-          <Practice
-            isNext={
-              !(
-                !user?.completedPracticeIds.includes(practice.id) &&
-                practiceIndex > 0 &&
-                !user?.completedPracticeIds.includes(
-                  practices[practiceIndex - 1]!.id,
-                )
-              )
-            }
-            lessons={lessons.filter(
-              (lesson) => lesson.practiceId === practice.id,
-            )}
-            userData={user!}
-            isCompleted={!!user?.completedPracticeIds.includes(practice.id)}
-            lastPractice={practices.length === practiceIndex + 1}
-            key={practice.id}
-            {...practice}
-          />
-        ))}
+        <Practices lessons={lessons} practices={practices} />
       </div>
     </div>
   );
