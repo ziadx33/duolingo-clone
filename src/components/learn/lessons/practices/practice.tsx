@@ -31,6 +31,7 @@ export function Practice({
       ? !userData?.completedLessonIds.includes(lesson.id)
       : true;
   });
+  console.log(nextLesson?.id, dialogOpen);
   return (
     <Card className="relative grid h-24 w-24 place-items-center rounded-[50%] border-[0.5rem]">
       <Button
@@ -58,33 +59,32 @@ export function Practice({
           <FaCheck className="scale-[2] fill-muted" />
         )}
       </Button>
-      {
-        <Card
-          className={cn(
-            "start-dialog absolute left-1/2 top-[4.2rem] z-10 flex  h-fit w-72 -translate-x-1/2 flex-col justify-between gap-4 rounded-3xl p-4 transition-opacity",
-            dialogOpen ? "opacity-100" : "opacity-0",
-          )}
-        >
-          <div>
-            <h4>{title}</h4>
-            <p className="text-muted-foreground">
-              Lesson {lessons.indexOf(nextLesson!) + 1} of {lessons.length}
-            </p>
-          </div>
-          <Button disabled={userData?.hearts === 0}>
-            <Link
-              /* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */
-              href={`/lesson/${lessons[Math.floor(Math.random() * lessons.length)]?.id}`}
-            >
-              {userData?.hearts === 0
-                ? "you have no hearts"
-                : isCompleted
-                  ? "practice again"
-                  : `Start +${nextLesson?.xp}XP`}
-            </Link>
-          </Button>
-        </Card>
-      }
+
+      <Card
+        className={cn(
+          "absolute left-1/2 top-[4.2rem] z-10 h-fit w-72 -translate-x-1/2 flex-col justify-between gap-4 rounded-3xl p-4 transition-opacity",
+          dialogOpen ? "flex" : "hidden",
+        )}
+      >
+        <div>
+          <h4>{title}</h4>
+          <p className="text-muted-foreground">
+            Lesson {lessons.indexOf(nextLesson!) + 1} of {lessons.length}
+          </p>
+        </div>
+        <Button disabled={userData?.hearts === 0}>
+          <Link
+            /* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */
+            href={`/lesson/${lessons[Math.floor(Math.random() * lessons.length)]?.id}`}
+          >
+            {userData?.hearts === 0
+              ? "you have no hearts"
+              : isCompleted
+                ? "practice again"
+                : `Start +${nextLesson?.xp}XP`}
+          </Link>
+        </Button>
+      </Card>
     </Card>
   );
 }
