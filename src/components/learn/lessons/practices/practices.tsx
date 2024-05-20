@@ -23,7 +23,7 @@ export function Practices({ practices, lessons }: PracticesProps) {
         )
       }
       lessons={lessons.filter((lesson) => lesson.practiceId === practice.id)}
-      userData={user!}
+      userData={user}
       isCompleted={!!user?.completedPracticeIds.includes(practice.id)}
       lastPractice={practices.length === practiceIndex + 1}
       key={practice.id}

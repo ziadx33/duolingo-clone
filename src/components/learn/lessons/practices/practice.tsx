@@ -14,7 +14,7 @@ type PracticeProps = {
   isNext: boolean;
   isCompleted: boolean;
   lessons: Lesson[];
-  userData: User;
+  userData: User | undefined;
 } & Practice;
 
 export function Practice({
@@ -28,14 +28,13 @@ export function Practice({
   const [dialogOpen, setDialogOpen] = useState(false);
   const nextLesson = lessons.find((lesson, lessonIndex) => {
     return !!lessons[lessonIndex + 1]
-      ? !userData.completedLessonIds.includes(lesson.id)
+      ? !userData?.completedLessonIds.includes(lesson.id)
       : true;
   });
   return (
     <Card className="relative grid h-24 w-24 place-items-center rounded-[50%] border-[0.5rem]">
       <Button
         onClick={() => setDialogOpen((v) => !v)}
-        disabled={!!isCompleted}
         variant="ghost"
         className="h-[85%] w-[85%] rounded-[50%] disabled:opacity-100"
       >
@@ -72,11 +71,16 @@ export function Practice({
               Lesson {lessons.indexOf(nextLesson!) + 1} of {lessons.length}
             </p>
           </div>
-          <Button disabled={userData.hearts === 0}>
-            <Link href={`/lesson/${nextLesson?.id}`}>
-              {userData.hearts === 0
+          <Button disabled={userData?.hearts === 0}>
+            <Link
+              /* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */
+              href={`/lesson/${lessons[Math.floor(Math.random() * lessons.length)]?.id}`}
+            >
+              {userData?.hearts === 0
                 ? "you have no hearts"
-                : `Start +${nextLesson?.xp}XP`}
+                : isCompleted
+                  ? "practice again"
+                  : `Start +${nextLesson?.xp}XP`}
             </Link>
           </Button>
         </Card>

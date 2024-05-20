@@ -3,7 +3,6 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/hooks/use-session";
-import { revalidatePath } from "next/cache";
 
 type BottomBar = {
   done: boolean;

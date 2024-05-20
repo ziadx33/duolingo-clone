@@ -22,28 +22,40 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
   useEffect(() => {
     void (async () => {
       if (!userData?.user || !lessonData || !lessons) return;
+      const isAlreadyCompleted =
+        userData.user.completedLessonIds.includes(lessonId);
       setCompletedDoneReqs(false);
       const newTotalXp = userData?.user?.totalXp + lessonData?.xp ?? 0;
-      const newCompletedLessonIds = [
-        ...userData.user?.completedLessonIds,
-        lessonId,
-      ];
-      const newCompletedPracticeIds = [...userData?.user.completedPracticeIds];
-      const completedPracticeLessonsLength = lessons
-        .filter((lesson) => newCompletedLessonIds.includes(lesson.id))
-        .map((lesson) => lesson.id).length;
-      console.log("completed:", completedPracticeLessonsLength);
-      console.log("lessons length", lessons.length);
-      if (completedPracticeLessonsLength === lessons.length) {
-        newCompletedPracticeIds.push(lessonData.practiceId);
-      }
+      if (!isAlreadyCompleted) {
+        const newCompletedLessonIds = [
+          ...userData.user?.completedLessonIds,
+          lessonId,
+        ];
+        const newCompletedPracticeIds = [
+          ...userData?.user.completedPracticeIds,
+        ];
+        const completedPracticeLessonsLength = lessons
+          .filter((lesson) => newCompletedLessonIds.includes(lesson.id))
+          .map((lesson) => lesson.id).length;
+        if (completedPracticeLessonsLength === lessons.length) {
+          newCompletedPracticeIds.push(lessonData.practiceId);
+        }
 
+        const updatedData = {
+          totalXp: newTotalXp,
+          completedLessonIds: newCompletedLessonIds,
+          completedPracticeIds: newCompletedPracticeIds,
+        };
+        await update(updatedData);
+        await editUserFn({
+          data: updatedData,
+          id: userData?.user.id,
+        });
+        return;
+      }
       const updatedData = {
         totalXp: newTotalXp,
-        completedLessonIds: newCompletedLessonIds,
-        completedPracticeIds: newCompletedPracticeIds,
       };
-      console.log("uupdated", updatedData);
       await update(updatedData);
       await editUserFn({
         data: updatedData,
