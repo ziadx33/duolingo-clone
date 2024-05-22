@@ -7,11 +7,9 @@ import {
 } from "../ui/dialog";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
 import { LoadingLink } from "../loading-link";
 
 export function LeaveButton() {
-  const router = useRouter();
   return (
     <>
       <Dialog>

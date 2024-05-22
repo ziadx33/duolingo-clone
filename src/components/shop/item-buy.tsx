@@ -21,7 +21,8 @@ export function ItemBuy({ costs, type }: ItemBuyProps) {
       onClick={() => {
         if (!user) return;
         if (type === "MAXIMIZE_HEARTS") {
-          if (user.gem < costs) toast.error("you don't have enough gems!");
+          if (user.gem < costs)
+            return toast.error("you don't have enough gems!");
           void maximizeHeartsFn({ id: user?.id, currentGem: user.gem, costs });
           void updateUserData({
             hearts: 5,

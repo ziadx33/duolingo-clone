@@ -5,6 +5,8 @@ import { RotatingLines } from "react-loader-spinner";
 import { useSession } from "@/hooks/use-session";
 import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { DEFAULT_GEMS_INCREMENT } from "@/constants";
+import { differenceInDays } from "date-fns";
+import { type User } from "@prisma/client";
 
 type CongratsProps = {
   lessonId: string;
@@ -23,10 +25,43 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
   useEffect(() => {
     void (async () => {
       if (!userData?.user || !lessonData || !lessons) return;
+      let streak: User["streak"] = 0;
+      let last_streak: User["last_streak"] = userData.user.last_streak;
+      let highest_streak: User["highest_streak"] = userData.user.highest_streak;
+      const daysBetweenLastStreakAndNow = differenceInDays(
+        new Date(),
+        userData.user.last_streak,
+      );
+      console.log("works", daysBetweenLastStreakAndNow);
+      if (
+        daysBetweenLastStreakAndNow === 1 ||
+        (daysBetweenLastStreakAndNow === 0 && streak === 0)
+      ) {
+        streak = userData.user.streak + 1;
+        last_streak = new Date();
+        console.log("first condition");
+      } else if (daysBetweenLastStreakAndNow === 0 && highest_streak === 0) {
+        streak = userData.user.streak;
+        console.log("second condition");
+      }
+      if (daysBetweenLastStreakAndNow > 1) {
+        console.log("third condition");
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        highest_streak = Math.max(streak, userData.user.highest_streak);
+      }
       const isAlreadyCompleted =
         userData.user.completedLessonIds.includes(lessonId);
       setCompletedDoneReqs(false);
       const newTotalXp = userData?.user?.totalXp + lessonData?.xp ?? 0;
+
+      const defaultUpdatedData: Parameters<typeof editUserFn>["0"]["data"] = {
+        last_streak,
+        streak,
+        highest_streak,
+        gem: userData.user.gem + DEFAULT_GEMS_INCREMENT,
+        totalXp: newTotalXp,
+      };
+
       if (!isAlreadyCompleted) {
         const newCompletedLessonIds = [
           ...userData.user?.completedLessonIds,
@@ -43,10 +78,9 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         }
 
         const updatedData: Parameters<typeof editUserFn>["0"]["data"] = {
+          ...defaultUpdatedData,
           completedLessonIds: newCompletedLessonIds,
           completedPracticeIds: newCompletedPracticeIds,
-          totalXp: newTotalXp,
-          gem: DEFAULT_GEMS_INCREMENT,
         };
         await update(updatedData);
         await editUserFn({
@@ -55,13 +89,9 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         });
         return;
       }
-      const updatedData = {
-        totalXp: newTotalXp,
-        gem: DEFAULT_GEMS_INCREMENT,
-      };
-      await update(updatedData);
+      await update(defaultUpdatedData);
       await editUserFn({
-        data: updatedData,
+        data: defaultUpdatedData,
         id: userData?.user.id,
       });
       setCompletedDoneReqs(true);
