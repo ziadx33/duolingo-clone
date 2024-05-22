@@ -13,3 +13,30 @@ export const getShopItems = unstable_cache(
     }
   }),
 );
+
+type MaximizeHeartsFnParams = {
+  id: string;
+  currentGem: number;
+  costs: number;
+};
+
+export const maximizeHearts = async ({
+  id,
+  currentGem,
+  costs,
+}: MaximizeHeartsFnParams) => {
+  try {
+    const res = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        hearts: 5,
+        gem: currentGem - costs,
+      },
+    });
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};

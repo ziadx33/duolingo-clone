@@ -1,5 +1,6 @@
 import * as z from "zod"
 import * as imports from "../null"
+import { SHOP_ITEM_TYPE } from "@prisma/client"
 
 export const ShopItemModel = z.object({
   id: z.string(),
@@ -7,4 +8,5 @@ export const ShopItemModel = z.object({
   description: z.string(),
   imgSrc: z.string(),
   costs: z.number().int(),
+  type: z.nativeEnum(SHOP_ITEM_TYPE),
 })
