@@ -31,3 +31,5 @@ export const SIDEBAR_LINKS: { name: string; href: string }[] = [
     href: "/profile",
   },
 ];
+
+export const DEFAULT_GEMS_INCREMENT = 25;

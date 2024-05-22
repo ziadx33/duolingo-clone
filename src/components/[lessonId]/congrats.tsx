@@ -4,6 +4,7 @@ import { api } from "@/trpc/react";
 import { RotatingLines } from "react-loader-spinner";
 import { useSession } from "@/hooks/use-session";
 import { type Dispatch, type SetStateAction, useEffect } from "react";
+import { DEFAULT_GEMS_INCREMENT } from "@/constants";
 
 type CongratsProps = {
   lessonId: string;
@@ -41,10 +42,11 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
           newCompletedPracticeIds.push(lessonData.practiceId);
         }
 
-        const updatedData = {
-          totalXp: newTotalXp,
+        const updatedData: Parameters<typeof editUserFn>["0"]["data"] = {
           completedLessonIds: newCompletedLessonIds,
           completedPracticeIds: newCompletedPracticeIds,
+          totalXp: newTotalXp,
+          gem: DEFAULT_GEMS_INCREMENT,
         };
         await update(updatedData);
         await editUserFn({
@@ -55,6 +57,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       }
       const updatedData = {
         totalXp: newTotalXp,
+        gem: DEFAULT_GEMS_INCREMENT,
       };
       await update(updatedData);
       await editUserFn({
