@@ -1,6 +1,4 @@
 import localFont from "next/font/local";
-import { IBM_Plex_Sans_Arabic } from "next/font/google";
-import { type NextFontWithVariable } from "next/dist/compiled/@next/font";
 
 const mainFont = localFont({
   variable: "--font-main",
@@ -13,14 +11,4 @@ const mainFont = localFont({
   ],
 });
 
-const arFont = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  variable: "--font-ar",
-  weight: "700",
-});
-
-type CountryCode = "ar";
-
-const fonts: Record<CountryCode, NextFontWithVariable> = { ar: arFont };
-
-export { mainFont, arFont, fonts };
+export { mainFont };
