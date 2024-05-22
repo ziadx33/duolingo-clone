@@ -12,6 +12,8 @@ export const UserModel = z.object({
   created_at: z.date(),
   currentSubjectId: z.string(),
   streak: z.number().int(),
+  highest_streak: z.number().int(),
+  last_streak: z.date(),
   totalXp: z.number().int(),
   gem: z.number().int(),
   hearts: z.number().int(),

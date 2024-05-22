@@ -75,7 +75,10 @@ model User {
     currentSubject   Subject   @relation(fields: [currentSubjectId], references: [id])
     currentSubjectId String    @default("")
 
-    streak  Int @default(0)
+    streak         Int      @default(0)
+    highest_streak Int      @default(0)
+    last_streak    DateTime @default(now())
+
     totalXp Int @default(9)
     gem     Int @default(500)
 
