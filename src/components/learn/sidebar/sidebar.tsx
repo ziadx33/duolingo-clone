@@ -6,7 +6,7 @@ import Image from "next/image";
 export async function Sidebar() {
   const { user } = await getServerAuthSession();
   return (
-    <aside className="h-full w-[13%] border-r-2 px-6 py-6">
+    <aside className="h-full min-w-[13%] border-r-2 px-6 py-6">
       <Image
         draggable="false"
         alt="logo"
@@ -18,10 +18,11 @@ export async function Sidebar() {
       <nav className="flex flex-col gap-4">
         {SIDEBAR_LINKS.map((link) => (
           <ActiveLink
-            className="flex h-12 items-center justify-center gap-2 rounded-lg p-0 hover:bg-secondary 2xl:justify-start 2xl:pl-2"
+            className="flex h-12 items-center justify-center gap-2 rounded-lg p-0 hover:bg-secondary 2xl:justify-start 2xl:pl-2 2xl:pr-4"
             activeClasses="bg-secondary"
             href={link.href}
             key={link.name}
+            prefetch={false}
           >
             <Image
               src={
