@@ -192,3 +192,11 @@ model WriteQuestionAnswer {
     correctSentence String[]
     helpers         String[]
 }
+
+model ShopItem {
+    id          String @id @default(uuid())
+    name        String
+    description String
+    imgSrc      String
+    costs       Int
+}
