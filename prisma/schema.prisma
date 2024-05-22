@@ -79,11 +79,14 @@ model User {
     highest_streak Int      @default(0)
     last_streak    DateTime @default(now())
 
-    totalXp Int @default(9)
-    gem     Int @default(500)
+    gem Int @default(500)
 
     hearts             Int      @default(5)
     lastHeartIncrement DateTime @default(now())
+
+    totalXp           Int      @default(0)
+    current_xp        Int      @default(0)
+    last_xp_increment DateTime @default(now())
 
     accounts Account[]
     sessions Session[]
@@ -91,6 +94,12 @@ model User {
     completedUnitsIds    String[] @default([])
     completedPracticeIds String[] @default([])
     completedLessonIds   String[] @default([])
+}
+
+model Quest {
+    id    String @id
+    costs Int
+    price Int
 }
 
 model VerificationToken {
