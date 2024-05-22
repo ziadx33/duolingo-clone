@@ -33,9 +33,10 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         userData.user.last_streak,
       );
       console.log("works", daysBetweenLastStreakAndNow);
+      console.log("streaking", userData.user.streak);
       if (
         daysBetweenLastStreakAndNow === 1 ||
-        (daysBetweenLastStreakAndNow === 0 && streak === 0)
+        (daysBetweenLastStreakAndNow === 0 && userData.user.streak === 0)
       ) {
         streak = userData.user.streak + 1;
         last_streak = new Date();
@@ -55,7 +56,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       const newTotalXp = userData?.user?.totalXp + lessonData?.xp ?? 0;
 
       const defaultUpdatedData: Parameters<typeof editUserFn>["0"]["data"] = {
-        last_streak,
+        last_streak: new Date(last_streak),
         streak,
         highest_streak,
         gem: userData.user.gem + DEFAULT_GEMS_INCREMENT,
