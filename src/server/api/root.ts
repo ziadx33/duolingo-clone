@@ -13,6 +13,7 @@ import { revalidateTag } from "next/cache";
 import { lessons } from "./routers/lessons";
 import { questionTypes } from "./routers/question-types";
 import { writeQuestions } from "./routers/write-questions";
+import { shopItems } from "./routers/shop-items";
 
 /**
  * This is the primary router for your server.
@@ -30,6 +31,7 @@ export const appRouter = createTRPCRouter({
   lessons,
   questionTypes,
   writeQuestions,
+  shopItems,
   revalidate: publicProcedure.input(z.string()).mutation(async ({ input }) => {
     revalidateTag(input);
   }),
