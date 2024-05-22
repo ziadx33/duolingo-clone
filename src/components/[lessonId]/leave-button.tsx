@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { LoadingLink } from "../loading-link";
 
 export function LeaveButton() {
   const router = useRouter();
@@ -33,14 +34,15 @@ export function LeaveButton() {
             <DialogClose asChild>
               <Button className="mb-1.5 w-full">keep learning</Button>
             </DialogClose>
-            <Button
+            <LoadingLink
+              loadingText="leaving..."
               type="submit"
-              onClick={() => router.push("/learn")}
               className="w-full"
               variant="destructive"
+              href="/learn"
             >
               end session
-            </Button>
+            </LoadingLink>
           </div>
         </DialogContent>
       </Dialog>

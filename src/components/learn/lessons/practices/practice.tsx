@@ -7,7 +7,7 @@ import { type User, type Lesson, type Practice } from "@prisma/client";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import { FaTrophy, FaCheck } from "react-icons/fa";
 import { useState } from "react";
-import Link from "next/link";
+import { LoadingLink } from "@/components/loading-link";
 
 type PracticeProps = {
   lastPractice: boolean;
@@ -72,18 +72,18 @@ export function Practice({
             Lesson {lessons.indexOf(nextLesson!) + 1} of {lessons.length}
           </p>
         </div>
-        <Button disabled={userData?.hearts === 0}>
-          <Link
-            /* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */
-            href={`/lesson/${lessons[Math.floor(Math.random() * lessons.length)]?.id}`}
-          >
-            {userData?.hearts === 0
-              ? "you have no hearts"
-              : isCompleted
-                ? "practice again"
-                : `Start +${nextLesson?.xp}XP`}
-          </Link>
-        </Button>
+        <LoadingLink
+          disabled={userData?.hearts === 0}
+          loadingText="loading lesson..."
+          /* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */
+          href={`/lesson/${lessons[Math.floor(Math.random() * lessons.length)]?.id}`}
+        >
+          {userData?.hearts === 0
+            ? "you have no hearts"
+            : isCompleted
+              ? "practice again"
+              : `Start +${nextLesson?.xp}XP`}
+        </LoadingLink>
       </Card>
     </Card>
   );
