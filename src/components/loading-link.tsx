@@ -35,7 +35,12 @@ export function LoadingLink({
   };
   return (
     <Button {...restProps} disabled={isPending || disabled}>
-      <a {...restProps} onClick={(e) => handleClick(e)} href={href}>
+      <a
+        {...restProps}
+        className="h-full w-full"
+        onClick={(e) => handleClick(e)}
+        href={href}
+      >
         {!isPending ? children : loadingText}
       </a>
     </Button>
