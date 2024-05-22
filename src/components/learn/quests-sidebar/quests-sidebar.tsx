@@ -1,9 +1,11 @@
 import { Header } from "./header";
+import { Quests } from "./quests";
 
 export function QuestsSidebar() {
   return (
-    <aside className="w-[20%]">
+    <aside className="mr-4 flex w-[20%] flex-col gap-4">
       <Header />
+      <Quests />
     </aside>
   );
 }

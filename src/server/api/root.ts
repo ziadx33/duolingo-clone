@@ -14,6 +14,7 @@ import { lessons } from "./routers/lessons";
 import { questionTypes } from "./routers/question-types";
 import { writeQuestions } from "./routers/write-questions";
 import { shopItems } from "./routers/shop-items";
+import { quests } from "./routers/quests";
 
 /**
  * This is the primary router for your server.
@@ -32,6 +33,7 @@ export const appRouter = createTRPCRouter({
   questionTypes,
   writeQuestions,
   shopItems,
+  quests,
   revalidate: publicProcedure.input(z.string()).mutation(async ({ input }) => {
     revalidateTag(input);
   }),
