@@ -193,10 +193,17 @@ model WriteQuestionAnswer {
     helpers         String[]
 }
 
+enum SHOP_ITEM_TYPE {
+    MAXIMIZE_HEARTS
+    STREAK_FREEZE
+    DOUBLE_GEMS
+}
+
 model ShopItem {
-    id          String @id @default(uuid())
+    id          String         @id @default(uuid())
     name        String
     description String
     imgSrc      String
     costs       Int
+    type        SHOP_ITEM_TYPE
 }
