@@ -5,6 +5,16 @@ import ChooseSubjectSelect from "./header-buttons/choose-subject-select";
 import { StreakButton } from "./header-buttons/streak-button";
 import { GemButton } from "./header-buttons/gem-button";
 import { HeartsButton } from "./header-buttons/hearts-button";
+import { useEffect, useState } from "react";
+
+export function useHooker() {
+  const [firstRender, setFirstRender] = useState(false);
+  useEffect(() => {
+    if (firstRender) return;
+    setFirstRender(true);
+  }, [firstRender]);
+  return firstRender;
+}
 
 export function Header() {
   const { data: userData } = useSession();

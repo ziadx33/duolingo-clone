@@ -1,9 +1,9 @@
 import { type QuestionType } from "@prisma/client";
 import { Progress } from "../ui/progress";
 import { useCallback } from "react";
-import { IoMdClose } from "react-icons/io";
 import { useSession } from "@/hooks/use-session";
 import Image from "next/image";
+import { LeaveButton } from "./leave-button";
 
 type ProgressBarProps = {
   currentQuestion: QuestionType;
@@ -23,9 +23,7 @@ export function ProgressBar({
   }, [completedQuestions, questionTypes.length]);
   return (
     <div className="flex h-1 w-full items-center gap-2">
-      <button>
-        <IoMdClose size={25} />
-      </button>
+      <LeaveButton />
       <Progress value={!isDone ? progress() : 100} className="mb-0.5" />
       <div className="flex items-center gap-1 text-red-500">
         <Image
