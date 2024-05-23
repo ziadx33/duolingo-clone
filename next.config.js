@@ -8,6 +8,7 @@ await import("./src/env.js");
 const config = {
   images: {
     dangerouslyAllowSVG: true,
+
     remotePatterns: [
       {
         protocol: "https",

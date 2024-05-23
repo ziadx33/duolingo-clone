@@ -54,6 +54,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         userData.user.completedLessonIds.includes(lessonId);
       setCompletedDoneReqs(false);
       const newTotalXp = userData?.user?.totalXp + lessonData?.xp ?? 0;
+      const current_xp = userData?.user?.current_xp + lessonData?.xp ?? 0;
 
       const defaultUpdatedData: Parameters<typeof editUserFn>["0"]["data"] = {
         last_streak: new Date(last_streak),
@@ -61,6 +62,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         highest_streak,
         gem: userData.user.gem + DEFAULT_GEMS_INCREMENT,
         totalXp: newTotalXp,
+        current_xp,
       };
 
       if (!isAlreadyCompleted) {

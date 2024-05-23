@@ -12,7 +12,6 @@ type PracticesProps = {
 export function Practices({ practices, lessons }: PracticesProps) {
   const { data } = useSession();
   const user = data?.user;
-  console.log("those are completed", user?.completedLessonIds);
   return practices?.map((practice, practiceIndex) => (
     <PracticeComp
       isNext={
