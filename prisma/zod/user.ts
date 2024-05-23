@@ -20,6 +20,7 @@ export const UserModel = z.object({
   totalXp: z.number().int(),
   current_xp: z.number().int(),
   last_xp_increment: z.date(),
+  completed_quests_ids: z.string().array(),
   completedUnitsIds: z.string().array(),
   completedPracticeIds: z.string().array(),
   completedLessonIds: z.string().array(),

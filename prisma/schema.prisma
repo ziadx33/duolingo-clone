@@ -88,6 +88,8 @@ model User {
     current_xp        Int      @default(0)
     last_xp_increment DateTime @default(now())
 
+    completed_quests_ids String[]
+
     accounts Account[]
     sessions Session[]
 
