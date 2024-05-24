@@ -34,6 +34,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       );
       console.log("works", daysBetweenLastStreakAndNow);
       console.log("streaking", userData.user.streak);
+
       if (
         daysBetweenLastStreakAndNow === 1 ||
         (daysBetweenLastStreakAndNow === 0 && userData.user.streak === 0)
@@ -41,15 +42,17 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         streak = userData.user.streak + 1;
         last_streak = new Date();
         console.log("first condition");
+
+        if (daysBetweenLastStreakAndNow >= 1) {
+          console.log("third condition");
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          highest_streak = Math.max(streak, userData.user.highest_streak);
+        }
       } else if (daysBetweenLastStreakAndNow === 0 && highest_streak === 0) {
         streak = userData.user.streak;
         console.log("second condition");
       }
-      if (daysBetweenLastStreakAndNow > 1) {
-        console.log("third condition");
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        highest_streak = Math.max(streak, userData.user.highest_streak);
-      }
+
       const isAlreadyCompleted =
         userData.user.completedLessonIds.includes(lessonId);
       setCompletedDoneReqs(false);

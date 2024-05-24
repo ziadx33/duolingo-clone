@@ -7,14 +7,15 @@ type updateXPParams = {
 };
 
 export function updateXP({ current_xp, last_xp_increment }: updateXPParams) {
-  let new_current_xp = 0;
+  let new_current_xp = current_xp;
 
-  const daysBetweenLastStreakAndNow = differenceInDays(
+  const daysBetweenLastXpIncrementAndNow = differenceInDays(
     new Date(),
     last_xp_increment,
   );
-  if (daysBetweenLastStreakAndNow === 0) {
-    new_current_xp = current_xp;
+
+  if (daysBetweenLastXpIncrementAndNow === 1) {
+    new_current_xp = 0;
   }
 
   return new_current_xp;

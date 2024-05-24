@@ -5,6 +5,7 @@ import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
 import NextAuthProvider from "./next-auth-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "./auth-provider";
 
 export const metadata = {
   title: "Duolingo clone",
@@ -27,8 +28,10 @@ export default function RootLayout({
         >
           <NextAuthProvider>
             <TRPCReactProvider>
-              <main>{children}</main>
-              <Toaster richColors />
+              <AuthProvider>
+                <main>{children}</main>
+                <Toaster richColors />
+              </AuthProvider>
             </TRPCReactProvider>
           </NextAuthProvider>
         </ThemeProvider>

@@ -13,8 +13,6 @@ export function Quests() {
   const { mutateAsync: updateUser } = api.auth.user.update.useMutation();
   const { data: session, update: updateSession } = useSession();
 
-  console.log(session);
-
   useEffect(() => {
     void (async () => {
       if (!session?.user) return;
@@ -22,14 +20,18 @@ export function Quests() {
         current_xp: session.user.current_xp,
         last_xp_increment: session.user.last_xp_increment,
       });
-      if (new_xp === 0) return;
+      if (new_xp !== 0) return;
+      const updateData = {
+        current_xp: new_xp,
+        completed_quests_ids:
+          new_xp === 0 ? [] : session.user.completed_quests_ids,
+        last_xp_increment: new Date(),
+      };
       void updateUser({
-        data: {
-          current_xp: new_xp,
-        },
+        data: updateData,
         id: session.user.id,
       });
-      void updateSession({ current_xp: new_xp });
+      void updateSession(updateData);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
