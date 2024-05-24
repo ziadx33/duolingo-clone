@@ -1,25 +1,13 @@
-"use client";
-
-import { PROTECTED_ROUTES } from "@/constants";
-import { useSession } from "@/hooks/use-session";
-import { usePathname, useRouter } from "next/navigation";
+import { getServerAuthSession } from "@/server/auth";
 import { type ReactNode } from "react";
+import { UserDataProvider } from "./user-data-provider";
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-  const router = useRouter();
-  const isIncludingProtectedRoutes = PROTECTED_ROUTES.some((r) =>
-    pathname.startsWith(r),
-  );
-  const { data: user_data } = useSession();
-  if (!user_data && isIncludingProtectedRoutes) {
-    router.push("/login");
-  } else if (
-    pathname !== "/choose-subjects" &&
-    isIncludingProtectedRoutes &&
-    user_data?.user?.currentSubjectId === ""
-  ) {
-    router.push("/choose-subjects");
-  }
-  return children;
+type AuthProviderProps = {
+  children: ReactNode;
+};
+
+export async function AuthProvider({ children }: AuthProviderProps) {
+  const userData = await getServerAuthSession();
+  const user = userData?.user;
+  return <UserDataProvider userData={user}>{children}</UserDataProvider>;
 }
