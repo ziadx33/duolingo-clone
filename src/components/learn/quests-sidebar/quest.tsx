@@ -35,6 +35,7 @@ export function Quest({ userData, costs, questIndex, price, id }: QuestProps) {
         last_xp_increment: userData.last_xp_increment,
         init: [...userData.completed_quests_ids, id],
       });
+      console.log("shoulder", userData.gem + price);
       const updated_data = {
         completed_quests_ids: new_completed_quests_ids,
         gem: userData.gem + price,
@@ -47,7 +48,6 @@ export function Quest({ userData, costs, questIndex, price, id }: QuestProps) {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
-  console.log("data", userData);
   return (
     <div className="flex h-fit items-center gap-2">
       <Image width={40} height={40} alt="xp" src="/images/icons/gem.svg" />

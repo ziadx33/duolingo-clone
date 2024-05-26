@@ -63,7 +63,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         last_streak: new Date(last_streak),
         streak,
         highest_streak,
-        gem: userData.user.gem + DEFAULT_GEMS_INCREMENT,
+        gem: userData.user.gem,
         totalXp: newTotalXp,
         current_xp,
       };
