@@ -8,6 +8,7 @@ import {
   type ComponentPropsWithoutRef,
 } from "react";
 import { Button, type ButtonProps } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 type LoadingLinkProps = ComponentPropsWithoutRef<"a"> &
   ButtonProps & {
@@ -37,7 +38,10 @@ export function LoadingLink({
     <Button {...restProps} disabled={isPending || disabled}>
       <a
         {...restProps}
-        className="h-full w-full"
+        className={cn(
+          "grid h-full w-full place-items-center",
+          restProps.className,
+        )}
         onClick={(e) => handleClick(e)}
         href={href}
       >
