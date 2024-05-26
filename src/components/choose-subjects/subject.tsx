@@ -4,7 +4,8 @@ import { SubjectButton } from "./subject-button";
 import { getServerAuthSession } from "@/server/auth";
 
 export async function Subject({ code, name, id }: Subject) {
-  // const { user } = await getServerAuthSession();
+  const { user } = await getServerAuthSession();
+  console.log(user);
   // const isAlreadyChosen = (user?.currentSubjectId ?? "") === id;
   return (
     // <SubjectButton
