@@ -5,20 +5,23 @@ import { type Subject } from "@prisma/client";
 import { useSession } from "@/hooks/use-session";
 import { type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import { type getServerAuthSession } from "@/server/auth";
 
 type SubjectButtonProps = {
   children: ReactNode;
   subjectId: Subject["id"];
   isAlreadyChosen: boolean;
+  userData: Awaited<ReturnType<typeof getServerAuthSession>>["user"];
 };
 
 export function SubjectButton({
   children,
   subjectId,
   isAlreadyChosen,
+  userData,
 }: SubjectButtonProps) {
   const { mutateAsync: addCurrentSubject } = api.auth.user.update.useMutation();
-  const { update: updateUser, data: userData } = useSession();
+  const { update: updateUser } = useSession();
   const router = useRouter();
   const addSubjectHandler = async () => {
     if (userData) {
@@ -26,7 +29,7 @@ export function SubjectButton({
         currentSubjectId: subjectId,
       });
       await addCurrentSubject({
-        id: userData?.user?.id ?? "",
+        id: userData?.id ?? "",
         data: {
           currentSubjectId: subjectId,
         },
