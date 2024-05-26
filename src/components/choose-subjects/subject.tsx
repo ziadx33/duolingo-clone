@@ -5,10 +5,11 @@ import Image from "next/image";
 import { SubjectButton } from "./subject-button";
 import { useSession } from "@/hooks/use-session";
 import { Checkbox } from "../ui/checkbox";
+import { getServerAuthSession } from "@/server/auth";
 
-export function Subject({ code, name, id }: Subject) {
-  const userData = useSession();
-  const isAlreadyChosen = userData?.data?.user?.currentSubjectId === id;
+export async function Subject({ code, name, id }: Subject) {
+  const { user } = await getServerAuthSession();
+  const isAlreadyChosen = (user?.currentSubjectId ?? "") === id;
   return (
     <SubjectButton isAlreadyChosen={!!isAlreadyChosen} subjectId={id}>
       {isAlreadyChosen && (
