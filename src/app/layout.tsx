@@ -21,19 +21,19 @@ export default function RootLayout({
     <html lang="en">
       <body className={mainFont.className}>
         <TRPCReactProvider>
-          {/* <NextAuthProvider>
-            <AuthProvider> */}
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <main>{children}</main>
-            <Toaster richColors />
-          </ThemeProvider>
-          {/* </AuthProvider>
-          </NextAuthProvider> */}
+          <NextAuthProvider>
+            {/* <AuthProvider> */}
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <main>{children}</main>
+              <Toaster richColors />
+            </ThemeProvider>
+            {/* </AuthProvider> */}
+          </NextAuthProvider>
         </TRPCReactProvider>
       </body>
     </html>
