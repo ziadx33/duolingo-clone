@@ -35,10 +35,10 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       console.log("works", daysBetweenLastStreakAndNow);
       console.log("streaking", userData.user.streak);
 
-      if (
-        daysBetweenLastStreakAndNow === 1 ||
-        (daysBetweenLastStreakAndNow === 0 && userData.user.streak === 0)
-      ) {
+      if (userData.user.streak === 1 && daysBetweenLastStreakAndNow === 0) {
+        streak = userData.user.streak;
+      }
+      if (daysBetweenLastStreakAndNow === 1 || userData.user.streak === 0) {
         streak = userData.user.streak + 1;
         last_streak = new Date();
         console.log("first condition");

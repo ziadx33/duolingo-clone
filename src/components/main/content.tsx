@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { getServerAuthSession } from "@/server/auth";
 import Image from "next/image";
 import Link from "next/link";
+import { LoadingLink } from "../loading-link";
 
 export async function Content() {
   const userData = await getServerAuthSession();
@@ -23,17 +24,30 @@ export async function Content() {
         <div className="ml-24 flex w-[350px] flex-col gap-2">
           {!userData ? (
             <>
-              <Button className="text-md h-12 w-full" asChild>
-                <Link href="/register">get started</Link>
-              </Button>
-              <Button variant="outline" asChild className="text-md h-12 w-full">
-                <Link href="/login">I already have an account</Link>
-              </Button>
+              <LoadingLink
+                className="text-md h-12 w-full"
+                loadingText="loading..."
+                href="/register"
+              >
+                get started
+              </LoadingLink>
+              <LoadingLink
+                loadingText="loading..."
+                variant="outline"
+                className="text-md h-12 w-full"
+                href="/login"
+              >
+                I already have an account
+              </LoadingLink>
             </>
           ) : (
-            <Button asChild className="text-md h-12 w-full">
-              <Link href="/learn">Continue learning</Link>
-            </Button>
+            <LoadingLink
+              className="text-md h-12 w-full"
+              loadingText="loading..."
+              href="/learn"
+            >
+              Continue learning
+            </LoadingLink>
           )}
         </div>
       </div>
