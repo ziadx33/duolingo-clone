@@ -7,7 +7,9 @@ export default function Home() {
     <main className="h-screen w-full">
       <div className="container mx-auto h-[calc(100vh-5rem)]">
         <Header />
-        <div className="h-[calc(100%-5rem)] w-full">{/* <Content /> */}</div>
+        <div className="h-[calc(100%-5rem)] w-full">
+          <Content />
+        </div>
       </div>
       <LanguagesBar />
     </main>
