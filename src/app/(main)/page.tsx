@@ -9,7 +9,7 @@ export default function Home() {
         <Header />
         <div className="h-[calc(100%-5rem)] w-full">{/* <Content /> */}</div>
       </div>
-      {/* <LanguagesBar /> */}
+      <LanguagesBar />
     </main>
   );
 }
