@@ -8,8 +8,9 @@ import { Checkbox } from "../ui/checkbox";
 import { getServerAuthSession } from "@/server/auth";
 
 export async function Subject({ code, name, id }: Subject) {
-  const { user } = await getServerAuthSession();
-  const isAlreadyChosen = (user?.currentSubjectId ?? "") === id;
+  // const { user } = await getServerAuthSession();
+  // const isAlreadyChosen = (user?.currentSubjectId ?? "") === id;
+  const isAlreadyChosen = true;
   return (
     <SubjectButton isAlreadyChosen={!!isAlreadyChosen} subjectId={id}>
       {isAlreadyChosen && (
