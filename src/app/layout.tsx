@@ -20,7 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={mainFont.className}>
-        <NextAuthProvider>
+        <h1>Hi</h1>
+      </body>
+    </html>
+  );
+}
+
+/*
+
+<NextAuthProvider>
           <TRPCReactProvider>
             <AuthProvider>
               <ThemeProvider
@@ -35,7 +43,5 @@ export default function RootLayout({
             </AuthProvider>
           </TRPCReactProvider>
         </NextAuthProvider>
-      </body>
-    </html>
-  );
-}
+
+*/
