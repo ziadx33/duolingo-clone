@@ -15,7 +15,6 @@ export default async function ChooseSubjects() {
           ))}
         </div>
       </div>
-      <h1>Hi</h1>
     </main>
   );
 }
