@@ -221,3 +221,17 @@ model ShopItem {
     costs       Int
     type        SHOP_ITEM_TYPE
 }
+
+enum ACHIEVEMENT_TYPE {
+    STREAK
+    XP
+}
+
+model Achievement {
+    id     String           @id @default(uuid())
+    name   String
+    imgSrc String
+    type   ACHIEVEMENT_TYPE
+    levels Int              @default(10)
+    max    Int
+}
