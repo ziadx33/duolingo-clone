@@ -6,6 +6,7 @@ import { useSession } from "@/hooks/use-session";
 import { type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { type getServerAuthSession } from "@/server/auth";
+import { cn } from "@/lib/utils";
 
 type SubjectButtonProps = {
   children: ReactNode;
@@ -24,6 +25,7 @@ export function SubjectButton({
   const { update: updateUser } = useSession();
   const router = useRouter();
   const addSubjectHandler = async () => {
+    if (isAlreadyChosen) return router.push("/learn");
     if (userData) {
       await updateUser({
         currentSubjectId: subjectId,
@@ -39,9 +41,11 @@ export function SubjectButton({
   };
   return (
     <button
-      disabled={isAlreadyChosen}
-      onClick={isAlreadyChosen ? undefined : addSubjectHandler}
-      className="relative flex h-[175px] w-[172px] flex-col items-center justify-center gap-4 rounded-lg border px-[12px] pb-[24px] pt-[12px] transition duration-200 hover:bg-secondary"
+      onClick={addSubjectHandler}
+      className={cn(
+        "relative flex h-[175px] w-[172px] flex-col items-center justify-center gap-4 rounded-lg border px-[12px] pb-[24px] pt-[12px] transition duration-200 hover:bg-secondary",
+        isAlreadyChosen ? "bg-muted" : "",
+      )}
     >
       {children}
     </button>
