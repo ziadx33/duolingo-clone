@@ -1,16 +1,14 @@
 "use client";
 
-import { type User, type Subject } from "@prisma/client";
+import { type Subject } from "@prisma/client";
 import Image from "next/image";
 import { SubjectButton } from "./subject-button";
 import { useSession } from "@/hooks/use-session";
 import { Checkbox } from "../ui/checkbox";
 
 export function Subject({ code, name, id }: Subject) {
-  const { data: userData } = useSession() as unknown as {
-    data?: { user: User };
-  };
-  const isAlreadyChosen = userData?.user.currentSubjectId === id;
+  const { data: userData } = useSession();
+  const isAlreadyChosen = userData?.user?.currentSubjectId === id;
   return (
     <SubjectButton isAlreadyChosen={!!isAlreadyChosen} subjectId={id}>
       {isAlreadyChosen && (

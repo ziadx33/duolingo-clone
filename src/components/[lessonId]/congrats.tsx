@@ -4,7 +4,6 @@ import { api } from "@/trpc/react";
 import { RotatingLines } from "react-loader-spinner";
 import { useSession } from "@/hooks/use-session";
 import { type Dispatch, type SetStateAction, useEffect } from "react";
-import { DEFAULT_GEMS_INCREMENT } from "@/constants";
 import { differenceInDays } from "date-fns";
 import { type User } from "@prisma/client";
 
