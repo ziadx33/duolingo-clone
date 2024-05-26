@@ -7,8 +7,8 @@ import { useSession } from "@/hooks/use-session";
 import { Checkbox } from "../ui/checkbox";
 
 export function Subject({ code, name, id }: Subject) {
-  const { data: userData } = useSession();
-  const isAlreadyChosen = userData?.user?.currentSubjectId === id || false;
+  const userData = useSession();
+  const isAlreadyChosen = userData?.data?.user?.currentSubjectId === id;
   return (
     <SubjectButton isAlreadyChosen={!!isAlreadyChosen} subjectId={id}>
       {isAlreadyChosen && (
