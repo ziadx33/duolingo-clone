@@ -12,19 +12,19 @@ export function UserDataProvider({
   userData: User | undefined;
   children: ReactNode;
 }) {
-  // const router = useRouter();
-  // const pathname = usePathname();
-  // const isIncludingProtectedRoutes = PROTECTED_ROUTES.some((r) =>
-  //   pathname?.startsWith(r),
-  // );
-  // if (!userData && isIncludingProtectedRoutes) {
-  //   router.push("/login");
-  // } else if (
-  //   pathname !== "/choose-subjects" &&
-  //   isIncludingProtectedRoutes &&
-  //   userData?.currentSubjectId === ""
-  // ) {
-  //   router.push("/choose-subjects");
-  // }
+  const router = useRouter();
+  const pathname = usePathname();
+  const isIncludingProtectedRoutes = PROTECTED_ROUTES.some((r) =>
+    pathname?.startsWith(r),
+  );
+  if (!userData && isIncludingProtectedRoutes) {
+    router.push("/login");
+  } else if (
+    pathname !== "/choose-subjects" &&
+    isIncludingProtectedRoutes &&
+    userData?.currentSubjectId === ""
+  ) {
+    router.push("/choose-subjects");
+  }
   return children;
 }
