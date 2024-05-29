@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useCallback } from "react";
 import { Progress } from "../ui/progress";
 import { cn } from "@/lib/utils";
+import { useSession } from "@/hooks/use-session";
 
 type AchieventProps = {
   isBottomBorder: boolean;
@@ -17,19 +18,31 @@ export function Achievement({
   name,
   isBottomBorder,
   type,
+  max,
+  levels,
 }: AchieventProps) {
+  const { data: userData } = useSession();
   type achievementStatsReturnType = {
     level: number;
     currentLevelTotal: number;
     currentUserLevelTotal: number;
   };
   const achievementStats = useCallback<() => achievementStatsReturnType>(() => {
+    const currentLevelTotal = Math.floor(max / levels);
+    const level = Math.floor(
+      (userData?.user?.[type === "XP" ? "totalXp" : "highest_streak"] ?? 0) /
+        currentLevelTotal,
+    );
+    const currentUserLevelTotal =
+      (userData?.user?.[type === "XP" ? "totalXp" : "highest_streak"] ?? 0) -
+      level * currentLevelTotal;
+
     return {
-      level: 10,
-      currentLevelTotal: 250,
-      currentUserLevelTotal: 150,
+      level,
+      currentLevelTotal,
+      currentUserLevelTotal,
     };
-  }, []);
+  }, [levels, max, type, userData?.user]);
   const achievementStatsData = achievementStats();
   return (
     <div
@@ -41,7 +54,7 @@ export function Achievement({
       <Card className="flex h-[85%] w-[77px] flex-col items-center justify-center gap-2.5 rounded-2xl border-none bg-muted px-4">
         <Image width={35} height={35} alt={name} src={imgSrc} />
         <p className="whitespace-nowrap text-xs">
-          level {achievementStatsData.level}
+          level {achievementStatsData.level + 1}
         </p>
       </Card>
       <div className="flex h-full w-full flex-col gap-2 py-3">
