@@ -1,3 +1,4 @@
+import { Achievements } from "@/components/profile/achievements";
 import { StatsBox } from "@/components/profile/stats-box";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -26,7 +27,7 @@ export default async function Page() {
       </div>
       <Separator className="mb-2" />
       <h1 className="text-3xl">Statistics</h1>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="mb-2 grid grid-cols-2 gap-3">
         <StatsBox
           caption={session?.streak}
           description="Day streak"
@@ -37,6 +38,10 @@ export default async function Page() {
           description="Total XP"
           image="https://d35aaqx5ub95lt.cloudfront.net/images/profile/01ce3a817dd01842581c3d18debcbc46.svg"
         />
+      </div>
+      <h1 className="text-3xl">Achievements</h1>
+      <div className="flex h-fit w-full flex-col overflow-hidden rounded-lg border">
+        <Achievements />
       </div>
     </div>
   );
