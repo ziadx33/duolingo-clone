@@ -18,9 +18,11 @@ import { toast } from "sonner";
 import { login } from "@/utils/(auth)/login";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { useTransition } from "react";
 
 export function LoginForm() {
   const router = useRouter();
+  const [isDisabled, disabledTransition] = useTransition();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -40,13 +42,15 @@ export function LoginForm() {
               redirect: false,
             });
           };
-          toast.promise(fn(), {
-            loading: "Logging in...",
-            success: () => {
-              router.push("/learn");
-              return "Logged in successfully!";
-            },
-            error: (error: Error) => error.message,
+          disabledTransition(() => {
+            toast.promise(fn(), {
+              loading: "Logging in...",
+              success: () => {
+                router.push("/learn");
+                return "Logged in successfully!";
+              },
+              error: (error: Error) => error.message,
+            });
           });
         })}
         className="mx-auto flex h-screen w-96 flex-col items-center gap-4 py-32"
@@ -87,7 +91,7 @@ export function LoginForm() {
           )}
         />
         <Button
-          disabled={form.formState.isLoading}
+          disabled={form.formState.isLoading || isDisabled}
           type="submit"
           className="w-full"
         >

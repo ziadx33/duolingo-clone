@@ -16,12 +16,14 @@ import { RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { register } from "@/utils/(auth)/register";
 import { toast } from "sonner";
+import { useTransition } from "react";
 
 type RegisterFormProps = {
   subjectId: string;
 };
 
 export function RegisterForm({ subjectId }: RegisterFormProps) {
+  const [isDisabled, disabledTransition] = useTransition();
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -34,15 +36,17 @@ export function RegisterForm({ subjectId }: RegisterFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (values) => {
-          toast.promise(
-            register({ ...values, subjectId }, window.location.origin),
-            {
-              loading: "Registering...",
-              success:
-                "Registered successfully, we have sent a verification link to your email.",
-              error: "Failed to register",
-            },
-          );
+          disabledTransition(() => {
+            toast.promise(
+              register({ ...values, subjectId }, window.location.origin),
+              {
+                loading: "Registering...",
+                success:
+                  "Registered successfully, we have sent a verification link to your email.",
+                error: "Failed to register",
+              },
+            );
+          });
         })}
         className="mx-auto flex h-screen w-96 flex-col items-center gap-4 py-32"
       >
@@ -99,7 +103,7 @@ export function RegisterForm({ subjectId }: RegisterFormProps) {
           )}
         />
         <Button
-          disabled={form.formState.isLoading}
+          disabled={form.formState.isLoading || isDisabled}
           type="submit"
           className="w-full"
         >
