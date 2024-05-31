@@ -21,6 +21,8 @@ export function Quest({ userData, costs, questIndex, price, id }: QuestProps) {
   const progress = useCallback(() => {
     const current_xp = userData?.current_xp ?? 0;
     return current_xp > costs ? 100 : (current_xp / costs) * 100;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [costs, userData?.current_xp]);
 
   const { mutateAsync: updateUser } = api.auth.user.update.useMutation();
@@ -29,17 +31,18 @@ export function Quest({ userData, costs, questIndex, price, id }: QuestProps) {
   useEffect(() => {
     void (async () => {
       if (userData === undefined) return;
-      if (userData.completed_quests_ids.includes(id)) return;
-      if (userData.current_xp < costs) return;
       const new_completed_quests_ids = updateCompletedQuests({
         last_xp_increment: userData.last_xp_increment,
         init: [...userData.completed_quests_ids, id],
       });
+      if (new_completed_quests_ids.includes(id)) return;
+      if (userData.current_xp < costs) return;
       console.log("shoulder", userData.gem + price);
       const updated_data = {
         completed_quests_ids: new_completed_quests_ids,
         gem: userData.gem + price,
       };
+      console.log("updated_data", updated_data);
       void updateUser({
         id: userData.id,
         data: updated_data,
@@ -47,7 +50,7 @@ export function Quest({ userData, costs, questIndex, price, id }: QuestProps) {
       void updateSession(updated_data);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, []);
   return (
     <div className="flex h-fit items-center gap-2">
       <Image width={40} height={40} alt="xp" src="/images/icons/gem.svg" />

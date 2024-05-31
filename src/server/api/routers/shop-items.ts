@@ -1,4 +1,8 @@
-import { getShopItems, maximizeHearts } from "@/server/actions/shop-items";
+import {
+  freezeStreak,
+  getShopItems,
+  maximizeHearts,
+} from "@/server/actions/shop-items";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { z } from "zod";
 
@@ -14,6 +18,12 @@ export const shopItems = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const res = await maximizeHearts(input);
+      return res;
+    }),
+  freezeStreak: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }) => {
+      const res = await freezeStreak(input);
       return res;
     }),
 });

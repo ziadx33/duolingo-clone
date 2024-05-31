@@ -14,10 +14,10 @@ export function updateCompletedQuests({
   let new_completed_quests_ids: User["completed_quests_ids"] = init;
 
   const daysBetweenLastStreakAndNow = differenceInDays(
-    new Date(),
     last_xp_increment,
+    new Date(),
   );
-  if (daysBetweenLastStreakAndNow !== 0) {
+  if (daysBetweenLastStreakAndNow > 0) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     new_completed_quests_ids = [];
   }

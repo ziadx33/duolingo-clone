@@ -12,6 +12,7 @@ export const getShopItems = unstable_cache(
       throw err;
     }
   }),
+  ["shop-items"],
 );
 
 type MaximizeHeartsFnParams = {
@@ -33,6 +34,26 @@ export const maximizeHearts = async ({
       data: {
         hearts: 5,
         gem: currentGem - costs,
+      },
+    });
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};
+
+type FreezeStreakFnParams = {
+  id: string;
+};
+
+export const freezeStreak = async ({ id }: FreezeStreakFnParams) => {
+  try {
+    const res = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        freeze_streak: true,
       },
     });
     return res;

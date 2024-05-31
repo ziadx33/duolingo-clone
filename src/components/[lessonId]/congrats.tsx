@@ -5,7 +5,6 @@ import { RotatingLines } from "react-loader-spinner";
 import { useSession } from "@/hooks/use-session";
 import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { differenceInDays } from "date-fns";
-import { type User } from "@prisma/client";
 
 type CongratsProps = {
   lessonId: string;
@@ -24,9 +23,14 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
   useEffect(() => {
     void (async () => {
       if (!userData?.user || !lessonData || !lessons) return;
-      let streak: User["streak"] = 0;
-      let last_streak: User["last_streak"] = userData.user.last_streak;
-      let highest_streak: User["highest_streak"] = userData.user.highest_streak;
+
+      let data: Parameters<typeof editUserFn>["0"]["data"] = {
+        streak: 0,
+        last_streak: userData.user.last_streak,
+        highest_streak: userData.user.highest_streak,
+        freeze_streak: userData.user.freeze_streak,
+      };
+
       const daysBetweenLastStreakAndNow = differenceInDays(
         new Date(),
         userData.user.last_streak,
@@ -35,21 +39,35 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       console.log("streaking", userData.user.streak);
 
       if (userData.user.streak === 1 && daysBetweenLastStreakAndNow === 0) {
-        streak = userData.user.streak;
+        data.streak = userData.user.streak;
       }
       if (daysBetweenLastStreakAndNow === 1 || userData.user.streak === 0) {
-        streak = userData.user.streak + 1;
-        last_streak = new Date();
+        data.streak = userData.user.streak + 1;
+        data.last_streak = new Date();
         console.log("first condition");
 
         if (daysBetweenLastStreakAndNow >= 1) {
           console.log("third condition");
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          highest_streak = Math.max(streak, userData.user.highest_streak);
+          data.highest_streak = Math.max(
+            data.streak,
+            userData.user.highest_streak,
+          );
         }
-      } else if (daysBetweenLastStreakAndNow === 0 && highest_streak === 0) {
-        streak = userData.user.streak;
+      } else if (
+        daysBetweenLastStreakAndNow === 0 &&
+        data.highest_streak === 0
+      ) {
+        data.streak = userData.user.streak;
         console.log("second condition");
+      }
+
+      if (data.streak === 0 && userData.user.freeze_streak) {
+        data = {
+          ...data,
+          streak: userData.user.streak,
+          freeze_streak: false,
+        };
       }
 
       const isAlreadyCompleted =
@@ -59,12 +77,10 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       const current_xp = userData?.user?.current_xp + lessonData?.xp ?? 0;
 
       const defaultUpdatedData: Parameters<typeof editUserFn>["0"]["data"] = {
-        last_streak: new Date(last_streak),
-        streak,
-        highest_streak,
         gem: userData.user.gem,
         totalXp: newTotalXp,
         current_xp,
+        ...data,
       };
 
       if (!isAlreadyCompleted) {
