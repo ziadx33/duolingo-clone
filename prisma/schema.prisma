@@ -93,6 +93,8 @@ model User {
     accounts Account[]
     sessions Session[]
 
+    freeze_streak Boolean @default(false)
+
     completedUnitsIds    String[] @default([])
     completedPracticeIds String[] @default([])
     completedLessonIds   String[] @default([])
