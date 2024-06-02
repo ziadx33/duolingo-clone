@@ -20,6 +20,8 @@ export function ItemBuy({ costs, type }: ItemBuyProps) {
     api.shopItems.maximizeHearts.useMutation();
   const { mutateAsync: freezeStreak } =
     api.shopItems.freezeStreak.useMutation();
+  const { mutateAsync: doubleOrNothing } =
+    api.shopItems.doubleOrNothing.useMutation();
   return (
     <Button
       disabled={disabled}
@@ -47,7 +49,19 @@ export function ItemBuy({ costs, type }: ItemBuyProps) {
                 gem: user.gem - costs,
               };
             }
-            void updateUserData(data!);
+            if (type === "DOUBLE_GEMS") {
+              void doubleOrNothing({ id: user?.id });
+              data = {
+                double_or_nothing: true,
+                gem: user.gem - costs,
+              };
+            }
+            toast.promise(updateUserData(data!), {
+              success() {
+                return "done!";
+              },
+              loading: "buying...",
+            });
           }
         });
       }}

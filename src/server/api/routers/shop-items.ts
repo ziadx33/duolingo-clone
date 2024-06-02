@@ -1,4 +1,5 @@
 import {
+  doubleOrNothing,
   freezeStreak,
   getShopItems,
   maximizeHearts,
@@ -24,6 +25,12 @@ export const shopItems = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .mutation(async ({ input }) => {
       const res = await freezeStreak(input);
+      return res;
+    }),
+  doubleOrNothing: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }) => {
+      const res = await doubleOrNothing(input);
       return res;
     }),
 });

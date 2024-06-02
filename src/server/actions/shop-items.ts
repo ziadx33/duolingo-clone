@@ -61,3 +61,19 @@ export const freezeStreak = async ({ id }: FreezeStreakFnParams) => {
     throw err;
   }
 };
+
+export const doubleOrNothing = async ({ id }: FreezeStreakFnParams) => {
+  try {
+    const res = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        double_or_nothing: true,
+      },
+    });
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};

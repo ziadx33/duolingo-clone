@@ -47,7 +47,7 @@ export function Quests() {
             ?.sort((a, b) => (b.costs > a.costs ? -1 : 1))
             .map((quest, questIndex) => (
               <Quest
-                userData={session?.user}
+                userData={session}
                 key={quest.id}
                 questIndex={questIndex}
                 {...quest}

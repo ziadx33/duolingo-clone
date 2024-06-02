@@ -26,7 +26,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
 
       let data: Parameters<typeof editUserFn>["0"]["data"] = {
         streak: 0,
-        last_streak: userData.user.last_streak,
+        last_streak: new Date(userData.user.last_streak),
         highest_streak: userData.user.highest_streak,
         freeze_streak: userData.user.freeze_streak,
       };
@@ -38,13 +38,16 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       console.log("works", daysBetweenLastStreakAndNow);
       console.log("streaking", userData.user.streak);
 
-      if (userData.user.streak === 1 && daysBetweenLastStreakAndNow === 0) {
+      if (userData.user.streak >= 1 && daysBetweenLastStreakAndNow === 0) {
+        console.log("first condition");
         data.streak = userData.user.streak;
-      }
-      if (daysBetweenLastStreakAndNow === 1 || userData.user.streak === 0) {
+      } else if (
+        daysBetweenLastStreakAndNow === 1 ||
+        userData.user.streak === 0
+      ) {
         data.streak = userData.user.streak + 1;
         data.last_streak = new Date();
-        console.log("first condition");
+        console.log("second condition");
 
         if (daysBetweenLastStreakAndNow >= 1) {
           console.log("third condition");
@@ -59,7 +62,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         data.highest_streak === 0
       ) {
         data.streak = userData.user.streak;
-        console.log("second condition");
+        console.log("forth condition");
       }
 
       if (data.streak === 0 && userData.user.freeze_streak) {
@@ -77,10 +80,10 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       const current_xp = userData?.user?.current_xp + lessonData?.xp ?? 0;
 
       const defaultUpdatedData: Parameters<typeof editUserFn>["0"]["data"] = {
+        ...data,
         gem: userData.user.gem,
         totalXp: newTotalXp,
         current_xp,
-        ...data,
       };
 
       if (!isAlreadyCompleted) {

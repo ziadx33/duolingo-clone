@@ -18,6 +18,7 @@ export function updateCompletedQuests({
     new Date(),
   );
   if (daysBetweenLastStreakAndNow > 0) {
+    console.log("conditioning rn");
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     new_completed_quests_ids = [];
   }
