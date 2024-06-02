@@ -95,6 +95,8 @@ model User {
 
     freeze_streak Boolean @default(false)
 
+    double_or_nothing Boolean @default(false)
+
     completedUnitsIds    String[] @default([])
     completedPracticeIds String[] @default([])
     completedLessonIds   String[] @default([])
