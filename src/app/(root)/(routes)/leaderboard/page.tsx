@@ -28,22 +28,20 @@ export default async function Page() {
         <NextLeague
           userData={user}
           currentLeague={league}
-          // win={
-          //   leaderboard.findIndex((leaderUser) => leaderUser.id === user.id) <
-          //   league.top_won
-          // }
-          // lose={
-          //   league.top_lose
-          //     ? leaderboard.findIndex(
-          //         (leaderUser) => leaderUser.id === user.id,
-          //       ) >
-          //       TEST.length - league.top_lose
-          //     : leaderboard.findIndex(
-          //         (leaderUser) => leaderUser.id === user.id,
-          //       ) > league.top_won
-          // }
-          win={false}
-          lose={true}
+          win={
+            leaderboard.findIndex((leaderUser) => leaderUser.id === user.id) <
+            league.top_won
+          }
+          lose={
+            league.top_lose
+              ? leaderboard.findIndex(
+                  (leaderUser) => leaderUser.id === user.id,
+                ) >
+                TEST.length - league.top_lose
+              : leaderboard.findIndex(
+                  (leaderUser) => leaderUser.id === user.id,
+                ) > league.top_won
+          }
         />
       )}
       <div className="flex h-full flex-col pb-4">
