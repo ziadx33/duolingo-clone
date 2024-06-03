@@ -7,6 +7,7 @@ import { type ComponentPropsWithoutRef } from "react";
 
 type ActiveLink = {
   activeClasses?: string;
+  cache?: boolean;
 } & LinkProps &
   ComponentPropsWithoutRef<"a">;
 
@@ -14,11 +15,13 @@ export function ActiveLink({
   children,
   className,
   activeClasses,
+  cache = true,
   ...restProps
 }: ActiveLink) {
   const pathname = usePathname();
+  const Component = cache ? Link : "a";
   return (
-    <Link
+    <Component
       {...restProps}
       className={cn(
         className,
@@ -26,6 +29,6 @@ export function ActiveLink({
       )}
     >
       {children}
-    </Link>
+    </Component>
   );
 }

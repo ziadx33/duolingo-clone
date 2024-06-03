@@ -6,8 +6,9 @@ export const LeagueModel = z.object({
   id: z.string(),
   img_src: z.string(),
   name: z.string(),
+  level: z.number().int(),
   top_won: z.number().int(),
-  top_lose: z.number().int(),
+  top_lose: z.number().int().nullish(),
 })
 
 export interface CompleteLeague extends z.infer<typeof LeagueModel> {

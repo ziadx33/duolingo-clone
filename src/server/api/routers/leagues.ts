@@ -1,4 +1,8 @@
-import { getLeague, getLeagueUsers } from "@/server/actions/leagues";
+import {
+  getLeague,
+  getLeagueUsers,
+  getLeagues,
+} from "@/server/actions/leagues";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { z } from "zod";
 
@@ -14,6 +18,10 @@ export const leagues = createTRPCRouter({
       const league = await getLeague(id);
       return league;
     }),
+  getLeagues: publicProcedure.query(async () => {
+    const leagues = await getLeagues();
+    return leagues;
+  }),
   getLeagueUsers: publicProcedure
     .input(
       z.object({

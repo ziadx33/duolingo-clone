@@ -113,8 +113,9 @@ model League {
     id       String @id @default(uuid())
     img_src  String
     name     String
+    level    Int    @default(1)
     top_won  Int
-    top_lose Int
+    top_lose Int?
     User     User[]
 }
 

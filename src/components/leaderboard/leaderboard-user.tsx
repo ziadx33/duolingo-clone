@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 type LeaderboardUserProps = {
   index: number;
   win: boolean;
+  lose: boolean | null;
 } & User;
 
 export function LeaderboardUser({
@@ -14,12 +15,14 @@ export function LeaderboardUser({
   image,
   current_league_xp,
   win,
+  lose,
 }: LeaderboardUserProps) {
   return (
     <Card
       className={cn(
-        "flex h-16 w-full items-center justify-between border-none px-6 py-2 pl-7 transition-colors hover:bg-muted",
+        "flex h-16 w-full items-center justify-between border-none px-6 py-2 pl-7 transition-colors hover:bg-muted ",
         index <= 3 && "pl-4",
+        index === 1 && "rounded-t-none",
       )}
     >
       <div className="flex items-center">
@@ -48,7 +51,12 @@ export function LeaderboardUser({
             alt={name ?? ""}
           />
         ) : (
-          <span className={cn("mr-6 text-xl", win && "text-green-600")}>
+          <span
+            className={cn(
+              "flex h-full w-9 items-center text-xl",
+              win ? "text-green-600" : lose ? "text-destructive" : "",
+            )}
+          >
             {index}
           </span>
         )}

@@ -23,6 +23,7 @@ export async function Sidebar() {
             href={link.href}
             key={link.name}
             prefetch={false}
+            cache={link.href === "/leaderboard" ? false : true}
           >
             <Image
               src={

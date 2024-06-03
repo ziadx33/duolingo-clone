@@ -19,10 +19,6 @@ export const SIDEBAR_LINKS: { name: string; href: string }[] = [
     href: "/leaderboard",
   },
   {
-    name: "quests",
-    href: "/quests",
-  },
-  {
     name: "shop",
     href: "/shop",
   },

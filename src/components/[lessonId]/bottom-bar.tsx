@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/hooks/use-session";
+import { api } from "@/trpc/react";
 
 type BottomBar = {
   done: boolean;
@@ -22,6 +23,7 @@ export function BottomBar({
   completedDoneReqs,
 }: BottomBar) {
   const { update: updateUserData, data: userData } = useSession();
+  const { mutate: revalidatePath } = api.revalidate.useMutation();
   const router = useRouter();
   const correctSound = new Audio(
     "https://d35aaqx5ub95lt.cloudfront.net/sounds/37d8f0b39dcfe63872192c89653a93f6.mp3",
@@ -39,6 +41,7 @@ export function BottomBar({
       <Button
         onClick={async () => {
           if (done) {
+            revalidatePath("/leaderboard");
             return router.push("/learn");
           }
           setGoNext(true);
@@ -58,7 +61,7 @@ export function BottomBar({
         disabled={!isButtonShow || !completedDoneReqs}
         className={cn(done && "w-full")}
       >
-        {!done ? "check" : "continue"}
+        {!done ? "check" : completedDoneReqs ? "continue" : "loading..."}
       </Button>
     </div>
   );

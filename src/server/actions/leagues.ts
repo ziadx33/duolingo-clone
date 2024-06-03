@@ -14,6 +14,18 @@ export const getLeague = unstable_cache(
   ["league", "id"],
 );
 
+export const getLeagues = unstable_cache(
+  cache(async () => {
+    try {
+      const leagues = await prisma.league.findMany();
+      return leagues;
+    } catch (err) {
+      throw err;
+    }
+  }),
+  ["leagues"],
+);
+
 export const getLeagueUsers = unstable_cache(
   cache(async (id: string) => {
     try {
@@ -23,5 +35,5 @@ export const getLeagueUsers = unstable_cache(
       throw err;
     }
   }),
-  ["league-users", "league-id"],
+  ["league-users", "id"],
 );

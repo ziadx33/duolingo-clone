@@ -76,13 +76,14 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       const isAlreadyCompleted =
         userData.user.completedLessonIds.includes(lessonId);
       setCompletedDoneReqs(false);
-      const newTotalXp = userData?.user?.totalXp + lessonData?.xp ?? 0;
-      const current_xp = userData?.user?.current_xp + lessonData?.xp ?? 0;
+      const newTotalXp = userData?.user?.totalXp + lessonData.xp;
+      const current_xp = userData?.user?.current_xp + lessonData.xp;
 
       const defaultUpdatedData: Parameters<typeof editUserFn>["0"]["data"] = {
         ...data,
         gem: userData.user.gem,
         totalXp: newTotalXp,
+        current_league_xp: userData.user.current_league_xp + lessonData.xp,
         current_xp,
       };
 
@@ -114,6 +115,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         return;
       }
       await update(defaultUpdatedData);
+
       await editUserFn({
         data: defaultUpdatedData,
         id: userData?.user.id,
