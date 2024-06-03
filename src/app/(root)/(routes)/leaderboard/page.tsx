@@ -15,8 +15,7 @@ export default async function Page() {
   const users = await api.leagues.getLeagueUsers({ id: league?.id ?? "" });
   if (!league || !users || !user) notFound();
   console.log("users", users);
-  const TEST = users;
-  const leaderboard = TEST.sort((a, b) =>
+  const leaderboard = users.sort((a, b) =>
     a.current_league_xp > b.current_league_xp ? -1 : 1,
   );
   const daysUntilNextLeague =
@@ -37,7 +36,7 @@ export default async function Page() {
               ? leaderboard.findIndex(
                   (leaderUser) => leaderUser.id === user.id,
                 ) >
-                TEST.length - league.top_lose
+                users.length - league.top_lose
               : leaderboard.findIndex(
                   (leaderUser) => leaderUser.id === user.id,
                 ) > league.top_won
@@ -63,37 +62,40 @@ export default async function Page() {
           </p>
         </div>
         <div className="flex h-full w-full flex-col overflow-y-auto [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-muted [&::-webkit-scrollbar]:w-2.5 [&::-webkit-scrollbar]:bg-primary-foreground">
-          {TEST.sort((a, b) =>
-            a.current_league_xp > b.current_league_xp ? -1 : 1,
-          ).map((user, index) => (
-            <>
-              {index === league.top_won && (
-                <div className="my-2 flex h-12 items-center justify-center gap-6 text-lg  uppercase text-green-600">
-                  <FaArrowAltCircleUp size={24} />
-                  promotion zone
-                  <FaArrowAltCircleUp size={24} />
-                </div>
-              )}
-              {league.top_lose && index === TEST.length - league.top_lose && (
-                <div className="my-2 flex h-12 items-center justify-center gap-6 text-lg  uppercase text-destructive">
-                  <FaArrowAltCircleDown size={24} />
-                  demotion zone
-                  <FaArrowAltCircleDown size={24} />
-                </div>
-              )}
-              <LeaderboardUser
-                key={user.id}
-                index={index + 1}
-                win={index < league.top_won}
-                lose={
-                  league.top_lose
-                    ? index + 1 > TEST.length - league.top_lose
-                    : null
-                }
-                {...user}
-              />
-            </>
-          ))}
+          {users
+            .sort((a, b) =>
+              a.current_league_xp > b.current_league_xp ? -1 : 1,
+            )
+            .map((user, index) => (
+              <>
+                {index === league.top_won && (
+                  <div className="my-2 flex h-12 items-center justify-center gap-6 text-lg  uppercase text-green-600">
+                    <FaArrowAltCircleUp size={24} />
+                    promotion zone
+                    <FaArrowAltCircleUp size={24} />
+                  </div>
+                )}
+                {league.top_lose &&
+                  index === users.length - league.top_lose && (
+                    <div className="my-2 flex h-12 items-center justify-center gap-6 text-lg  uppercase text-destructive">
+                      <FaArrowAltCircleDown size={24} />
+                      demotion zone
+                      <FaArrowAltCircleDown size={24} />
+                    </div>
+                  )}
+                <LeaderboardUser
+                  key={user.id}
+                  index={index + 1}
+                  win={index < league.top_won}
+                  lose={
+                    league.top_lose
+                      ? index + 1 > users.length - league.top_lose
+                      : null
+                  }
+                  {...user}
+                />
+              </>
+            ))}
         </div>
       </div>
     </>
