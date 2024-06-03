@@ -4,7 +4,8 @@ import { getServerAuthSession } from "@/server/auth";
 import Image from "next/image";
 
 export async function Sidebar() {
-  const { user } = await getServerAuthSession();
+  const userData = await getServerAuthSession();
+  const user = userData?.user;
   return (
     <aside className="h-full min-w-[13%] border-r-2 px-6 py-6">
       <Image

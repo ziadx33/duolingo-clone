@@ -25,6 +25,7 @@ export function UserDataProvider({
     userData?.currentSubjectId === ""
   ) {
     router.push("/choose-subjects");
+  } else {
+    return children;
   }
-  return children;
 }

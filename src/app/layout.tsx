@@ -20,9 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={mainFont.className}>
-        <TRPCReactProvider>
-          <NextAuthProvider>
-            <AuthProvider>
+        <AuthProvider>
+          <TRPCReactProvider>
+            <NextAuthProvider>
               <ThemeProvider
                 attribute="class"
                 defaultTheme="system"
@@ -32,9 +32,9 @@ export default function RootLayout({
                 <main>{children}</main>
                 <Toaster richColors />
               </ThemeProvider>
-            </AuthProvider>
-          </NextAuthProvider>
-        </TRPCReactProvider>
+            </NextAuthProvider>
+          </TRPCReactProvider>
+        </AuthProvider>
       </body>
     </html>
   );

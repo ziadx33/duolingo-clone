@@ -86,4 +86,4 @@ export const authHandler = nextAuth(authOptions);
  * Wrapper for `getServerSession` to avoid importing `authOptions` in every file.
  */
 export const getServerAuthSession = () =>
-  getServerSession(authOptions) as Promise<{ user?: User }>;
+  getServerSession(authOptions) as Promise<{ user: User } | undefined>;

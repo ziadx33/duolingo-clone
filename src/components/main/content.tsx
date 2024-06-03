@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { getServerAuthSession } from "@/server/auth";
 import Image from "next/image";
-import Link from "next/link";
 import { LoadingLink } from "../loading-link";
 
 export async function Content() {

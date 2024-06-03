@@ -8,7 +8,8 @@ import { notFound } from "next/navigation";
 import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 
 export default async function Page() {
-  const { user } = await getServerAuthSession();
+  const userData = await getServerAuthSession();
+  const user = userData?.user;
   const league = await api.leagues.getLeague({
     id: user?.current_league_id ?? "",
   });

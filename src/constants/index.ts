@@ -4,7 +4,13 @@ export const PUBLIC_ROUTES = [
   "/verification-token",
   "/choose-subjects",
 ];
-export const PROTECTED_ROUTES = ["/learn", "/lesson", "/shop"];
+export const PROTECTED_ROUTES = [
+  "/learn",
+  "/lesson",
+  "/shop",
+  "/leaderboard",
+  "/profile",
+];
 export const MIDDLEWARE_ROUTES = [
   ...PUBLIC_ROUTES,
   ...PROTECTED_ROUTES,

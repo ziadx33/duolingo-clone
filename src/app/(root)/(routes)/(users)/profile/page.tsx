@@ -1,13 +1,13 @@
 import { Achievements } from "@/components/profile/achievements";
 import { StatsBox } from "@/components/profile/stats-box";
-import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { getServerAuthSession } from "@/server/auth";
 import { format } from "date-fns";
 import Image from "next/image";
 
 export default async function Page() {
-  const { user: session } = await getServerAuthSession();
+  const userData = await getServerAuthSession();
+  const session = userData?.user;
   return (
     <div className="flex flex-col gap-3">
       <div className="flex gap-6">
