@@ -112,6 +112,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
           data: updatedData,
           id: userData?.user.id,
         });
+        setCompletedDoneReqs(true);
         return;
       }
       await update(defaultUpdatedData);
