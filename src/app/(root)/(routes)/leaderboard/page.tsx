@@ -4,6 +4,7 @@ import { api } from "@/trpc/server";
 import { differenceInDays } from "date-fns";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 
 export default async function Page() {
   const { user } = await getServerAuthSession();
@@ -15,6 +16,7 @@ export default async function Page() {
   const daysUntilNextLeague =
     user.current_next_league_days -
     differenceInDays(user.current_league_started, new Date());
+  console.log(users.length - league.top_lose);
   return (
     <div className="flex h-full flex-col pb-4">
       <div className="flex flex-col items-center">
@@ -35,8 +37,63 @@ export default async function Page() {
         </p>
       </div>
       <div className="flex h-full w-full flex-col overflow-y-auto">
-        {[...users, ...users, ...users, ...users].map((user, index) => (
-          <LeaderboardUser key={user.id} index={index + 1} {...user} />
+        {[
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+          ...users,
+        ].map((user, index) => (
+          <>
+            {index === league.top_won && (
+              <div className="my-2 flex h-12 items-center justify-center gap-6 text-lg  uppercase text-green-600">
+                <FaArrowAltCircleUp size={24} />
+                promotion zone
+                <FaArrowAltCircleUp size={24} />
+              </div>
+            )}
+            {index ===
+              [
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+                ...users,
+              ].length -
+                league.top_lose && (
+              <div className="my-2 flex h-12 items-center justify-center gap-6 text-lg  uppercase text-destructive">
+                <FaArrowAltCircleDown size={24} />
+                demotion zone
+                <FaArrowAltCircleDown size={24} />
+              </div>
+            )}
+            <LeaderboardUser
+              key={user.id}
+              index={index + 1}
+              win={index < league.top_won}
+              {...user}
+            />
+          </>
         ))}
       </div>
     </div>

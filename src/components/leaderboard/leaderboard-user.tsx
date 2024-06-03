@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 
 type LeaderboardUserProps = {
   index: number;
+  win: boolean;
 } & User;
 
 export function LeaderboardUser({
@@ -12,6 +13,7 @@ export function LeaderboardUser({
   index,
   image,
   current_league_xp,
+  win,
 }: LeaderboardUserProps) {
   return (
     <Card
@@ -46,7 +48,9 @@ export function LeaderboardUser({
             alt={name ?? ""}
           />
         ) : (
-          <span className="mr-6 text-xl">{index + 1}</span>
+          <span className={cn("mr-6 text-xl", win && "text-green-600")}>
+            {index}
+          </span>
         )}
         <Image
           src={image ?? ""}
