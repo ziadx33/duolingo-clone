@@ -5,14 +5,14 @@ import { type Subject } from "@prisma/client";
 import { useSession } from "@/hooks/use-session";
 import { type ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { type getServerAuthSession } from "@/server/auth";
 import { cn } from "@/lib/utils";
+import { type User } from "@prisma/client";
 
 type SubjectButtonProps = {
   children: ReactNode;
   subjectId: Subject["id"];
   isAlreadyChosen: boolean;
-  userData: Awaited<ReturnType<typeof getServerAuthSession>>["user"];
+  userData: User | undefined;
 };
 
 export function SubjectButton({
