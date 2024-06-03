@@ -84,9 +84,11 @@ model User {
     hearts             Int      @default(5)
     lastHeartIncrement DateTime @default(now())
 
-    totalXp           Int      @default(0)
-    current_xp        Int      @default(0)
-    last_xp_increment DateTime @default(now())
+    totalXp                Int      @default(0)
+    current_xp             Int      @default(0)
+    last_xp_increment      DateTime @default(now())
+    current_league_xp      Int      @default(0)
+    last_current_league_xp DateTime @default(now())
 
     completed_quests_ids String[] @default([])
 
@@ -97,9 +99,23 @@ model User {
 
     double_or_nothing Boolean @default(false)
 
+    current_league           League?  @relation(fields: [current_league_id], references: [id])
+    current_league_id        String?  @default("1")
+    current_next_league_days Int      @default(7)
+    current_league_started   DateTime @default(now())
+
     completedUnitsIds    String[] @default([])
     completedPracticeIds String[] @default([])
     completedLessonIds   String[] @default([])
+}
+
+model League {
+    id       String @id @default(uuid())
+    img_src  String
+    name     String
+    top_won  Int
+    top_lose Int
+    User     User[]
 }
 
 model Quest {

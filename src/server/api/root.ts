@@ -16,6 +16,7 @@ import { writeQuestions } from "./routers/write-questions";
 import { shopItems } from "./routers/shop-items";
 import { quests } from "./routers/quests";
 import { achievements } from "./routers/achievements";
+import { leagues } from "./routers/leagues";
 
 /**
  * This is the primary router for your server.
@@ -36,6 +37,7 @@ export const appRouter = createTRPCRouter({
   shopItems,
   quests,
   achievements,
+  leagues,
   revalidate: publicProcedure.input(z.string()).mutation(async ({ input }) => {
     revalidateTag(input);
   }),

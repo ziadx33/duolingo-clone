@@ -1,6 +1,6 @@
 import * as z from "zod"
 import * as imports from "../null"
-import { CompleteSubject, RelatedSubjectModel, CompleteAccount, RelatedAccountModel, CompleteSession, RelatedSessionModel } from "./index"
+import { CompleteSubject, RelatedSubjectModel, CompleteAccount, RelatedAccountModel, CompleteSession, RelatedSessionModel, CompleteLeague, RelatedLeagueModel } from "./index"
 
 export const UserModel = z.object({
   id: z.string(),
@@ -20,9 +20,14 @@ export const UserModel = z.object({
   totalXp: z.number().int(),
   current_xp: z.number().int(),
   last_xp_increment: z.date(),
+  current_league_xp: z.number().int(),
+  last_current_league_xp: z.date(),
   completed_quests_ids: z.string().array(),
   freeze_streak: z.boolean(),
   double_or_nothing: z.boolean(),
+  current_league_id: z.string().nullish(),
+  current_next_league_days: z.number().int(),
+  current_league_started: z.date(),
   completedUnitsIds: z.string().array(),
   completedPracticeIds: z.string().array(),
   completedLessonIds: z.string().array(),
@@ -32,6 +37,7 @@ export interface CompleteUser extends z.infer<typeof UserModel> {
   currentSubject: CompleteSubject
   accounts: CompleteAccount[]
   sessions: CompleteSession[]
+  current_league?: CompleteLeague | null
 }
 
 /**
@@ -43,4 +49,5 @@ export const RelatedUserModel: z.ZodSchema<CompleteUser> = z.lazy(() => UserMode
   currentSubject: RelatedSubjectModel,
   accounts: RelatedAccountModel.array(),
   sessions: RelatedSessionModel.array(),
+  current_league: RelatedLeagueModel.nullish(),
 }))
