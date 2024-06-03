@@ -16,12 +16,10 @@ import { LoginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { login } from "@/utils/(auth)/login";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useTransition } from "react";
 
 export function LoginForm() {
-  const router = useRouter();
   const [isDisabled, disabledTransition] = useTransition();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -46,7 +44,7 @@ export function LoginForm() {
             toast.promise(fn(), {
               loading: "Logging in...",
               success: () => {
-                router.push("/learn");
+                location.pathname = "/learn";
                 return "Logged in successfully!";
               },
               error: (error: Error) => error.message,
