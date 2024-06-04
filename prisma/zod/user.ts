@@ -28,6 +28,7 @@ export const UserModel = z.object({
   current_league_id: z.string().nullish(),
   current_next_league_days: z.number().int(),
   current_league_started: z.date(),
+  is_super: z.boolean(),
   completedUnitsIds: z.string().array(),
   completedPracticeIds: z.string().array(),
   completedLessonIds: z.string().array(),

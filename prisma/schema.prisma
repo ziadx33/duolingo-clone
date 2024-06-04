@@ -104,6 +104,8 @@ model User {
     current_next_league_days Int      @default(7)
     current_league_started   DateTime @default(now())
 
+    is_super Boolean @default(false)
+
     completedUnitsIds    String[] @default([])
     completedPracticeIds String[] @default([])
     completedLessonIds   String[] @default([])
