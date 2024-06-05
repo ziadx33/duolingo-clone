@@ -2,7 +2,6 @@ import { type Quest, type User } from "@prisma/client";
 import { updateCompletedQuests } from "./quests-sidebar/update-completed-quests";
 import { double } from "./quests-sidebar/double";
 import { updateXP } from "./quests-sidebar/update-xp";
-import { type useSession } from "next-auth/react";
 
 export const getCompletedQuests = ({
   session,
