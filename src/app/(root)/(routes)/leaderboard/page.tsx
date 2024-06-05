@@ -15,7 +15,6 @@ export default async function Page() {
   });
   const users = await api.leagues.getLeagueUsers({ id: league?.id ?? "" });
   if (!league || !users || !user) notFound();
-  console.log("users", users);
   const leaderboard = users.sort((a, b) =>
     a.current_league_xp > b.current_league_xp ? -1 : 1,
   );

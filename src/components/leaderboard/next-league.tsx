@@ -22,11 +22,9 @@ export function NextLeague({
   const { update: updateSession } = useSession();
   const { isLoading, data: leagues } = api.leagues.getLeagues.useQuery();
   const { mutateAsync: updateUser } = api.auth.user.update.useMutation();
-  console.log("started");
   useEffect(() => {
     void (async () => {
       if (isLoading) return;
-      console.log("started 2");
       type UpdateParams = Parameters<
         ReturnType<typeof useSession>["update"]
       >["0"];

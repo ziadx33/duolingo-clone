@@ -10,11 +10,11 @@ export function updateXP({ current_xp, last_xp_increment }: updateXPParams) {
   let new_current_xp = current_xp;
 
   const daysBetweenLastXpIncrementAndNow = differenceInDays(
-    new Date(),
     last_xp_increment,
+    new Date(),
   );
 
-  if (daysBetweenLastXpIncrementAndNow === 1) {
+  if (daysBetweenLastXpIncrementAndNow < 0) {
     new_current_xp = 0;
   }
 

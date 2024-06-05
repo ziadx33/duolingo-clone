@@ -17,8 +17,7 @@ export function updateCompletedQuests({
     last_xp_increment,
     new Date(),
   );
-  if (daysBetweenLastStreakAndNow > 0) {
-    console.log("conditioning rn");
+  if (daysBetweenLastStreakAndNow < 0) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     new_completed_quests_ids = [];
   }

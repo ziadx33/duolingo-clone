@@ -10,6 +10,7 @@ export const PROTECTED_ROUTES = [
   "/shop",
   "/leaderboard",
   "/profile",
+  "/subscriptions",
 ];
 export const MIDDLEWARE_ROUTES = [
   ...PUBLIC_ROUTES,

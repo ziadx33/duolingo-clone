@@ -109,6 +109,9 @@ model User {
     completedUnitsIds    String[] @default([])
     completedPracticeIds String[] @default([])
     completedLessonIds   String[] @default([])
+
+    Subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+    subscriptionId String?
 }
 
 model League {
@@ -257,4 +260,12 @@ model Achievement {
     type   ACHIEVEMENT_TYPE
     levels Int              @default(10)
     max    Int
+}
+
+model Subscription {
+    id     String @id @default(uuid())
+    name   String
+    months Int
+
+    users User[]
 }

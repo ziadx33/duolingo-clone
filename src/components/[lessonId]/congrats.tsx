@@ -35,11 +35,8 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         new Date(),
         userData.user.last_streak,
       );
-      console.log("works", daysBetweenLastStreakAndNow);
-      console.log("streaking", userData.user.streak);
 
       if (userData.user.streak >= 1 && daysBetweenLastStreakAndNow === 0) {
-        console.log("first condition");
         data.streak = userData.user.streak;
       } else if (
         daysBetweenLastStreakAndNow === 1 ||
@@ -47,10 +44,8 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       ) {
         data.streak = userData.user.streak + 1;
         data.last_streak = new Date();
-        console.log("second condition");
 
         if (daysBetweenLastStreakAndNow >= 1) {
-          console.log("third condition");
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           data.highest_streak = Math.max(
             data.streak,
@@ -62,7 +57,6 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
         data.highest_streak === 0
       ) {
         data.streak = userData.user.streak;
-        console.log("forth condition");
       }
 
       if (data.streak === 0 && userData.user.freeze_streak) {
