@@ -1,4 +1,4 @@
-import { unstable_cache } from "next/cache";
+import { revalidatePath, unstable_cache } from "next/cache";
 import { cache } from "react";
 import prisma from "../db/prisma";
 
@@ -26,14 +26,12 @@ export const getLeagues = unstable_cache(
   ["leagues"],
 );
 
-export const getLeagueUsers = unstable_cache(
-  cache(async (id: string) => {
-    try {
-      const users = await prisma.league.findUnique({ where: { id } }).User();
-      return users;
-    } catch (err) {
-      throw err;
-    }
-  }),
-  ["league-users", "id"],
-);
+export const getLeagueUsers = async (id: string) => {
+  try {
+    revalidatePath("/leaderboard");
+    const users = await prisma.league.findUnique({ where: { id } }).User();
+    return users;
+  } catch (err) {
+    throw err;
+  }
+};
