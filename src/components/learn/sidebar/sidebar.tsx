@@ -24,7 +24,6 @@ export async function Sidebar() {
             href={link.href}
             key={link.name}
             prefetch={false}
-            cache={link.href === "/leaderboard" ? false : true}
           >
             <Image
               src={
@@ -35,7 +34,9 @@ export async function Sidebar() {
               alt={link.name}
               width={40}
               height={40}
-              className={link.name === "profile" ? "rounded-full" : ""}
+              className={
+                link.name === "profile" ? "rounded-full object-cover" : ""
+              }
             />
             <span className="hidden 2xl:block">{link.name}</span>
           </ActiveLink>

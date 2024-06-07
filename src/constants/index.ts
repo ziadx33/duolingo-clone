@@ -34,3 +34,6 @@ export const SIDEBAR_LINKS: { name: string; href: string }[] = [
     href: "/profile",
   },
 ];
+
+export const DEFAULT_PROFILE_PIC =
+  "https://qpaaeeduxpckpcjvcygl.supabase.co/storage/v1/object/public/profiles/default.jpg";

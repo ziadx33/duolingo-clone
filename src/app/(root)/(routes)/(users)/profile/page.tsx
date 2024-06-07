@@ -1,9 +1,12 @@
 import { Achievements } from "@/components/profile/achievements";
 import { StatsBox } from "@/components/profile/stats-box";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getServerAuthSession } from "@/server/auth";
 import { format } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
+import { FaPen } from "react-icons/fa";
 
 export default async function Page() {
   const userData = await getServerAuthSession();
@@ -11,13 +14,24 @@ export default async function Page() {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex gap-6">
-        <Image
-          src={session?.image ?? ""}
-          width={150}
-          height={150}
-          alt="profile pic"
-          className="rounded-full"
-        />
+        <div className="relative h-36 w-36">
+          <Image
+            src={session?.image ?? ""}
+            fill
+            alt="profile pic"
+            className="rounded-full"
+          />
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute right-0 rounded-full"
+            asChild
+          >
+            <Link href="/profile/edit">
+              <FaPen />
+            </Link>
+          </Button>
+        </div>
         <div className="flex h-fit flex-col justify-between gap-1">
           <h1 className="text-3xl">{session?.name}</h1>
           <p className="text-muted-foreground">

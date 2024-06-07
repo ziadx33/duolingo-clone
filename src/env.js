@@ -30,7 +30,8 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    //
+    NEXT_PUBLIC_PROJECT_URL: z.string(),
+    NEXT_PUBLIC_ANON_KEY: z.string(),
   },
 
   /**
@@ -38,6 +39,8 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    NEXT_PUBLIC_PROJECT_URL: process.env.NEXT_PUBLIC_PROJECT_URL,
+    NEXT_PUBLIC_ANON_KEY: process.env.NEXT_PUBLIC_ANON_KEY,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,

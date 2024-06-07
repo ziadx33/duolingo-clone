@@ -3,7 +3,6 @@ import { NextLeague } from "@/components/leaderboard/next-league";
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
 import { differenceInDays } from "date-fns";
-import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Fragment } from "react";

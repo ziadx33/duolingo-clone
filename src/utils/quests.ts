@@ -21,7 +21,6 @@ export const getCompletedQuests = ({
       if (new_completed_quests_ids.includes(id)) {
         return { id, done: false };
       }
-      console.log(id, costs, session.current_xp, "shoulder");
       if (session.current_xp < costs) {
         return { id, done: false };
       }
