@@ -8,6 +8,7 @@ import { type ComponentPropsWithoutRef } from "react";
 type ActiveLink = {
   activeClasses?: string;
   cache?: boolean;
+  revalidate?: boolean;
 } & LinkProps &
   ComponentPropsWithoutRef<"a">;
 

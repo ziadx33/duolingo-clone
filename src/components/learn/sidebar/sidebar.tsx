@@ -24,7 +24,7 @@ export async function Sidebar() {
             href={link.href}
             key={link.name}
             prefetch={false}
-            cache={link.href !== "/leaderboard"}
+            revalidate={link.href === "/leaderboard"}
           >
             <Image
               src={

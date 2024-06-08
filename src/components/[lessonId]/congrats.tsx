@@ -9,6 +9,7 @@ import { getXp } from "@/utils/congrats/get-xp";
 import { Loading } from "../loading";
 import { useUpdateUser } from "@/hooks/use-update-user";
 import { type User } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 type CongratsProps = {
   lessonId: string;
@@ -24,6 +25,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
     id: lessonId,
   });
   const { update: updateUser } = useUpdateUser();
+  const router = useRouter();
   useEffect(() => {
     const changeUserData = async () => {
       if (!userData?.user || !lessonData || !lessons) return;
@@ -57,6 +59,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       };
 
       await postData(userData.user);
+      router.refresh();
 
       setCompletedDoneReqs(true);
     };

@@ -9,7 +9,6 @@ import { verificationTokens } from "./routers/verification-tokens";
 import { units } from "./routers/units";
 import { practices } from "./routers/practices";
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
 import { lessons } from "./routers/lessons";
 import { questionTypes } from "./routers/question-types";
 import { writeQuestions } from "./routers/write-questions";
@@ -17,6 +16,7 @@ import { shopItems } from "./routers/shop-items";
 import { quests } from "./routers/quests";
 import { achievements } from "./routers/achievements";
 import { leagues } from "./routers/leagues";
+import { revalidateAPI } from "../actions/revalidate";
 
 /**
  * This is the primary router for your server.
@@ -39,7 +39,7 @@ export const appRouter = createTRPCRouter({
   achievements,
   leagues,
   revalidate: publicProcedure.input(z.string()).mutation(async ({ input }) => {
-    revalidatePath(input);
+    await revalidateAPI(input);
   }),
 });
 
