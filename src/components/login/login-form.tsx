@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { GoogleOAuth } from "@/components/(auth)/google-oauth";
 import {
   Form,
   FormControl,
@@ -95,8 +94,6 @@ export function LoginForm() {
         >
           submit
         </Button>
-        <div className="relative my-2 h-[0.050rem] w-full bg-secondary before:absolute before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:bg-background before:px-2 before:text-secondary-foreground before:content-['or']" />
-        <GoogleOAuth />
       </form>
     </Form>
   );
