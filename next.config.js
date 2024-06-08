@@ -27,6 +27,11 @@ const config = {
         protocol: "https",
         hostname: "qpaaeeduxpckpcjvcygl.supabase.co",
       },
+
+      {
+        protocol: "https",
+        hostname: "www.duolingo.com",
+      },
     ],
   },
 };
