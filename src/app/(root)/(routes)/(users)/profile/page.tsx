@@ -23,7 +23,7 @@ export default async function Page() {
             src={session?.image ?? ""}
             fill
             alt="profile pic"
-            className="rounded-full"
+            className="rounded-full object-cover"
           />
           <Button
             variant="outline"

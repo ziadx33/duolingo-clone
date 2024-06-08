@@ -35,7 +35,9 @@ export async function Sidebar() {
               width={40}
               height={40}
               className={
-                link.name === "profile" ? "rounded-full object-cover" : ""
+                link.name === "profile"
+                  ? "h-[40px] w-[40px] rounded-full object-cover"
+                  : ""
               }
             />
             <span className="hidden 2xl:block">{link.name}</span>
