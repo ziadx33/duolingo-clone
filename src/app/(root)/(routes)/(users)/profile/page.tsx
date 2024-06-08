@@ -3,6 +3,7 @@ import { StatsBox } from "@/components/profile/stats-box";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getServerAuthSession } from "@/server/auth";
+import { api } from "@/trpc/server";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +12,9 @@ import { FaPen } from "react-icons/fa";
 export default async function Page() {
   const userData = await getServerAuthSession();
   const session = userData?.user;
+  const currentLeague = await api.leagues.getLeague({
+    id: session?.current_league_id ?? "",
+  });
   return (
     <div className="flex flex-col gap-3">
       <div className="flex gap-6">
@@ -51,6 +55,11 @@ export default async function Page() {
           caption={session?.totalXp}
           description="Total XP"
           image="https://d35aaqx5ub95lt.cloudfront.net/images/profile/01ce3a817dd01842581c3d18debcbc46.svg"
+        />
+        <StatsBox
+          caption={currentLeague?.name}
+          description="current league"
+          image={currentLeague?.img_src ?? ""}
         />
       </div>
       <h1 className="text-3xl">Achievements</h1>
