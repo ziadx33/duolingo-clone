@@ -5,8 +5,8 @@ import { LoadingLink } from "../loading-link";
 export async function Content() {
   const userData = await getServerAuthSession();
   return (
-    <div className="flex h-full w-full">
-      <div className="flex h-full w-full flex-1 items-center justify-end">
+    <div className="flex h-full w-full justify-center">
+      <div className="hidden h-full w-full flex-1 items-center justify-end lg:flex">
         <Image
           src="/images/pages/hero/animate.svg"
           alt="animate"
@@ -15,11 +15,11 @@ export async function Content() {
           draggable="false"
         />
       </div>
-      <div className="flex flex-1 flex-col justify-center gap-12">
-        <h1 className="mr-auto text-center text-3xl">
+      <div className="flex w-full flex-col justify-center gap-12 lg:flex-1">
+        <h1 className="mx-auto text-center text-3xl lg:mx-0 lg:mr-auto">
           The free, fun, and effective, way to <br /> learn a language!
         </h1>
-        <div className="ml-24 flex w-[350px] flex-col gap-2">
+        <div className="mx-auto flex w-full max-w-96 flex-col gap-2 lg:ml-20">
           {!userData ? (
             <>
               <LoadingLink
