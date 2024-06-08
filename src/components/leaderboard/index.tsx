@@ -43,7 +43,7 @@ export default async function Leaderboard() {
           }
         />
       )}
-      <div className="flex h-full flex-col pb-4">
+      <div className="flex h-full flex-col px-4 pb-4 pt-4">
         <div className="flex flex-col items-center">
           <Image
             draggable="false"

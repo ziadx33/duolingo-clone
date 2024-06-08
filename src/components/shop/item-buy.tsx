@@ -65,6 +65,7 @@ export function ItemBuy({ costs, type }: ItemBuyProps) {
           }
         });
       }}
+      className="w-full xl:w-fit"
     >
       {costs} gems
     </Button>
