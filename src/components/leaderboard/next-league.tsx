@@ -1,27 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
-import { type User, type League } from "@prisma/client";
-import { RotatingLines } from "react-loader-spinner";
+import { type League } from "@prisma/client";
 import { api } from "@/trpc/react";
-import { useSession } from "@/hooks/use-session";
+import { type useSession } from "@/hooks/use-session";
+import { Loading } from "../loading";
+import { useUpdateUser } from "@/hooks/use-update-user";
 
 type NextLeagueProps = {
   currentLeague: League;
   win: boolean;
   lose: boolean;
-  userData: User;
 };
 
-export function NextLeague({
-  currentLeague,
-  win,
-  lose,
-  userData,
-}: NextLeagueProps) {
-  const { update: updateSession } = useSession();
+export function NextLeague({ currentLeague, win, lose }: NextLeagueProps) {
   const { isLoading, data: leagues } = api.leagues.getLeagues.useQuery();
-  const { mutateAsync: updateUser } = api.auth.user.update.useMutation();
+  const { update: updateUser } = useUpdateUser();
   useEffect(() => {
     void (async () => {
       if (isLoading) return;
@@ -40,45 +34,25 @@ export function NextLeague({
           ...defaultUpdateData,
           current_league_id: prevLeague.id,
         };
-        void updateUser({ id: userData.id, data: updateData }).then(
+        void updateUser({ data: updateData }).then(
           () => (location.pathname = "/leaderboard"),
         );
-        await updateSession(updateData as UpdateParams);
         if (prevLeague.id === currentLeague.id)
           location.pathname = "/leaderboard";
       }
-      if (win) {
-        const nextLeague =
-          leagues?.find((league) => league.level === currentLeague.level + 1) ??
-          currentLeague;
-        const updateData: Parameters<typeof updateUser>["0"]["data"] = {
-          ...defaultUpdateData,
-          current_league_id: nextLeague.id,
-        };
-        void updateUser({ id: userData.id, data: updateData }).then(
-          () => (location.pathname = "/leaderboard"),
-        );
-        await updateSession(updateData as UpdateParams);
-        if (nextLeague.id === currentLeague.id) {
-          location.pathname = "/leaderboard";
-        }
-      }
+      if (!win) return;
+      const nextLeague =
+        leagues?.find((league) => league.level === currentLeague.level + 1) ??
+        currentLeague;
+      const updateData: Parameters<typeof updateUser>["0"]["data"] = {
+        ...defaultUpdateData,
+        current_league_id: nextLeague.id,
+      };
+      void updateUser({ data: updateData }).then(
+        () => (location.pathname = "/leaderboard"),
+      );
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
   return <Loading />;
-}
-
-function Loading() {
-  return (
-    <div className="grid h-full w-full place-items-center pb-12">
-      <RotatingLines
-        strokeColor="grey"
-        strokeWidth="5"
-        animationDuration="0.75"
-        width="70"
-        visible={true}
-      />
-    </div>
-  );
 }

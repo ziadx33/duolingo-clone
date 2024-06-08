@@ -26,7 +26,6 @@ export default async function Leaderboard() {
     <>
       {daysUntilNextLeague === 0 && (
         <NextLeague
-          userData={user}
           currentLeague={league}
           win={
             leaderboard.findIndex((leaderUser) => leaderUser.id === user.id) <

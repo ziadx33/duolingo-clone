@@ -1,10 +1,14 @@
 import Image from "next/image";
 import { Card } from "../ui/card";
 import { api } from "@/trpc/react";
-import { RotatingLines } from "react-loader-spinner";
 import { useSession } from "@/hooks/use-session";
 import { type Dispatch, type SetStateAction, useEffect } from "react";
-import { differenceInDays } from "date-fns";
+import { getStreak } from "@/utils/congrats/get-streak";
+import { getCompletedLessons } from "@/utils/congrats/get-completed-lessons";
+import { getXp } from "@/utils/congrats/get-xp";
+import { Loading } from "../loading";
+import { useUpdateUser } from "@/hooks/use-update-user";
+import { type User } from "@prisma/client";
 
 type CongratsProps = {
   lessonId: string;
@@ -15,124 +19,53 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
   const { data: lessonData, isLoading } = api.lessons.getLessonById.useQuery({
     id: lessonId,
   });
-  const { update, data: userData } = useSession();
-  const { mutateAsync: editUserFn } = api.auth.user.update.useMutation();
+  const { data: userData } = useSession();
   const { data: lessons } = api.lessons.getLessonsByLessonId.useQuery({
     id: lessonId,
   });
+  const { update: updateUser } = useUpdateUser();
   useEffect(() => {
-    void (async () => {
+    const changeUserData = async () => {
       if (!userData?.user || !lessonData || !lessons) return;
 
-      let data: Parameters<typeof editUserFn>["0"]["data"] = {
-        streak: 0,
-        last_streak: new Date(userData.user.last_streak),
-        highest_streak: userData.user.highest_streak,
-        freeze_streak: userData.user.freeze_streak,
+      setCompletedDoneReqs(false);
+
+      const defaultUpdatedData: Partial<User> = {
+        ...getStreak(userData.user),
+        ...getXp({ ...userData.user, lessonData }),
       };
-
-      const daysBetweenLastStreakAndNow = differenceInDays(
-        new Date(),
-        userData.user.last_streak,
-      );
-
-      if (userData.user.streak >= 1 && daysBetweenLastStreakAndNow === 0) {
-        data.streak = userData.user.streak;
-      } else if (
-        daysBetweenLastStreakAndNow === 1 ||
-        userData.user.streak === 0
-      ) {
-        data.streak = userData.user.streak + 1;
-        data.last_streak = new Date();
-
-        if (daysBetweenLastStreakAndNow >= 1) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          data.highest_streak = Math.max(
-            data.streak,
-            userData.user.highest_streak,
-          );
-        }
-      } else if (
-        daysBetweenLastStreakAndNow === 0 &&
-        data.highest_streak === 0
-      ) {
-        data.streak = userData.user.streak;
-      }
-
-      if (data.streak === 0 && userData.user.freeze_streak) {
-        data = {
-          ...data,
-          streak: userData.user.streak,
-          freeze_streak: false,
-        };
-      }
 
       const isAlreadyCompleted =
         userData.user.completedLessonIds.includes(lessonId);
-      setCompletedDoneReqs(false);
-      const newTotalXp = userData?.user?.totalXp + lessonData.xp;
-      const current_xp = userData?.user?.current_xp + lessonData.xp;
 
-      const defaultUpdatedData: Parameters<typeof editUserFn>["0"]["data"] = {
-        ...data,
-        gem: userData.user.gem,
-        totalXp: newTotalXp,
-        current_league_xp: userData.user.current_league_xp + lessonData.xp,
-        current_xp,
+      const postData = async (user: User) => {
+        if (!isAlreadyCompleted) {
+          const completedLessonsData = getCompletedLessons({
+            lessonId,
+            lessonData,
+            lessons,
+            ...user,
+          });
+
+          await updateUser({
+            data: {
+              ...defaultUpdatedData,
+              ...completedLessonsData,
+            },
+          });
+        } else await updateUser({ data: defaultUpdatedData });
       };
 
-      if (!isAlreadyCompleted) {
-        const newCompletedLessonIds = [
-          ...userData.user?.completedLessonIds,
-          lessonId,
-        ];
-        const newCompletedPracticeIds = [
-          ...userData?.user.completedPracticeIds,
-        ];
-        const completedPracticeLessonsLength = lessons
-          .filter((lesson) => newCompletedLessonIds.includes(lesson.id))
-          .map((lesson) => lesson.id).length;
-        if (completedPracticeLessonsLength === lessons.length) {
-          newCompletedPracticeIds.push(lessonData.practiceId);
-        }
+      await postData(userData.user);
 
-        const updatedData: Parameters<typeof editUserFn>["0"]["data"] = {
-          ...defaultUpdatedData,
-          completedLessonIds: newCompletedLessonIds,
-          completedPracticeIds: newCompletedPracticeIds,
-        };
-        await update(updatedData);
-        await editUserFn({
-          data: updatedData,
-          id: userData?.user.id,
-        });
-        setCompletedDoneReqs(true);
-        return;
-      }
-      await update(defaultUpdatedData);
-
-      await editUserFn({
-        data: defaultUpdatedData,
-        id: userData?.user.id,
-      });
       setCompletedDoneReqs(true);
-    })();
+    };
+
+    void changeUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonData, lessons]);
 
-  if (isLoading) {
-    return (
-      <div className="mb-56 grid h-full w-[50rem] place-items-center">
-        <RotatingLines
-          strokeColor="grey"
-          strokeWidth="5"
-          animationDuration="0.75"
-          width="70"
-          visible={true}
-        />
-      </div>
-    );
-  }
+  if (isLoading) return <Loading />;
   return (
     <div className="-mt-24 flex h-full w-full flex-col items-center gap-4">
       <Image
