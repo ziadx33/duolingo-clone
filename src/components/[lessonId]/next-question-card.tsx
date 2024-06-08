@@ -29,11 +29,11 @@ export function NextQuestionCard({
     <div>
       <div
         className={cn(
-          "absolute bottom-0 z-50 flex h-40 w-full items-start gap-2.5 border-t-2 bg-card px-[30rem] py-8 transition-all duration-75",
+          "absolute bottom-0 z-50 flex h-40 w-full items-start gap-2.5 border-t-2 bg-card px-12 py-8 transition-all duration-75 2xl:px-[30rem]",
           goNext ? "bottom-0" : "-bottom-40",
         )}
       >
-        <div className="grid h-20 w-20 place-items-center rounded-[50%] border-2 bg-secondary">
+        <div className="hidden h-20 w-20 place-items-center rounded-[50%] border-2 bg-secondary lg:grid">
           {isCorrect ? <FaCheck size={30} /> : <IoMdClose size={40} />}
         </div>
         <div className="flex w-[80%] flex-col">

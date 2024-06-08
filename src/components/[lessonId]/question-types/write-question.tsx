@@ -39,7 +39,7 @@ export function WriteQuestion({
   }, []);
 
   return (
-    <div className="flex h-full w-[35rem] flex-col pt-24">
+    <div className="flex h-full w-full flex-col pt-24 xl:w-[35rem]">
       <h1 className="text-3xl font-bold">Write this in english</h1>
       <div className="relative flex h-fit">
         {/* eslint-disable-next-line @next/next/no-img-element */}

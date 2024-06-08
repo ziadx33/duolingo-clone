@@ -28,7 +28,7 @@ export function HearQuestion({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="flex h-full w-[35rem] flex-col gap-6 pt-24">
+    <div className="flex h-full w-full flex-col gap-6 pt-24 xl:w-[35rem]">
       <h1 className="text-3xl font-bold">Tap what you hear</h1>
       <div className="flex items-end justify-center gap-4 py-2">
         <Button
@@ -39,7 +39,7 @@ export function HearQuestion({
           <HiMiniSpeakerWave size={60} />
         </Button>
       </div>
-      <div className="mb-12 flex h-16 w-full items-center justify-center gap-2 border-y-2">
+      <div className="mb-12 flex h-16 w-full flex-wrap items-center justify-center gap-2 border-y-2">
         {selectedWords.map((word) => (
           <span
             onClick={() => {
@@ -62,7 +62,7 @@ export function HearQuestion({
           </span>
         ))}
       </div>
-      <div className="flex h-fit w-full justify-center gap-1">
+      <div className="flex h-fit w-full flex-wrap justify-center gap-1">
         {suggestedSentences
           .filter(
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

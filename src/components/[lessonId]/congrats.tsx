@@ -70,7 +70,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
 
   if (isLoading) return <Loading />;
   return (
-    <div className="-mt-24 flex h-full w-full flex-col items-center gap-4">
+    <div className="flex h-full w-full flex-col items-center gap-4 xl:-mt-24">
       <Image
         src="/images/questions/congrats.svg"
         width={500}

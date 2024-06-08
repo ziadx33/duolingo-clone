@@ -36,11 +36,11 @@ export function ChooseQuestion({
   }, []);
 
   return (
-    <div className="flex h-full w-[40rem] flex-col gap-12 pt-24">
+    <div className="flex h-full w-full flex-col gap-12 pt-24 xl:w-[40rem]">
       <h1 className="text-3xl font-bold">
         Which one of these is &quot;{correctSentence}&quot;?
       </h1>
-      <div className="flex gap-2">
+      <div className="flex h-[31rem] flex-wrap gap-2 overflow-y-auto pb-4 sm:flex-nowrap">
         {suggestedSentences.map((sentence, sentenceIndex) => (
           <button
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

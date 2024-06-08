@@ -32,7 +32,7 @@ export function BottomBar({
     "https://d35aaqx5ub95lt.cloudfront.net/sounds/f0b6ab4396d5891241ef4ca73b4de13a.mp3",
   );
   return (
-    <div className="container flex h-full items-center justify-between px-96">
+    <div className="container flex h-full items-center justify-between md:px-24 lg:px-48 xl:px-96">
       {!done && (
         <Button variant="outline" onClick={goNextQuestion}>
           Skip
