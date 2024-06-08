@@ -11,8 +11,8 @@ export async function Unit({ unitIndex, description, id }: UnitProps) {
     practiceIds: practices?.map((practice) => practice.id) ?? [],
   });
   return (
-    <div className="flex flex-col gap-10">
-      <Card className="flex h-24 w-full items-center justify-between p-4">
+    <div className="mx-4 mt-6 flex h-full flex-col gap-10 xl:mt-0">
+      <Card className=" flex h-24 w-full items-center justify-between p-4 xl:mt-0">
         <div>
           <h3 className="text-md mb-2 text-muted-foreground">
             Unit {unitIndex}

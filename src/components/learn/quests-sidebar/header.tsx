@@ -1,5 +1,3 @@
-"use client";
-
 import { useSession } from "@/hooks/use-session";
 import ChooseSubjectSelect from "./header-buttons/choose-subject-select";
 import { StreakButton } from "./header-buttons/streak-button";
@@ -19,7 +17,7 @@ export function useHooker() {
 export function Header() {
   const { data: userData } = useSession();
   return (
-    <header className="flex h-24 w-full items-center justify-center gap-8 py-3">
+    <header className="flex items-center justify-center gap-8 py-3 pt-12 xl:h-24 xl:pr-4 xl:pt-4">
       <ChooseSubjectSelect {...userData?.user} />
       <StreakButton user={userData?.user} streak={userData?.user?.streak} />
       <GemButton gem={userData?.user?.gem} />

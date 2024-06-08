@@ -51,7 +51,7 @@ export function LoginForm() {
             });
           });
         })}
-        className="mx-auto flex h-screen w-96 flex-col items-center gap-4 py-32"
+        className="mx-auto flex h-screen w-96 flex-col items-center gap-4 px-4 py-32"
       >
         <h1 className="mb-10 text-2xl">Login to your account</h1>
         <FormField

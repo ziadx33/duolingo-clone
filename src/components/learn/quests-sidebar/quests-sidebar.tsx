@@ -1,11 +1,15 @@
+"use client";
+
 import { Header } from "./header";
 import { Quests } from "./quests";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 
-export async function QuestsSidebar() {
+export function QuestsSidebar() {
+  const isMobile = useIsMobile(1280);
   return (
-    <aside className="mr-4 flex w-[20%] flex-col gap-4">
+    <aside className="mr-4 flex h-full w-full flex-col gap-4 xl:w-[20%]">
       <Header />
-      <Quests />
+      {!isMobile && <Quests />}
     </aside>
   );
 }

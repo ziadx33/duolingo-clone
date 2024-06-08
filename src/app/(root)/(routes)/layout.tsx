@@ -4,10 +4,10 @@ import { type ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <main className="flex h-screen w-full">
+    <main className="flex h-screen w-full flex-col-reverse xl:flex-row">
       <Sidebar />
-      <div className="flex min-h-full w-[67%] justify-center pt-12">
-        <div className="w-[40rem]">{children}</div>
+      <div className="flex min-h-[82%] w-full justify-center xl:w-[67%] xl:pt-12">
+        <div className="h-full w-full xl:w-[40rem]">{children}</div>
       </div>
       <QuestsSidebar />
     </main>
