@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { api } from "@/trpc/react";
 import { Quest } from "./quest";
@@ -8,7 +10,13 @@ import { type User } from "@prisma/client";
 import { getCompletedQuests, getUpdatedXp } from "@/utils/quests";
 import { useUpdateUser } from "@/hooks/use-update-user";
 
-export function Quests() {
+export function Quests({
+  className,
+  sidebar = true,
+}: {
+  className?: string;
+  sidebar?: boolean;
+}) {
   const { isLoading, data: quests } = api.quests.getQuests.useQuery();
   api.auth.user.update.useMutation();
   const { data: session } = useSession();
@@ -18,6 +26,7 @@ export function Quests() {
 
   useEffect(() => {
     void (async () => {
+      if (!sidebar) return;
       if (completedReqs.current) return;
       if (isLoading) return;
       if (session?.user) updated.current = true;
@@ -47,7 +56,7 @@ export function Quests() {
   }, [session, isLoading]);
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>Daily Quests</CardTitle>
       </CardHeader>

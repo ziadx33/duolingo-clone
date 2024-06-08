@@ -10,6 +10,7 @@ export const PROTECTED_ROUTES = [
   "/shop",
   "/leaderboard",
   "/profile",
+  "/quests",
 ];
 export const MIDDLEWARE_ROUTES = [
   ...PUBLIC_ROUTES,
@@ -23,6 +24,10 @@ export const SIDEBAR_LINKS: { name: string; href: string }[] = [
   {
     name: "leaderboards",
     href: "/leaderboard",
+  },
+  {
+    name: "quests",
+    href: "/quests",
   },
   {
     name: "shop",

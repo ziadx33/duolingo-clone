@@ -16,7 +16,7 @@ export default async function Page() {
     id: session?.current_league_id ?? "",
   });
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 px-4 pt-4 xl:px-0 xl:pt-0">
       <div className="flex gap-6">
         <div className="relative h-36 w-36">
           <Image
