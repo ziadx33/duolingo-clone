@@ -30,7 +30,7 @@ export const getLeagueUsers = async (id: string) => {
   try {
     revalidatePath("/leaderboard");
     const users = await prisma.league.findUnique({ where: { id } }).User();
-    return users;
+    return users?.filter((user) => user.emailVerified);
   } catch (err) {
     throw err;
   }
