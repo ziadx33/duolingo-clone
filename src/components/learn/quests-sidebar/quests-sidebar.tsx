@@ -7,7 +7,7 @@ import { useIsMobile } from "@/hooks/use-is-mobile";
 export function QuestsSidebar() {
   const isMobile = useIsMobile(1280);
   return (
-    <aside className="mr-4 flex h-full w-full flex-col gap-4 xl:w-[20%]">
+    <aside className="mr-4 flex h-[10%] w-full flex-col gap-4 xl:w-[20%]">
       <Header />
       {!isMobile && <Quests />}
     </aside>
