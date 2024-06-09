@@ -32,7 +32,7 @@ export function LeaderboardUser({
       )}
     >
       <div className="flex items-center">
-        {index !== 4 ? (
+        {index < 4 ? (
           <Image
             src={LEADERBORD_TOP[index - 1] ?? ""}
             width={40}
