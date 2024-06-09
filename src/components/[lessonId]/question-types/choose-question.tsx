@@ -1,6 +1,5 @@
 import { type ChoosingQuestion } from "@prisma/client";
 import { type getInfoFnType } from "../question-section";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useEffect, useMemo, useState } from "react";
 
@@ -36,11 +35,11 @@ export function ChooseQuestion({
   }, []);
 
   return (
-    <div className="flex h-full w-full flex-col gap-4 xl:w-[40rem] xl:gap-12">
+    <div className="flex h-fit w-full flex-col gap-4 sm:gap-6 md:gap-12 xl:w-[40rem]">
       <h1 className="text-3xl font-bold">
         Which one of these is &quot;{correctSentence}&quot;?
       </h1>
-      <div className="flex h-full w-full flex-wrap items-start justify-center gap-2 pb-4 sm:flex-nowrap">
+      <div className="flex h-fit w-full flex-wrap items-start justify-center gap-2 pb-4 ">
         {suggestedSentences.map((sentence, sentenceIndex) => (
           <button
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -52,17 +51,17 @@ export function ChooseQuestion({
             }}
             key={JSON.stringify({ id: crypto.randomUUID() })}
             className={cn(
-              "h-42 flex w-32 flex-col items-center gap-6 rounded-lg border p-4 pt-8 transition-all hover:bg-secondary sm:h-64 sm:w-[30rem]",
+              "flex h-fit flex-col items-center gap-6 rounded-lg border p-4 pt-8 transition-all hover:bg-secondary",
               selectedWord === sentence ? "bg-secondary" : "",
             )}
           >
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
               src={suggestedSentencesImgSrcs[sentenceIndex]!}
               draggable={false}
               alt={sentence}
-              width={150}
-              height={150}
+              className="h-[100px] w-[100px] sm:h-[150px] sm:w-[150px]"
             />
             <div>{sentence}</div>
           </button>

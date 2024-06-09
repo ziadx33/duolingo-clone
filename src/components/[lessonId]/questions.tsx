@@ -23,7 +23,7 @@ export function Questions({ questionTypes, lessonId }: QuestionsProps) {
     ]!,
   );
   return (
-    <main className="h-screen w-full pt-14">
+    <main className="h-screen w-full">
       <CurrentQuestion
         lessonId={lessonId}
         setCurrentQuestion={setCurrentQuestion}

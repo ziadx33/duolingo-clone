@@ -45,11 +45,11 @@ export function CurrentQuestion({
   }, []);
 
   return (
-    <>
-      <div className="relative h-[85%] w-full">
+    <div className="flex h-full w-full flex-col justify-between">
+      <div className="relative h-[90%] w-full">
         <div
           className={cn(
-            "container flex h-full flex-col items-start sm:items-center",
+            "container flex h-full flex-col items-center pt-10",
             done ? "gap-0" : "gap-10 sm:gap-20",
           )}
         >
@@ -73,7 +73,7 @@ export function CurrentQuestion({
           />
         </div>
       </div>
-      <div className="h-[15%] w-full border-t-2  pb-2">
+      <div className="relative h-[10%] w-full border-t-2 pb-2 sm:h-[15%]">
         <Stats
           completedDoneReqs={completedDoneReqs}
           correctSolution={correctSolution}
@@ -88,6 +88,6 @@ export function CurrentQuestion({
           questionTypes={questionTypes}
         />
       </div>
-    </>
+    </div>
   );
 }

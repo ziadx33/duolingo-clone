@@ -72,7 +72,7 @@ export function WriteQuestion({
           </div>
         </Card>
       </div>
-      <div className="mb-12 flex h-16 w-full items-center justify-center gap-2 border-y-2">
+      <div className="mb-4 flex h-16 w-full flex-wrap items-center justify-center gap-2 border-y-2">
         {selectedWords.map((word) => (
           <span
             onClick={() => {
@@ -99,7 +99,7 @@ export function WriteQuestion({
           </span>
         ))}
       </div>
-      <div className="flex h-fit w-full justify-center gap-1">
+      <div className="flex h-fit w-full flex-wrap justify-center gap-1">
         {suggestedSentences
           .filter(
             (suggestedSentence) => !selectedWords.includes(suggestedSentence),

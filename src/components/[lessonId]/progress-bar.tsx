@@ -22,7 +22,7 @@ export function ProgressBar({
     return (completedQuestions / questionTypes.length) * 100;
   }, [completedQuestions, questionTypes.length]);
   return (
-    <div className="flex h-1 w-full items-center gap-2">
+    <div className="flex h-[1%] w-full items-center gap-2">
       <LeaveButton />
       <Progress value={!isDone ? progress() : 100} className="mb-0.5" />
       <div className="flex items-center gap-1 text-red-500">

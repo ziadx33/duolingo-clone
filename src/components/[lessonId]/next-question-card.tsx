@@ -4,8 +4,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import { FaCheck, FaFlag } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
+import { FaFlag } from "react-icons/fa";
 import { Button } from "../ui/button";
 
 type NextQuestionCardProps = {
@@ -29,22 +28,19 @@ export function NextQuestionCard({
     <div>
       <div
         className={cn(
-          "absolute bottom-0 z-50 flex h-40 w-full items-start gap-2.5 border-t-2 bg-card px-12 py-8 transition-all duration-75 2xl:px-[30rem]",
+          "absolute bottom-0 z-50 flex h-full w-full items-center gap-2.5 border-t bg-card px-12 transition-all duration-75 2xl:px-[30rem]",
           goNext ? "bottom-0" : "-bottom-40",
         )}
       >
-        <div className="hidden h-20 w-20 place-items-center rounded-[50%] border-2 bg-secondary lg:grid">
-          {isCorrect ? <FaCheck size={30} /> : <IoMdClose size={40} />}
-        </div>
         <div className="flex w-[80%] flex-col">
-          <h1 className="mb-3 text-2xl">
+          <h1 className="mb-0 text-lg sm:mb-3 sm:text-2xl">
             {isCorrect
               ? "Good Job!"
               : correctSolution
                 ? "Correct solution:"
                 : "Wrong answer!"}
           </h1>
-          <p className="flex items-center text-muted-foreground">
+          <p className="sm:text-md sm:text-md flex items-center text-xs text-muted-foreground">
             {correctSolution ? (
               correctSolution
             ) : (
@@ -65,7 +61,7 @@ export function NextQuestionCard({
             setGoNext(false);
             goNextQuestion();
           }}
-          className="mt-6"
+          className="sm:mt-6"
         >
           {isCorrect ? "continue" : "try again"}
         </Button>

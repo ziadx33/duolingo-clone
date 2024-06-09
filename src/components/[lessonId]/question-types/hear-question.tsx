@@ -39,7 +39,7 @@ export function HearQuestion({
           <HiMiniSpeakerWave size={60} />
         </Button>
       </div>
-      <div className="mb-12 flex h-16 w-full flex-wrap items-center justify-center gap-2 border-y-2">
+      <div className="mb-1 flex h-16 w-full flex-wrap items-center justify-center gap-2 border-y-2">
         {selectedWords.map((word) => (
           <span
             onClick={() => {
