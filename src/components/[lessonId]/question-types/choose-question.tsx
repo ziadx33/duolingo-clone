@@ -36,7 +36,7 @@ export function ChooseQuestion({
   }, []);
 
   return (
-    <div className="flex h-full w-full flex-col gap-12 xl:w-[40rem]">
+    <div className="flex h-full w-full flex-col gap-4 xl:w-[40rem] xl:gap-12">
       <h1 className="text-3xl font-bold">
         Which one of these is &quot;{correctSentence}&quot;?
       </h1>

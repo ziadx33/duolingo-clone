@@ -49,8 +49,8 @@ export function CurrentQuestion({
       <div className="relative h-[85%] w-full">
         <div
           className={cn(
-            "container flex h-full flex-col items-center",
-            done ? "gap-0" : "gap-20",
+            "container flex h-full flex-col items-start sm:items-center",
+            done ? "gap-0" : "gap-10 sm:gap-20",
           )}
         >
           <ProgressBar
