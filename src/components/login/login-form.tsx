@@ -16,10 +16,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { login } from "@/utils/(auth)/login";
 import { signIn } from "next-auth/react";
-import { useTransition } from "react";
+import { useState } from "react";
 
 export function LoginForm() {
-  const [isDisabled, disabledTransition] = useTransition();
+  const [isDisabled, setDisabled] = useState(false);
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -31,6 +31,7 @@ export function LoginForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (values) => {
+          setDisabled(true);
           const fn = async () => {
             await login(values, true);
             await signIn("credentials", {
@@ -39,15 +40,13 @@ export function LoginForm() {
               redirect: false,
             });
           };
-          disabledTransition(() => {
-            toast.promise(fn(), {
-              loading: "Logging in...",
-              success: () => {
-                location.pathname = "/learn";
-                return "Logged in successfully!";
-              },
-              error: (error: Error) => error.message,
-            });
+          toast.promise(fn(), {
+            loading: "Logging in...",
+            success: () => {
+              location.pathname = "/learn";
+              return "Logged in successfully!";
+            },
+            error: (error: Error) => error.message,
           });
         })}
         className="mx-auto flex h-screen w-96 flex-col items-center gap-4 px-4 py-32"

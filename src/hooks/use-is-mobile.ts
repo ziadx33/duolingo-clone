@@ -12,6 +12,7 @@ export function useIsMobile(number = 768) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return isMobile;
