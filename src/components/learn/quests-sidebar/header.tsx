@@ -19,7 +19,7 @@ export function Header() {
   return (
     <header className="flex h-24 items-center justify-center gap-8 py-3 xl:h-24 xl:pr-4 xl:pt-4">
       <ChooseSubjectSelect {...userData?.user} />
-      <StreakButton user={userData?.user} streak={userData?.user?.streak} />
+      <StreakButton streak={userData?.user?.streak} />
       <GemButton gem={userData?.user?.gem} />
       <HeartsButton
         userId={userData?.user?.id}
