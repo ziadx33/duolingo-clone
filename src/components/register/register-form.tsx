@@ -41,7 +41,7 @@ export function RegisterForm({ subjectId }: RegisterFormProps) {
               {
                 loading: "Registering...",
                 success:
-                  "Registered successfully, we have sent a verification link to your email.",
+                  "Registered successfully, we have sent a verification link to your email (it may be in spam folder).",
                 error: "Failed to register",
               },
             );
