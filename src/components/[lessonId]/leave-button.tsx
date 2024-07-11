@@ -20,7 +20,7 @@ export function LeaveButton() {
         </DialogTrigger>
         <DialogContent className="flex w-96 flex-col items-center">
           <Image
-            src="https://d35aaqx5ub95lt.cloudfront.net/images/ed9f592a37a6ce248be0beec9c13a0e1.svg"
+            src="/images/pages/[lessonId]/leave-image.svg"
             width={150}
             height={150}
             alt="dialog image"

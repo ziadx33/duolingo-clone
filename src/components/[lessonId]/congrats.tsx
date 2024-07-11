@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import Image from "next/image";
 import { Card } from "../ui/card";
 import { api } from "@/trpc/react";
@@ -81,12 +82,7 @@ export function Congrats({ lessonId, setCompletedDoneReqs }: CongratsProps) {
       <Card className="pt-2 text-center text-xl">
         <h3 className="border-b pb-2">Total xp</h3>
         <div className="flex h-16 w-fit items-center gap-2 px-12 text-lg">
-          <Image
-            src="https://d35aaqx5ub95lt.cloudfront.net/images/icons/f5358b2d4087a109790fc809eedc08c5.svg"
-            width={20}
-            height={20}
-            alt="xp"
-          />
+          <Image src="/images/icons/xp.svg" width={20} height={20} alt="xp" />
           {lessonData?.xp}
         </div>
       </Card>

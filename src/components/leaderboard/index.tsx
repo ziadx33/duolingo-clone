@@ -24,7 +24,7 @@ export default async function Leaderboard() {
     differenceInDays(new Date(), user.current_league_started);
   return (
     <>
-      {daysUntilNextLeague === 0 && (
+      {daysUntilNextLeague <= 0 && (
         <NextLeague
           currentLeague={league}
           win={

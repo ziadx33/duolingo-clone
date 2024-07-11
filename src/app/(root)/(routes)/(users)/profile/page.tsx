@@ -39,6 +39,7 @@ export default async function Page() {
         <div className="flex h-fit flex-col justify-between gap-1">
           <h1 className="text-3xl">{session?.name}</h1>
           <p className="text-muted-foreground">
+            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */}
             Joined {format(new Date(session?.created_at ?? ""), "MMM YYY")}
           </p>
         </div>
@@ -54,7 +55,7 @@ export default async function Page() {
         <StatsBox
           caption={session?.totalXp}
           description="Total XP"
-          image="https://d35aaqx5ub95lt.cloudfront.net/images/profile/01ce3a817dd01842581c3d18debcbc46.svg"
+          image="/images/icons/xp.svg"
         />
         <StatsBox
           caption={currentLeague?.name}

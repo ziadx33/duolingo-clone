@@ -25,12 +25,8 @@ export function BottomBar({
   const { update: updateUserData, data: userData } = useSession();
   const { mutate: revalidatePath } = api.revalidate.useMutation();
   const router = useRouter();
-  const correctSound = new Audio(
-    "https://d35aaqx5ub95lt.cloudfront.net/sounds/37d8f0b39dcfe63872192c89653a93f6.mp3",
-  );
-  const incorrectSound = new Audio(
-    "https://d35aaqx5ub95lt.cloudfront.net/sounds/f0b6ab4396d5891241ef4ca73b4de13a.mp3",
-  );
+  const correctSound = new Audio("/sounds/correct.mp3");
+  const incorrectSound = new Audio("/sounds/incorrect-sound.mp3");
   return (
     <div className="container flex h-full w-full items-center justify-between pt-2 md:px-24 lg:px-48 xl:px-96">
       {!done && (

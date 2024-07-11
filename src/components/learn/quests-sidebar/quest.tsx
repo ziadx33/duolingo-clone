@@ -12,16 +12,16 @@ type QuestProps = {
 
 export function Quest({ userData, costs, questIndex, price }: QuestProps) {
   const boxSrcs = [
-    "https://d35aaqx5ub95lt.cloudfront.net/images/goals/df7eda7cc1cc833ba30cd1e82781b68f.svg",
-    "https://d35aaqx5ub95lt.cloudfront.net/images/goals/9ec970f9fd7820abd758cb4cf805e73c.svg",
-    "https://d35aaqx5ub95lt.cloudfront.net/images/goals/ca23da57929a3144934ee0571a2f44e9.svg",
+    "/images/icons/brown-chest.svg",
+    "/images/icons/gray-chest.svg",
+    "/images/icons/golden-chest.svg",
   ];
   const progress = useCallback(() => {
     const current_xp = userData?.user?.current_xp ?? 0;
 
     return current_xp > costs ? 100 : (current_xp / costs) * 100;
   }, [costs, userData?.user]);
-
+  console.log(boxSrcs[questIndex]);
   return (
     <div className="flex h-fit items-center gap-2">
       <Image width={40} height={40} alt="xp" src="/images/icons/gem.svg" />

@@ -7,12 +7,13 @@ type LeaderboardUserProps = {
   index: number;
   win: boolean;
   lose: boolean | null;
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 } & User;
 
 const LEADERBORD_TOP = [
-  "https://d35aaqx5ub95lt.cloudfront.net/images/leagues/9e4f18c0bc42c7508d5fa5b18346af11.svg",
-  "https://d35aaqx5ub95lt.cloudfront.net/images/leagues/cc7b8f8582e9cfb88408ab851ec2e9bd.svg",
-  "https://d35aaqx5ub95lt.cloudfront.net/images/leagues/eef523c872b71178ef5acb2442d453a2.svg",
+  "/images/pages/leaderboard/one.svg",
+  "/images/pages/leaderboard/two.svg",
+  "/images/pages/leaderboard/three.svg",
 ];
 
 export function LeaderboardUser({
