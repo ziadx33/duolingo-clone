@@ -8,7 +8,7 @@ export async function Sidebar() {
   const userData = await getServerAuthSession();
   const user = userData?.user;
   return (
-    <aside className="mt-auto h-[10%] min-w-[13%] border-t-2 px-6 pb-6 pt-4 xl:mt-0 xl:h-full xl:border-r-2">
+    <aside className="fixed z-10 mt-auto h-[10%] min-w-[13%] bg-background px-6 pb-6 pt-4 max-lg:w-full max-lg:border-t-2 lg:border-r-2 xl:mt-0 xl:h-full">
       <Image
         draggable="false"
         alt="logo"
